@@ -1,0 +1,40 @@
+﻿@model BriefOtViewModel
+@{
+    ViewBag.Title = "BRIEF";
+    //Clase body personalizado
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title"> @ViewBag.Title</h4>
+</div>
+
+<div class="row">
+    <div class="col-md-10 text-left">
+    </div>
+    <div class="col-md-2 text-right">
+        @if (Sesion.HasPermission("TRA-BRIEF_CREAR"))
+        {
+            <a href="@Url.Action("Crear", "Brief", new { Area = "Trafico", id = Model.OtId,idEmpresa= Model.EmpresaId })" data-toggle="modal" data-target="#" data-execute-onload="OnLoadCrearBrief" data-size="all" class="btn btn-warning">
+                Crear BRIEF
+            </a>
+        }
+    </div>
+</div>
+
+<div class="modal-body">
+    @Html.HiddenFor(m => m.OtId)
+    <table id="tabla-Listar_Brief" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th>PRODUCTO</th>
+                <th>DESARROLLADO POR </th>
+                <th>FECHA DE CREACIÓN</th>
+                <th>FECHA ENTREGA CREAT.</th>
+                <th>DESCARGAR BRIEF</th>
+                <th class="text-center">Acción</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+

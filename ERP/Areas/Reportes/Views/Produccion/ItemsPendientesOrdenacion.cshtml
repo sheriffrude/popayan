@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Pendientes por ordenación";
+}
+
+<div class="row">
+    <div id="content_report" class="report"></div>
+</div>
+
+@Styles.Render("~/bundles/Reports.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/Reports.js")
+    <script type="text/javascript">
+        var USUARIO_ID = "@Sesion.GetId()";
+    </script>
+    @Scripts.Render("~/Areas/Reportes/scripts/Produccion/ItemsPendientesOrdenacion.js")
+}

@@ -1,0 +1,36 @@
+﻿@model ListarBancoViewModel
+@{
+    ViewBag.Title = "Bancos";
+    ViewBag.BodyClass = "body-background-gray";
+}
+<div class="pull-right">
+    <a href="@Url.Action("Crear", "Banco", new {Area = "Gestion"})" class="btn btn-primary">Adicionar</a>
+</div>
+<br /><br /><br />
+
+<div class="row content-menu">
+    <div class="col-sm-12">
+        @if (Model.ListaBancos == null || Model.ListaBancos.Count == 0)
+        {
+            <h4>No existen bancos creados</h4>
+        }
+        else
+        {
+            foreach (var item in Model.ListaBancos)
+            {
+                <div class="col-md-3 col-sm-3 text-center">
+                    <a href="@Url.Action("Menu", "Banco", new {Area = "Gestion", Id = item.Id})" class="link-empresa" title="@item.NombreComercial">
+                        @if (item.LogoModel != null)
+                        {
+                            <img src="@($"data:{item.LogoModel.FileContentType};base64,{Convert.ToBase64String(item.LogoModel.FileContent)}")" alt="@item.NombreComercial" class="img-responsive img-center" />
+                        }
+                        else
+                        {
+                            @item.NombreComercial
+                        }
+                    </a>
+                </div>
+            }
+        }
+    </div>
+</div>

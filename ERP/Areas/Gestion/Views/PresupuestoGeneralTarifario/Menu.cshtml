@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "MENU TARIFARIO";
+}
+
+<div class="col-md-2">
+    <ul class="nav nav-tabs tabs-left">
+        <li class="active"><a href="#grupo" data-toggle="tab">GRUPO</a></li>
+        <li><a href="#item" data-toggle="tab">ITEMS</a></li>
+    </ul>
+</div>
+
+<div class="col-md-10">
+    <div class="tab-content">
+        <div class="tab-pane active" id="grupo">
+            @Html.Partial("_Grupo")
+        </div>
+        <div class="tab-pane" id="item">
+            @Html.Partial("_Item")
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        var URL_LISTAR_PRESUPUESTO_GENERAL_GRUPO = "@Url.Action("ListarGrupo", "PresupuestoGeneralTarifario", new { Area = "Gestion" })";
+        var URL_EDITAR_PRESUPUESTO_GENERAL_GRUPO = "@Url.Action("EditarGrupo", "PresupuestoGeneralTarifario", new { Area = "Gestion" })";
+        var URL_ELIMINAR_PRESUPUESTO_GENERAL_GRUPO = "@Url.Action("EliminarGrupo", "PresupuestoGeneralTarifario", new { Area = "Gestion" })";
+        var PERMISO_EDITAR_PRESUPUESTO_GENERAL_GRUPO = ("@Sesion.HasPermission("GES-TARIFARIOGRUPO_EDITAR")" === "True");
+        var PERMISO_ELIMINAR_PRESUPUESTO_GENERAL_GRUPO = ("@Sesion.HasPermission("GES-TARIFARIOGRUPO_ELIMINAR")" === "True");
+
+        var URL_LISTAR_PRESUPUESTO_GENERAL_ITEM = "@Url.Action("ListarItem", "PresupuestoGeneralTarifario", new { Area = "Gestion" })";
+        var URL_EDITAR_PRESUPUESTO_GENERAL_ITEM = "@Url.Action("EditarItem", "PresupuestoGeneralTarifario", new { Area = "Gestion" })";
+        var URL_ELIMINAR_PRESUPUESTO_GENERAL_ITEM = "@Url.Action("EliminarItem", "PresupuestoGeneralTarifario", new { Area = "Gestion" })";
+        var PERMISO_EDITAR_PRESUPUESTO_GENERAL_ITEM = ("@Sesion.HasPermission("GES-TARIFARIOITEM_EDITAR")" === "True");
+        var PERMISO_ELIMINAR_PRESUPUESTO_GENERAL_ITEM = ("@Sesion.HasPermission("GES-TARIFARIOITEM_ELIMINAR")" === "True");
+    </script>
+
+    @Scripts.Render("~/Areas/Gestion/scripts/PresupuestoGeneralTarifario/_ListarGrupo.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/PresupuestoGeneralTarifario/CrearGrupo.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/PresupuestoGeneralTarifario/EditarGrupo.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/PresupuestoGeneralTarifario/_ListarItem.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/PresupuestoGeneralTarifario/CrearItem.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/PresupuestoGeneralTarifario/EditarItem.js")
+}

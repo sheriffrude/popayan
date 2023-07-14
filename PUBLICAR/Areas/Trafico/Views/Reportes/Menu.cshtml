@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "REPORTES TRAFICO";
+    ViewBag.SubNavbar = true;
+    ViewBag.SubNavbarItemActive = "TRA";
+}
+
+@Styles.Render("~/Content/menu.css")
+
+<div class="row content-menu">
+    <div class="col-sm-12 text-right margin-top-1">
+        <a href="@Url.Action("Menu", "General", new { Area = "" } )">
+            <img src="@Url.Content("~/Content/images/boton-regresar-menu.png")" />
+        </a>
+    </div>
+    <div class="col-sm-12 height-3 margin-top-1 margin-bottom-1"></div>
+    <div class="col-sm-12">
+       
+            <div class="col-md-4 col-sm-4 text-center">
+                <a href="@Url.Action("Listar", "ReporteTrafico", new { Area = "Trafico" })" class="content-icono-menu">
+                    Tráfico 
+                </a>
+            </div>
+        <div class="col-md-4 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "EstadoPresupuesto", new { Area = "Trafico" })" class="content-icono-menu">
+                Estado de Presupuesto
+            </a>
+        </div>
+        <div class="col-md-4 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Consolidado", new { Area = "Trafico" })" class="content-icono-menu">
+                Consolidado
+            </a>
+        </div>
+
+    </div>
+</div>

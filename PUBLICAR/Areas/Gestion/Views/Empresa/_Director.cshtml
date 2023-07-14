@@ -1,0 +1,126 @@
+﻿@model EmpresaDirectorViewModel
+@{
+    var edicionDisabled = ViewBag.Edicion == "Si" ? "disabled" : "";
+    var lecturaDisabled = ViewBag.Lectura == "Si" ? "disabled" : "";
+}
+
+@Html.HiddenFor(p => p.PersonaDirectorId, new { @class = "director" })
+<div class="col-md-6">
+    <div class="form-group">
+        @Html.LabelFor(m => m.DocumentoDirector, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.DocumentoDirector, new { @class = "form-control director director-data" })
+        @Html.ValidationMessageFor(m => m.DocumentoDirector, "", new { @class = "text-danger" })
+    </div>
+    <div class="text-right">
+        <button type="button" onclick="Empresa_Director.CambiarDocumento(true)" class="btn btn-secondary" id="boton-cambiar-director"> Cambiar</button>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoDocumentoDirectorId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.TipoDocumentoDirectorId, Model.ListaTiposDocumento, "Seleccione", new { @class = "form-control selectpicker director-data", data_live_search="true" })
+    @Html.ValidationMessageFor(m => m.TipoDocumentoDirectorId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PrimerNombreDirector, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PrimerNombreDirector, new { @class = "form-control director director-data" })
+    @Html.ValidationMessageFor(m => m.PrimerNombreDirector, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SegundoNombreDirector, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SegundoNombreDirector, new { @class = "form-control director director-data" })
+    @Html.ValidationMessageFor(m => m.SegundoNombreDirector, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PrimerApellidoDirector, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PrimerApellidoDirector, new { @class = "form-control director director-data" })
+    @Html.ValidationMessageFor(m => m.PrimerApellidoDirector, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SegundoApellidoDirector, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SegundoApellidoDirector, new { @class = "form-control director director-data" })
+    @Html.ValidationMessageFor(m => m.SegundoApellidoDirector, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.SexoDirectorId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.SexoDirectorId, Model.ListaSexos, "Seleccione", new { @class = "form-control selectpicker director-data" })
+    @Html.ValidationMessageFor(m => m.SexoDirectorId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.FechaNacimientoDirector, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaNacimientoDirector, new { @class = "form-control director director-data" })
+    @Html.ValidationMessageFor(m => m.FechaNacimientoDirector, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.CorreoDirector, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.CorreoDirector, new { @class = "form-control director director-data" })
+    @Html.ValidationMessageFor(m => m.CorreoDirector, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.DireccionDirector, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.DireccionDirector, new { @class = "form-control director director-data" })
+    @Html.ValidationMessageFor(m => m.DireccionDirector, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TelefonoDirector, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.TelefonoDirector, new { @class = "form-control director director-data" })
+    @Html.ValidationMessageFor(m => m.TelefonoDirector, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.CelularDirector, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.CelularDirector, new { @class = "form-control director director-data" })
+    @Html.ValidationMessageFor(m => m.CelularDirector, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.RHDirectorId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.RHDirectorId, Model.ListaRH, "Seleccione", new { @class = "form-control selectpicker director-data", data_live_search = "true" })
+    @Html.ValidationMessageFor(m => m.RHDirectorId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.EstadoCivilDirectorId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.EstadoCivilDirectorId, Model.ListaEstadosCiviles, "Seleccione", new { @class = "form-control selectpicker director-data", data_live_search = "true" })
+    @Html.ValidationMessageFor(m => m.EstadoCivilDirectorId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.FotoDirector, new { @class = "control-label" })<br />
+    <div id="content-logo-view_director" class="col-md-12"></div> <br />
+    <a id="btn_upload_director" href="@Url.Action("CrearUploadImageDirector", "Empresa", new { Area = "Gestion" })" class="btn btn-secondary" data-size="lg" data-target="#modal" data-toggle="modal">
+        Cargar Imagen
+    </a>
+    @Html.ValidationMessageFor(m => m.FotoDirector, "", new { @class = "text-danger" })
+  
+</div>
+
+<div class="pull-right">
+    <button type="button" onclick="Empresa_Director.Agregar()" class="btn btn-secondary" id="boton-cambiar-director" hidden>Agregar</button>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table id="TableDirector" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th hidden></th>
+                    <th class="text-center">Foto</th>
+                    <th class="text-center">Primer nombre</th>
+                    <th class="text-center">Segundo nombre</th>
+                    <th class="text-center">Primer apellido</th>
+                    <th class="text-center">Segundo apellido</th>
+                    <th class="text-center">Tipo de documento</th>
+                    <th class="text-center">Número de documento</th>
+                    <th class="text-center">Fecha de nacimiento</th>
+                    <th class="text-center">Sexo</th>
+                    <th class="text-center">Correo electronico</th>
+                    <th class="text-center">Dirección</th>
+                    <th class="text-center">Teléfono</th>
+                    <th class="text-center">RH</th>
+                    <th class="text-center">Estado civil</th>
+                    <th class="text-center">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>

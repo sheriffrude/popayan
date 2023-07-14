@@ -1,0 +1,71 @@
+﻿@model BuscarAnticipoViewModel
+@{
+    ViewBag.Title = "Lista de anticipos";
+}
+<!--Filtro de la tabla-->
+<form id="form-filtro-tabla">
+    <div class="row">
+        <div class="form-group col-md-3">
+            @Html.LabelFor(m => m.EstadoAnticipoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.EstadoAnticipoId, Model.ListaEstadoAnticipos, "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true" })
+            @Html.ValidationMessageFor(m => m.EstadoAnticipoId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-3">
+            @Html.LabelFor(m => m.filtro, new { @class = "control-label" })
+            <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+        </div>
+
+        <div class="form-group col-md-3">
+            <br />
+            <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+            <input type="button" class="btn btn-secondary" value="VER TODO" onclick="AnticipoListar.ResetearTabla()" />
+        </div>
+
+    </div>
+</form>
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <table id="tabla-anticipo" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Número de anticipo</th>
+                    <th>Desembolsar</th>
+                    <th>Desembolsar</th>
+                    <th>Detalle</th>
+                    <th>Estado</th>
+                    <th>Total del anticipo</th>
+                    <th>Total desembolsado</th>
+                    <th>Total legalizado</th>
+                    <th>Presupuesto</th>
+                    <th>Versión</th>
+                    <th>Usuario</th>
+                    <th>Razón de la solicitud</th>
+                    <th>Fecha de solicitud</th>
+                    <th>Fecha en la que es requerido</th>
+                    <th>Fecha máxima de legalización</th>
+                    <th>Forma de pago</th>
+                    <th>Solicitar aprobación</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        var PERMISO_DESEMBOLSAR_ANTICIPO = ("@Sesion.HasPermission("PRO-ANTICIPO_DESEMBOLSAR_CREAR")" === "True");
+        var PERMISO_APROBACION_ANTICIPO = ("@Sesion.HasPermission("PRO-ANTICIPO_APROBACION_CREAR")" === "True");
+        var URL_APROBACION_ANTICIPO = "@Url.Action("Crear", "AprobacionAnticipo", new { Area = "Produccion" })";
+        var URL_JERARQUIA_APROBACION_ANTICIPO_LISTAR = "@Url.Action("ListarJerarquia", "AprobacionAnticipo", new { Area = "Produccion" })";
+    </script>
+    @Scripts.Render("~/Areas/Produccion/scripts/Anticipo/Listar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionAnticipo/Crear.js")
+    @* Jerarquia Aprobacion *@
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionAnticipo/ListarJerarquia.js")
+}

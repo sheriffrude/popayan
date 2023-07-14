@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Tráfico Administrativo";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+@Styles.Render("~/Content/menu.css")
+
+<div class="col-md-12 content-menu">
+    <div class="col-md-2 col-sm-4 text-center">
+        @*@if (Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_ADMINISTRATIVA"))
+            {*@
+        <a href="@Url.Action("Listar", "TraficoAdministrativo", new { Area = "Trafico" })">
+            <img src="@Url.Content("~/Content/images/Trafico/Solicitud_Administrativa.svg")" class="img-responsive" alt="Facturación" />
+            <h4 class="text-center">Solicitud Administrativa</h4>
+        </a>
+        @*}*@
+    </div>
+    <div class="col-md-2 col-sm-4 text-center">
+        @*@if (Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE"))
+            {*@
+        <a href="@Url.Action("Listar", "SolicitudPendiente", new { Area = "Trafico" })">
+            <img src="@Url.Content("~/Content/images/Trafico/Solicitudes_pendientes.svg")" class="img-responsive" alt="Facturación" />
+            <h4 class="text-center">Mis solicitudes pendientes</h4>
+        </a>
+        @*}*@
+    </div>
+</div>

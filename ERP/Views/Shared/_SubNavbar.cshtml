@@ -1,0 +1,45 @@
+﻿<ul class="nav nav-pills nav-justified hidden-xs">
+    <li class="li-menu">
+        <a href="@Url.Action("Menu", "General", new { Area = "" })" class="btn btn-menu @(ViewBag.SubNavbarItemActive == "CON"? "active": "")">
+            <span class="glyphicon glyphicon-home"></span>
+        </a>
+    </li>
+    @if (Sesion.HasPermission("PAR-MENU"))
+    {
+        <li class="li-menu">
+            <a href="@Url.Action("Index", "Menu", new {Area = "Parametrizacion"})" class="btn btn-menu parametrizacion @(ViewBag.SubNavbarItemActive == "PAR" ? "active" : "")">
+                <strong>Parametrización</strong>
+            </a>
+        </li>
+    }
+    @if (Sesion.HasPermission("GES-MENU"))
+    {
+        <li class="li-menu">
+            <a href="@Url.Action("Index", "Menu", new {Area = "Gestion"})" class="btn btn-menu gestion @(ViewBag.SubNavbarItemActive == "GES" ? "active" : "")">
+                <strong>Gestión</strong>
+            </a>
+        </li>
+    }
+    <li class="li-menu">
+        <a href="@Url.Action("Index", "Menu", new { Area = "Trafico" })" class="btn btn-menu trafico @(ViewBag.SubNavbarItemActive == "TRA" ? "active": "")">
+            <strong>Tráfico</strong>
+        </a>
+    </li>
+    <li class="li-menu">
+        <a href="@Url.Action("Index", "Menu", new { Area = "Produccion" })" class="btn btn-menu produccion @(ViewBag.SubNavbarItemActive == "PRO"? "active": "")">
+            <strong>Producción</strong>
+        </a>
+    </li>
+    <li class="li-menu">
+        <a href="@Url.Action("Index", "Menu", new { Area = "Gerencia" })" class="btn btn-menu gerencia @(ViewBag.SubNavbarItemActive == "CON"? "GER": "")">
+            <strong>Gerencia</strong>
+        </a>
+    </li>
+    <li class="li-menu">
+        <a href="@Url.Action("Index", "Menu", new { Area = "HorasHombre" })" class="btn btn-menu horas-hombre @(ViewBag.SubNavbarItemActive == "HOH"? "active": "")">
+            <strong>Horas Hombre</strong>
+        </a>
+    </li>
+</ul>
+
+@Styles.Render("~/Content/css/_SubNavbar.css")

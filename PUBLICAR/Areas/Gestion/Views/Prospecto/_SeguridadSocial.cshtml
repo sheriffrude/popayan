@@ -1,0 +1,142 @@
+﻿@model CrearProspectoSeguridadSocialViewModel
+
+
+<h4 class="col-md-12"><strong>Prestaciones sociales</strong></h4>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorCesantia, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorCesantia, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorCesantia, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajeCesantia, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajeCesantia, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajeCesantia, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorInteresCesantia, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorInteresCesantia, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorInteresCesantia, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajeInteresCesantia, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajeInteresCesantia, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajeInteresCesantia, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorPrimaServicios, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorPrimaServicios, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorPrimaServicios, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajePrimaServicios, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajePrimaServicios, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajePrimaServicios, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorVacaciones, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorVacaciones, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorVacaciones, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajeVacacion, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajeVacacion, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajeVacacion, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorPrestacionServicios, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorPrestacionServicios, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorPrestacionServicios, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajePrestacionServicios, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajePrestacionServicios, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajePrestacionServicios, "", new { @class = "text-danger" })
+</div>
+
+<h4 class="col-md-12"><strong>Seguridad social</strong></h4>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorPension, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorPension, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorPension, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajePension, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajePension, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajePension, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorSalud, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorSalud, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorSalud, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajeSalud, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajeSalud, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajeSalud, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorArl, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorArl, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorArl, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajeArl, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajeArl, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajeArl, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorSeguridadSocial, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorSeguridadSocial, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorSeguridadSocial, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajeSeguridadSocial, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajeSeguridadSocial, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajeSeguridadSocial, "", new { @class = "text-danger" })
+</div>
+
+<h4 class="col-md-12"><strong>Aportes parafiscales</strong></h4>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorCajaCompensacion, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorCajaCompensacion, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorCajaCompensacion, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajeCajaCompensacion, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajeCajaCompensacion, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajeCajaCompensacion, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorIcbf, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorIcbf, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorIcbf, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajeIcbf, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajeIcbf, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajeIcbf, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorSena, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorSena, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorSena, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajeSena, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajeSena, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajeSena, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorAporteParafiscal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorAporteParafiscal, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.ValorAporteParafiscal, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PorcentajeAporteParafiscal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PorcentajeAporteParafiscal, new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.PorcentajeAporteParafiscal, "", new { @class = "text-danger" })
+</div>

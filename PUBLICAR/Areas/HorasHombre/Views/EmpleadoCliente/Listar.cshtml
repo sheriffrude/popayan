@@ -1,0 +1,156 @@
+﻿@model  EmpleadoClienteViewModel
+@{
+    ViewBag.Title = "Consolidado Mensual";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.EmpresaId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.EmpresaId, Model.ListaEmpresas, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+            @Html.ValidationMessageFor(m => m.EmpresaId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.AnioId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.AnioId, Model.ListaAnio, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+            @Html.ValidationMessageFor(m => m.AnioId, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.MesId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.MesId, Model.ListaMes, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+            @Html.ValidationMessageFor(m => m.MesId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="help-block"></div>
+
+        <div class="form-group col-md-3">
+            @Html.LabelFor(m => m.FiltroId, new { @class = "control-label" })
+            <div class="radio">
+                <label>
+                    @Html.RadioButtonFor(m => m.FiltroId, "1")
+                    Usuarios
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    @Html.RadioButtonFor(m => m.FiltroId, "2")
+                    Areas
+                </label>
+            </div>
+            @Html.ValidationMessageFor(m => m.FiltroId, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2">
+            <div class="select-style hidden" id="ListaAreas">
+                <select id="AreaId" class="form-control"></select>
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="clearfix"></div>
+
+    </div>
+</div>
+
+<!--Espacio vertical-->
+<div class="help-block"></div>
+
+<div class="clearfix"></div>
+<div class="hidden" id="TablaUsuarios">
+    <div class="col-md-offset-2 col-sm-8 text-center">
+
+        <div class="col-md-12 text-right margin-left-0">
+            <div id="form-filtro-tabla" class="form-inline margin-0">
+                <div class="form-group">
+                    <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tabla-Resultados" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="row hidden" id="Bton_GenerarReporte">
+    <div class="col-md-12 text-center">
+        <input type="button" class="btn btn-md btn-horashombre" onclick="Generar()" value="GENERAR REPORTE" />
+    </div>
+</div>
+
+
+
+<!--Espacio vertical-->
+<div class="help-block"></div>
+<hr />
+
+<div id="content-reporte" class="row hidden">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <table id="tabla-Datos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Empresa</th>
+                        <th class="text-center">Horas</th>
+                        <th class="text-center">(%)</th>
+                        <th class="text-center">Valor($)</th>
+                    </tr>
+                </thead>
+                <tbody align="right"></tbody>
+                <tfoot align="right">
+                    <tr>
+                        <th></th>
+                        <th class="text-right"><div id="Horas"></div></th>
+                        <th class="text-right"><div id="SumPorcent"></div></th>
+                        <th class="text-right"><div id="Sumatoria"></div></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <div id="chartContainer_pie" style="height: 400px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        var URL_LISTAR_USUARIOS = "@Url.Action("Listar", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_LISTAR_USUARIOS_POR_EMPRESA = "@Url.Action("Listar_Usuarios", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_LISTAR_USUARIOS_POR_AREA = "@Url.Action("Listar_Areas", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_LISTAR_USUARIOS_POR_UNIDAD = "@Url.Action("Listar_Unidad", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_GRAFICA_PIE = "@Url.Action("GraficaPie", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_GRAFICA_TABLA = "@Url.Action("GraficaTablaUsuarios", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_MODAL = "@Url.Action("Modal", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_CLIENTE = "@Url.Action("Clientes", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_GRAFICA_PIE_CLIENTE = "@Url.Action("Clientes_Pie", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_AUTOCOMPLETAR_USUARIO = "@Url.Action("CompletarUsuario", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_LISTAR_AREAS_POR_EMPRESA = "@Url.Action("ListarAreaPorEmpresa", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_GRAFICA_PIE_AREA = "@Url.Action("Pie_Area", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_TABLA_EMPRESA_AREA = "@Url.Action("GraficaTablaEmpresas", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_GRAFICA_PIE_CLIENTE_AREA = "@Url.Action("Clientes_Pie_area", "EmpleadoCliente", new { Area = "HorasHombre" })";
+        var URL_CLIENTE_AREA = "@Url.Action("GraficaTablaEmpresasArea", "EmpleadoCliente", new { Area = "HorasHombre" })";
+    </script>
+    @Scripts.Render("~/bundles/canvasjs")
+    @Scripts.Render("~/Areas/HorasHombre/scripts/EmpleadoCliente/Listar.js")
+    @Scripts.Render("~/Areas/HorasHombre/scripts/EmpleadoCliente/Modal.js")
+}

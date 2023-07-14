@@ -1,0 +1,48 @@
+﻿@model ListarEmpresaBancoLibroViewModel
+@{
+    ViewBag.Title = "Tipos de productos Bancos";
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<div class="row content-menu">
+    <div class="col-sm-12">
+        @if (Model.ListaTiposProductos == null)
+            {
+            <h4>No existen productos creados</h4>
+        }
+        else
+        {
+            foreach (var item in Model.ListaTiposProductos)
+            {
+                if (item.Value == "1")
+                {
+                    <div class="col-md-2 col-sm-2 text-center">
+                        <a href="@Url.Action("ListarCuentaCorriente", "EmpresaBancoLibro", new {Area = "Gestion", Id = item.Value, BancoId = Model.BancoId })" class="link-empresa" title="@item.Text">
+                            <img src="@Url.Content("~/Content/images/Gestion/Bancos.svg")" alt="@item.Text" class="img-responsive img-center icono-menu" />
+                            <h4>@item.Text</h4>
+                        </a>
+                    </div>
+                }
+                else if (item.Value == "2")
+                {
+                    <div class="col-md-2 col-sm-2 text-center">
+                        <a href="@Url.Action("ListarCuentasAhorros", "EmpresaBancoLibro", new {Area = "Gestion", Id = item.Value, BancoId = Model.BancoId })" class="link-empresa" title="@item.Text">
+                            <img src="@Url.Content("~/Content/images/Gestion/Bancos.svg")" alt="@item.Text" class="img-responsive img-center icono-menu" />
+                            <h4>@item.Text</h4>
+                        </a>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="col-md-2 col-sm-2 text-center">
+                        <a href="@Url.Action("ListarCreditos", "EmpresaBancoLibro", new {Area = "Gestion", Id = item.Value, BancoId = Model.BancoId })" class="link-empresa" title="@item.Text">
+                            <img src="@Url.Content("~/Content/images/Gestion/Bancos.svg")" alt="@item.Text" class="img-responsive img-center icono-menu" />
+                            <h4>@item.Text</h4>
+                        </a>
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>

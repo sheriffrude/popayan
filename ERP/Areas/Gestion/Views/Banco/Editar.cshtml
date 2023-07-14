@@ -1,0 +1,132 @@
+﻿@model EditarBancoViewModel
+@{
+    //Titulo
+    ViewBag.Title = "Editar Banco";
+
+    //Clase body personalizado
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<!--Formulario-->
+@using (Html.BeginForm("Editar", "Banco",
+    new { Area = "Gestion" },
+    FormMethod.Post,
+    new { enctype = "multipart/form-data", @class = "", role = "form" }))
+{
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NombreComercial, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.NombreComercial, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NombreComercial, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.RazonSocial, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.RazonSocial, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Nit, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Nit, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nit, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.FechaAniversario, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaAniversario, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FechaAniversario, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-2">
+        @Html.LabelFor(m => m.ParPaisId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.ParPaisId, Model.ListaPaises, "Seleccione", new
+       {
+           @class = "form-control",
+           onchange = "OnchangePais(this, '" + Url.Action("ListaOpcionesPorPais", "Departamento", new { Area = "Parametrizacion" }) + "');"
+       })
+        @Html.ValidationMessageFor(m => m.ParPaisId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-2">
+        @Html.LabelFor(m => m.ParDepartamentoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.ParDepartamentoId, Model.ListaDepartamentos, "Seleccione", new
+           {
+               @class = "form-control",
+               onchange = "OnchangeDepartamento(this, '" + Url.Action("ListaOpcionesCiudadesPorDepartamento", "Ciudad", new { Area = "Parametrizacion" }) + "');"
+           })
+        @Html.ValidationMessageFor(m => m.ParDepartamentoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-2">
+        @Html.LabelFor(m => m.ParCiudadId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.ParCiudadId, Model.ListaCiudades, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+        @Html.ValidationMessageFor(m => m.ParCiudadId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Direccion, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Direccion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Telefono, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", @type = "number", @max = "999999999999" })
+        @Html.ValidationMessageFor(m => m.Telefono, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Celular, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Celular, new { @class = "form-control", @type = "number", @max = "999999999999" })
+        @Html.ValidationMessageFor(m => m.Celular, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Correo, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.CorreoGerente, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.CorreoGerente, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CorreoGerente, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Logo, new { @class = "control-label" })
+        <input id="Logo" name="Logo" type="file" />
+        @Html.ValidationMessageFor(m => m.Logo, "", new { @class = "text-danger" })
+        @if (Model.LogoModel != null)
+        {
+            <img src="@($"data:{Model.LogoModel.FileContentType};base64,{Convert.ToBase64String(Model.LogoModel.FileContent)}")" alt="Logo Banco" class="img-responsive" />
+        }
+        @Html.HiddenFor(m =>m.LogoId)
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.ImagenBienvenida, new { @class = "control-label" })
+        <input id="ImagenBienvenida" name="ImagenBienvenida" type="file" />
+        @Html.ValidationMessageFor(m => m.ImagenBienvenida, "", new { @class = "text-danger" })
+        @if (Model.ImagenBienvenidaModel != null)
+        {
+            <img src="@($"data:{Model.ImagenBienvenidaModel.FileContentType};base64,{Convert.ToBase64String(Model.ImagenBienvenidaModel.FileContent)}")" alt="Imagen de bienvenida" class="img-responsive" />
+        }
+        @Html.HiddenFor(m => m.ImagenBienvenidaId)
+    </div>
+
+    <div class="col-md-12 text-right">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a type="button" href="@Url.Action("Ver", "Banco", new { Area = "Gestion", id = Model.Id })" class="btn btn-warning">Cerrar</a>
+    </div>
+
+}
+
+@section Scripts{
+    @Scripts.Render("~/Areas/Gestion/scripts/Banco/Editar.js")
+}

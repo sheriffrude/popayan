@@ -1,0 +1,140 @@
+﻿@model CrearPresupuestoViewModel
+@{
+    ViewBag.Title = "Nuevo Presupuesto";
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<!--Formulario-->
+@using (Ajax.BeginForm("Crear", "Presupuesto", new { Area = "Produccion" },
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnComplete = "OnCompleteCrearPresupuesto"
+        },
+        new { id = "form_crear_presupuesto", @class = "", role = "form" })
+        )
+{
+    @Html.AntiForgeryToken()
+
+    <div class="clearfix"></div>
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+    <div class="clearfix"></div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EmpresaId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.EmpresaId, Model.ListaEmpresas, "Seleccione", new
+   {
+       @class = "form-control selectpicker",
+       onchange = "OnchangeEmpresa(this)",
+       data_live_search = "true"
+   })
+        @Html.ValidationMessageFor(m => m.EmpresaId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.TipoPresupuestoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.TipoPresupuestoId, Model.ListaTiposPresupuesto, "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true", disabled = "disabled" })
+        @Html.ValidationMessageFor(m => m.TipoPresupuestoId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.ClasificacionPresupuestoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.ClasificacionPresupuestoId, Model.ListaClasificacionPresupuesto, "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true", disabled = "disabled" })
+        @Html.ValidationMessageFor(m => m.ClasificacionPresupuestoId, "", new { @class = "text-danger" })
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.CentroCostoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.CentroCostoId, Model.ListaCentrosCosto, "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true", disabled = "disabled" })
+        @Html.ValidationMessageFor(m => m.CentroCostoId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.ClienteId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.ClienteId, Model.ListaClientes, "Seleccione", new
+   {
+       @class = "form-control selectpicker",
+       onchange = "OnchangeCliente(this)",
+       data_live_search = "true",
+       disabled = "disabled"
+   })
+        @Html.ValidationMessageFor(m => m.ClienteId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.OrdenTrabajoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.OrdenTrabajoId, Model.ListaOrdenesTrabajo, "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true", disabled = "disabled" })
+        @Html.ValidationMessageFor(m => m.OrdenTrabajoId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.TipoComisionId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.TipoComisionId, Model.ListaTiposComision, "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true", disabled = "disabled" })
+        @Html.ValidationMessageFor(m => m.TipoComisionId, "", new { @class = "text-danger" })
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Referencia, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Referencia, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Referencia, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.VigenciaInicial, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.VigenciaInicial, new { @class = "form-control datepicker", onchange = "OnchangeVigencia()" })
+        @Html.ValidationMessageFor(m => m.VigenciaInicial, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.VigenciaFinal, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.VigenciaFinal, new { @class = "form-control datepicker", onchange = "OnchangeVigencia()" })
+        @Html.ValidationMessageFor(m => m.VigenciaFinal, "", new { @class = "text-danger" })
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NotaLegal, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.NotaLegal, new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.NotaLegal, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NotaAdicional, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.NotaAdicional, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NotaAdicional, "", new { @class = "text-danger" })
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.LugarEjecucion, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.LugarEjecucion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.LugarEjecucion, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.Dirigido, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Dirigido, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Dirigido, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.NumeroAprobacion, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.NumeroAprobacion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumeroAprobacion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-12 text-right">
+        <input type="submit" class="btn btn-success" value="Guardar" />
+        <a href="@Url.Action("index", "Menu", new { Area = "Produccion" })" class="btn btn-warning">Cancelar</a>
+    </div>
+}
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script>
+        var URL_PRESUPUESTO_CONSULTAR = "@Url.Action("Consultar", "Presupuesto", new { Area = "Produccion"})";
+
+        var URL_EMPRESA_TIPO_PRESUPUESTO_LISTAR = "@Url.Action("ListarOpcionesPorEmpresa", "EmpresaPresupuestoTipo", new { Area = "Gestion" })";
+        var URL_CLIENTE_LISTAR = "@Url.Action("ListarOpcionesPorEmpresa", "UsuarioCliente", new { Area = "Gestion" })";
+        var URL_EMPRESA_NOTA_LEGAL_CONSULTAR = "@Url.Action("ConsultarNotaLegalPorId", "Empresa", new { Area = "Gestion" })";
+        var URL_EMPRESA_CENTRO_COSTO_LISTAR = "@Url.Action("ListarOpcionesPorEmpresa", "EmpresaCentroCosto", new { Area = "Gestion" })";
+        var URL_EMPRESA_CLASIFICACION_PRESUPUESTO_LISTAR = "@Url.Action("ListarOpcionesPorEmpresa", "EmpresaPresupuestoClasificacion", new { Area = "Gestion" })";
+
+        var URL_ORDEN_TRABAJO_POR_EMPRESA_Y_CLIENTE_LISTAR = "@Url.Action("ListaOpcionesPorClienteYEmpresa", "OrdenTrabajo", new { Area = "Trafico" })";
+        var URL_EMPRESA_CLIENTE_TIPO_COMISION_LISTAR = "@Url.Action("ListarOptionesTipoComisionPorClienteYEmpresa", "EmpresaClienteNegociacion", new { Area = "Gestion" })";
+    </script>
+
+    @Scripts.Render("~/Areas/Produccion/scripts/Presupuesto/Crear.js")
+}

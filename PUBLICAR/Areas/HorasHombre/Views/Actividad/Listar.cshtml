@@ -1,0 +1,51 @@
+﻿@model ListarActividadViewModel
+@{
+    ViewBag.Title = "Actividades";
+}
+
+@Html.HiddenFor(m => m.FechaHoy)
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group col-md-3">
+            <label class="control-label">Año</label>
+            @Html.DropDownListFor(m => m.FiltroAnio, Model.Anios, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+        </div>
+        <div class="help-block"></div>
+        <div class="col-md-12">
+            <div id='contenedor_calendario'></div>
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+@Styles.Render("~/bundles/fullcalendar.css")
+@Styles.Render("~/Content/css/HorasHombre.css")
+@section Scripts{
+    @*Links*@
+    <script type="text/javascript">
+        var URL_CALENDARIO = "@Url.Action("Listar", "Actividad", new { Area = "HorasHombre" })";
+
+        var URL_VALIDAR_FECHA = "@Url.Action("ValidarFecha", "Actividad", new { Area = "HorasHombre" })";
+        var URL_REGISTRAR_ACTIVIDAD = "@Url.Action("Crear", "Actividad", new { Area = "HorasHombre" })";
+
+        var URL_LISTA_TIPOS_ACTIVIDADES = "@Url.Action("ListarTiposActividades", "Actividad", new { Area = "HorasHombre" })";
+        var URL_CLIENTES_POR_EMPRESA = "@Url.Action("ListarClientesPorEmpresa", "Actividad", new { Area = "HorasHombre" })";
+        var URL_OT_POR_CLIENTE = "@Url.Action("ListarOtsPorCliente", "Actividad", new { Area = "HorasHombre" })";
+        var URL_PRESUPUESTOS_POR_OT = "@Url.Action("ListarPresupuestoPorOt", "Actividad", new { Area = "HorasHombre" })";
+
+        var URL_CONSULTAR = "@Url.Action("Consultar", "Actividad", new { Area = "HorasHombre" })";
+        var URL_ELIMINAR = "@Url.Action("Eliminar", "Actividad", new { Area = "HorasHombre" })";
+    </script>
+
+    @*Librerias**@
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/fullcalendar.js")
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    @*Scripts Personalizados*@
+    @Scripts.Render("~/Areas/HorasHombre/scripts/Actividad/Listar.js")
+    @Scripts.Render("~/Areas/HorasHombre/scripts/Actividad/Crear.js")
+    @Scripts.Render("~/Areas/HorasHombre/scripts/Actividad/Eliminar.js")
+    @Scripts.Render("~/Areas/HorasHombre/scripts/Actividad/Editar.js")
+}

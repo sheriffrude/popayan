@@ -1,0 +1,73 @@
+﻿@model VerBriefViewModel
+
+@{
+    ViewBag.Title = "Detalle de Brief";
+}
+
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-10 text-left">
+            <h3>@ViewBag.Title</h3>
+        </div>
+        <div class="col-md-2 text-right">
+            <a href="@Url.Action("Listar", "Brief", new { Area = "Trafico",id = Model.OtId, idEmpresa = Model.EmpresaId} )" data-toggle="modal" data-target="#" data-size="all" data-execute-onload="OnLoadListarBrief" id="atras_listar_Brief">
+                <img src="@Url.Content("~/Content/images/boton-regresar-menu.png")" alt="" />
+            </a>
+        </div>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="clearfix">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Codigo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Codigo, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Nombre, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Producto, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Producto, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DesarrolladoPor, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DesarrolladoPor, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.FechaCreacion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaCreacion, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.FechaEntrega, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaEntrega, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+
+        @if (Model.ListaPreguntasRespuesta.Count > 0)
+        {
+            for (var i = 0; i < Model.ListaPreguntasRespuesta.Count; i++)
+            {
+                //if (Model.ListaPreguntasRespuesta[i].TipoPreguntaId == 1)
+                //{
+                var brief = Model.ListaPreguntasRespuesta[i].BriefId;
+                var pregunta = Model.ListaPreguntasRespuesta[i].Pregunta;
+                var preguntaId = Model.ListaPreguntasRespuesta[i].IdPregunta;
+                var respuesta = Model.ListaPreguntasRespuesta[i].Respuesta;
+
+
+                    <div class="form-group col-md-12">
+                        <input type="text" class="hidden" id="BriefId" value="@brief">
+                        <div class="form-group">
+                            <label data-toggle="tooltip" for="comment">@pregunta</label>
+                            <textarea id="@preguntaId" class="form-control" rows="3" readonly="readonly">@respuesta</textarea>
+                        </div>
+                    </div>
+                //}
+            }
+        }
+
+    </div>
+    <div class="text-right">
+        <a  href="@Url.Action("Listar", "Brief", new { Area = "Trafico",id = Model.OtId, idEmpresa = Model.EmpresaId} )" data-toggle="modal" data-target="#" data-size="all" data-execute-onload="OnLoadListarBrief" id="atras_listar_Brief" class="btn btn-warning" >Cerrar</a>
+    </div>
+</div>

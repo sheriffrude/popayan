@@ -1,0 +1,95 @@
+﻿@model EditarEmpleadoDocumentoViewModel
+@{
+    ViewBag.Title = "Editar";
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<!-- Titulo y boton volver -->
+<div class="row">
+    <div class="form-group col-md-12">
+        <div class="pull-left">
+            <h3><strong>@ViewBag.Title</strong></h3>
+        </div>
+        <div class="pull-right">
+            <a href="@Url.Action("Listar", "EmpleadoDocumento", new { Area = "Gestion", id = Model.EmpleadoId  })">
+                <img src="@Url.Content("~/Content/images/Gestion/boton-cerrar-ventana.png")" alt="" />
+            </a>
+        </div>
+    </div>
+</div>
+
+<!--Espacio vertical-->
+<div class="help-block"></div>
+<div class="clearfix"></div>
+
+<!--Formulario-->
+@using (Html.BeginForm("Editar", "EmpleadoDocumento", new { Area = "Gestion" },
+                                        FormMethod.Post,
+                                        new
+                                        {
+                                            enctype = "multipart/form-data",
+                                            @class = "",
+                                            role = "form"
+                                        })
+                                    )
+{
+    @Html.AntiForgeryToken()
+
+    <div class="clearfix"></div>
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+    <div class="clearfix"></div>
+
+    <div class="row">
+        @Html.HiddenFor(m => m.EmpleadoId)
+        @Html.HiddenFor(m => m.DocumentoLegalId)
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.Nombre, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.TipoDocumentoLegalId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.TipoDocumentoLegalId, Model.DocumentosLegales, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+            @Html.ValidationMessageFor(m => m.TipoDocumentoLegalId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6">
+            <label class="control-label">Documento actual</label><br />
+            <a class="form-control" href="@Url.Action("DownloadFile", "EmpleadoDocumento", new { Area = "Gestion", id = Model.DocumentoId })" title="Descargar">
+                <img src="/Content/images/Gestion/boton-descargar.png" alt="Descargar" />
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+            <input id="Documento" name="Documento" type="file" class="form-control" />
+            @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+        <div class="radio">
+            <label>
+                @Html.RadioButtonFor(m => m.Estado, false)
+                Inactivar
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                @Html.RadioButtonFor(m => m.Estado, true)
+                Activar
+            </label>
+        </div>
+        @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="text-right col-md-12">
+        <button type="submit" class="btn btn-secondary" value="Guardar">Guardar</button>
+        <a href="@Url.Action("Listar", "EmpleadoDocumento", new { Area = "Gestion", id = Model.EmpleadoId  })" class="btn btn-warning">Cerrar</a>
+    </div>
+}

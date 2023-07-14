@@ -1,0 +1,180 @@
+﻿@model VerEmpleadoViewModel
+@{
+    ViewBag.Title = "Información  Empleado";
+}
+
+<!-- Titulo y boton volver -->
+<div class="col-md-12">
+    <div class="pull-left">
+    </div>
+    <div class="pull-right">
+        @if (Sesion.HasPermission("GES-EMPLEADO_NOVEDAD_LISTAR"))
+        {
+            <a href="@Url.Action("Listar", "EmpleadoNovedad", new { Area = "Gestion", id = Model.Id })" class="btn btn-secondary">
+                Novedades
+            </a>
+        }
+        @if (Sesion.HasPermission("GES-EMPLEADO_DOCUMENTO_LISTAR"))
+        {
+            <a href="@Url.Action("Listar", "EmpleadoDocumento", new { Area = "Gestion", id = Model.Id })" class="btn btn-secondary">
+                Documentos
+            </a>
+        }
+        @if (Sesion.HasPermission("GES-EMPLEADO_EDITAR"))
+        {
+            <a href="@Url.Action("Editar", "Empleado", new { Area = "Gestion", id = Model.Id })" class="btn btn-secondary">
+                Editar
+            </a>
+        }
+    </div>
+</div>
+
+<!--Espacio vertical-->
+<div class="help-block"></div>
+
+<h4 class="col-md-12"><strong>Datos Personales</strong></h4>
+<div class="form-group col-md-6 text-center">
+    @if (!string.IsNullOrEmpty(Model.FotoPath))
+    {
+        <img src="@Url.Content(Model.FotoPath)" alt="" class="img-responsive img-perfil-empleado" />
+    }
+    else
+    {
+        <img src="@Url.Content("~/Content/images/Gestion/Empleado/foto-por-defecto.png")" alt="Foto" class="img-responsive img-perfil-empleado" />
+    }
+</div>
+<div class="clearfix"></div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Documento, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoDocumento, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.TipoDocumento, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PrimerNombre, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PrimerNombre, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SegundoNombre, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SegundoNombre, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PrimerApellido, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PrimerApellido, new { @class = "form-control ", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SegundoApellido, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SegundoApellido, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Sexo, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Sexo, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.FechaNacimiento, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaNacimiento, new { @class = "form-control ", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Correo, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Direcciones, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Direcciones, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Telefonos, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Telefonos, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Celulares, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Celulares, new { @class = "form-control ", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.RH, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.RH, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.EstadoCivil, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.EstadoCivil, new { @class = "form-control", @readonly = "readonly" })
+</div>
+
+<div class="clearfix"></div>
+<br />
+<h4 class="col-md-12"><strong>Datos Empresariales</strong></h4>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.FechaIngreso, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaIngreso, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.FechaRetiro, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaRetiro, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.UnidadNegocio, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.UnidadNegocio, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.Area, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Area, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.Cargo, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Cargo, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.Extension, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Extension, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.CorreoEmpresarial, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.CorreoEmpresarial, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.EntidadSalud, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.EntidadSalud, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.EntidadCesantias, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.EntidadCesantias, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.RiesgoProfesional, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.RiesgoProfesional, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.EntidadPension, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.EntidadPension, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SalarioBase, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SalarioBase, new { @class = "form-control", @readonly = "readonly", data_format_price = "" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Beneficio, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Beneficio, new { @class = "form-control", @readonly = "readonly", data_format_price = "" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Bonos, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Bonos, new { @class = "form-control", @readonly = "readonly", data_format_price = "" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Otros, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Otros, new { @class = "form-control", @readonly = "readonly", data_format_price = "" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.NombreContactoEmergencia, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.NombreContactoEmergencia, new { @class = "form-control ", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.NumeroContactoEmergencia, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.NumeroContactoEmergencia, new { @class = "form-control", @readonly = "readonly" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.NumeroHijos, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.NumeroHijos, new { @class = "form-control", @readonly = "readonly" })
+</div>

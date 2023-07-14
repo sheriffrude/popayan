@@ -1,0 +1,86 @@
+﻿@model ProcessPlusERP.Areas.Gestion.Models.ClienteContrato.RegistroClienteContratoViewModel
+@{
+    ViewBag.Title = "Crear contrato de cliente";
+
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<!--Espacio vertical-->
+<div class="help-block"></div>
+<!--Formulario-->
+@using (Html.BeginForm("Crear", "ClienteContrato", new { Area = "Gestion" },
+                    FormMethod.Post,
+                    new {
+                        enctype = "multipart/form-data",
+                        @class = "",
+                        role = "form"
+                    })
+                )
+{
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.ClienteId)
+
+    <input type="hidden" id="estadoProceso" value="@ViewBag.EstadoProceso"/>
+    <input type="hidden" id="mensajeProceso" value="@ViewBag.MensajeProceso" />
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.TipoContratoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.TipoContratoId, Model.TiposContrato, "Seleccione tipo de contrato", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.TipoContratoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nombre, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control",  placeholder = "Nombre del contrato", maxlength = "200" })
+        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.FechaFirma, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaFirma, new { @class = "form-control", placeholder = "DD/MM/YYYY", onkeydown = "javascript:return false;" })
+        @Html.ValidationMessageFor(m => m.FechaFirma, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.FechaInicio, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaInicio, new { @class = "form-control", placeholder = "DD/MM/YYYY", onkeydown = "javascript:return false;" })
+        @Html.ValidationMessageFor(m => m.FechaInicio, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.FechaFin, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaFin, new { @class = "form-control", placeholder = "DD/MM/YYYY", onkeydown = "javascript:return false;" })
+        @Html.ValidationMessageFor(m => m.FechaFin, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Valor, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Valor, new { @class = "form-control", placeholder = "Valor del contrato", type = "number" })
+        @Html.ValidationMessageFor(m => m.Valor, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group ">
+        @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+        <input id="Documento" name="Documento" type="file" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-12 text-right">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a type="button" href="@Url.Action("Listar", "ClienteContrato", new { Area = "Gestion", Id = ViewBag.Id })" class="btn btn-warning">Cerrar</a>
+    </div>
+
+}
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{    
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/Scripts/ClienteContrato/Crear.js")
+}
+
+<script type="text/javascript">
+    var urlRedireccion = "@Url.Action("Listar", "ClienteContrato", new { Area = "Gestion", Id = Model.ClienteId })"
+</script>
+

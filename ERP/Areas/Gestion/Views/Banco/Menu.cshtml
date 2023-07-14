@@ -1,0 +1,77 @@
+﻿@model MenuBancoViewModel
+@{
+    ViewBag.Title = "Bancos";
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<div class="row content-menu">
+    <div class="col-md-12 text-center">
+        @if (Model.LogoModel != null)
+        {
+            <div class="col-md-offset-4 col-md-4 text-center">
+                <img src="@($"data:{Model.LogoModel.FileContentType};base64,{Convert.ToBase64String(Model.LogoModel.FileContent)}")" alt="" class="img-responsive img-center" />
+            </div>
+        }
+    </div>
+    @if (Sesion.HasPermission("GES-BANCO_VER"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Ver", "Banco", new {Area = "Gestion", id = Model.Id})">
+                <img src="@Url.Content("~/Content/images/Gestion/Bancos.svg")" alt="" class="icono-menu" />
+                <h4>Ver Banco</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("GES-BANCO_VER"))
+    {
+        <div class="col-md-2 col-sm-2 text-center">
+            <a href="@Url.Action("Listar", "BancoEmpresas", new {Area = "Gestion", id = Model.Id})">
+                <img src="@Url.Content("~/Content/images/Gestion/Deptos.svg")" alt="" class="icono-menu" />
+                <h4>Asociar Empresas</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("GES-BANCO_VER"))
+    {
+        <div class="col-md-2 col-sm-2 text-center">
+            <a href="@Url.Action("SimularCredito", "Banco", new {Area = "Gestion", id = Model.Id})">
+                <img src="@Url.Content("~/Content/images/Gestion/Clientes.svg")" alt="" class="icono-menu" />
+                <h4>Simular Crédito</h4>
+            </a>
+        </div>
+    }
+
+
+    @if (Sesion.HasPermission("GES-EMPRESA_BANCO_CONTACTO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-2 text-center">
+            <a href="@Url.Action("ListarEmpresas", "EmpresaBancoContacto", new {Area = "Gestion", id = Model.Id})" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="icono-menu" />
+                <h4>Empresas asignadas al banco</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("GES-EMPRESA_BANCO_PRODUCTO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-2 text-center">
+            <a href="@Url.Action("ListarEmpresas", "EmpresaBancoProducto", new {Area = "Gestion", id = Model.Id})" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Cargos.svg")" class="icono-menu" />
+                <h4>Productos Asignados al banco</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("GES-EMPRESA_BANCO_LIBRO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-2 text-center">
+            <a href="@Url.Action("ListarProducto", "EmpresaBancoLibro", new {Area = "Gestion", id = Model.Id})" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Bancos.svg")" class="icono-menu" />
+                <h4>Libro Banco</h4>
+            </a>
+        </div>
+    }
+
+</div>

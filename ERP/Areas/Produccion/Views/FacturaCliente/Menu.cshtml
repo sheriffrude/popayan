@@ -1,0 +1,47 @@
+﻿@model CrearFacturaClienteViewModel
+@{
+    ViewBag.Title = "Factura cliente";
+}
+
+<div class="col-md-2">
+    <!-- required for floating -->
+    <ul class="nav nav-tabs tabs-left" id="nav-tabs-facturacion">
+        <!-- 'tabs-right' for right tabs -->
+        @if (Sesion.HasPermission("PRO-FACTURA_CLIENTE_CREAR"))
+        {
+            <li class="active"><a href="#registrar-pago-proveedor" data-toggle="tab" data-number-tab="1">REGISTRAR FACTURAS DE CLIENTE</a></li>
+        }
+        @if (Sesion.HasPermission("PRO-FACTURA_CLIENTE_LISTAR"))
+        {
+            <li><a href="#consultar-pagos-proveedor" onclick="consultarFacturaCliente.CrearTablaFacturasClientes()" data-toggle="tab" data-number-tab="2">CONSULTAR FACTURAS DE CLIENTES</a></li>
+        }
+    </ul>
+</div>
+
+<div class="col-md-10">
+    <!-- Tab panes -->
+    <div class="tab-content">
+        @if (Sesion.HasPermission("PRO-FACTURA_CLIENTE_CREAR"))
+        {
+            <div class="tab-pane active" id="registrar-pago-proveedor">
+                @Html.Partial("~/Areas/Produccion/Views/FacturaCliente/Crear.cshtml")
+            </div>
+        }
+        @if (Sesion.HasPermission("PRO-FACTURA_CLIENTE_LISTAR"))
+        {
+            <div class="tab-pane" id="consultar-pagos-proveedor">
+                @Html.Partial("~/Areas/Produccion/Views/FacturaCliente/Listar.cshtml")
+            </div>
+        }
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaCliente/Crear.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaCliente/Listar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaCliente/Consultar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaCliente/FacturaClienteHistorico.js")
+}

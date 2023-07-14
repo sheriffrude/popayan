@@ -1,0 +1,410 @@
+﻿@model CrearFacturaPagoProveedorViewModel
+@{
+    ViewBag.Title = "Registrar pago proveedor";
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<!--Formulario-->
+@using (Ajax.BeginForm("Crear", "FacturaPagoProveedor", new { Area = "Produccion" },
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            OnBegin = "registrarFacturaPagoProveedor.OnBeginFormCrearFacturaPagoCliente",
+                                            OnComplete = "registrarFacturaPagoProveedor.OnCompleteFacturaPagoFacturaCliente"
+                                        }, new { @class = "", role = "form", @id = "FormularioFacturaPagoCliente" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="clearfix"></div>
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox text-right">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="col-md-12">
+                <div class="col-md-12 padding-left-0">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.NumeroOrdenCompra, new { @class = "control-label col-md-4 padding-0 label-text-aling-left" })
+                        @Html.TextBoxFor(m => m.NumeroOrdenCompra, new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-md-5">
+                        @Html.LabelFor(m => m.Factura, new { @class = "control-label col-md-4 padding-0 label-text-aling-left" })
+                        @Html.TextBoxFor(m => m.Factura, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-1">
+                        <br />
+                        <a class="btn btn-warning" onclick="registrarFacturaPagoProveedor.ConsultarFacturaProveedor()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="datosFactura" class="col-md-12 padding-left-0">
+
+                <div class="clearfix"></div>
+                <div class="help-block"></div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title pull-left">
+                            <a data-toggle="collapse" href="#collapse-encabezado">
+                                <strong>DATOS OC</strong>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div id="collapse-encabezado" class="panel-collapse collapse-encabezado">
+                        <div class="panel-body">
+                            <div class="form-horizontal small">
+
+                                <div class="col-md-3">
+                                    <label class="control-label">NÚMERO DE OC</label>
+                                    <input class="form-control" id="numero-oc" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">ESTADO DE LA ÓRDEN DE COMPRA</label>
+                                    <input class="form-control" id="estado-oc" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">EMPRESA</label>
+                                    <input class="form-control" id="empresa" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">CLIENTE</label>
+                                    <input class="form-control" id="cliente" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">OT</label>
+                                    <input class="form-control" id="ot" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">REFERENCIA OT</label>
+                                    <input class="form-control" id="referencia-ot" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">NÚMERO DE PRESUPUESTO</label>
+                                    <input class="form-control" id="numero-presupuesto" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">VERSIÓN PPTO INTERNO</label>
+                                    <input class="form-control" id="version-interno" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">VERSIÓN PPTO EXTERNO</label>
+                                    <input class="form-control" id="version-externo" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">FECHA RADICACIÓN</label>
+                                    <input class="form-control" id="fecha-radicacion" readonly />
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr />
+                            <div class="clearfix"></div>
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <h2>Items</h2>
+                                    <table id="tabla_item_orden_compra_factura" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Descripción</th>
+                                                <th class="text-center">Dias</th>
+                                                <th class="text-center">Cantidad</th>
+                                                <th class="text-center">Valor unidad</th>
+                                                <th class="text-center">Costo Total</th>
+                                                <th class="text-center">Impuesto Costo</th>
+                                                <th class="text-center">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <h2>Asociados</h2>
+                                    <table id="tabla_asociado_orden_compra_factura" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Descripción</th>
+                                                <th class="text-center">Dias</th>
+                                                <th class="text-center">Cantidad</th>
+                                                <th class="text-center">Valor unidad</th>
+                                                <th class="text-center">Costo Total</th>
+                                                <th class="text-center">Impuesto Costo</th>
+                                                <th class="text-center">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title pull-left">
+                            <a data-toggle="collapse" href="#collapse-encabezado">
+                                <strong>DATOS PROVEEDOR</strong>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="collapse-encabezado" class="panel-collapse collapse-encabezado">
+                        <div class="panel-body">
+                            <div class="form-horizontal small">
+
+                                <div class="col-md-3 hidden">
+                                    @Html.TextBoxFor(m => m.NumeroFacturaProveedorId, new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(m => m.NumeroFacturaProveedorId, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">PROVEEDOR</label>
+                                    <input class="form-control" id="proveedor" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">RAZÓN SOCIAL PROVEEDOR</label>
+                                    <input class="form-control" id="razon-social-proveedor" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">NIT PROVEEDOR</label>
+                                    <input class="form-control" id="nit-proveedor" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">TELÉFONO PROVEEDOR</label>
+                                    <input class="form-control" id="telefono-proveedor" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    @Html.LabelFor(m => m.FechaPago, new { @class = "control-label" })
+                                    @Html.TextBoxFor(m => m.FechaPago, new { @class = "form-control datepicker" })
+                                    @Html.ValidationMessageFor(m => m.FechaPago, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-3">
+                                    @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+                                    <input id="Documento" name="Documento" type="file" class="form-control" onchange="registrarFacturaPagoProveedor.UploadFilePago(this)" />
+                                    @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title pull-left">
+                            <a data-toggle="collapse" href="#collapse-encabezado">
+                                <strong>DETALLE FACTURA</strong>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="collapse-encabezado" class="panel-collapse collapse-encabezado">
+                        <div class="panel-body">
+                            <div class="form-horizontal small">
+
+                                <div class="col-md-3">
+                                    <label class="control-label">TIPO DOCUMENTO</label>
+                                    <input class="form-control" id="tipo-documento" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">NÚMERO DE FACTURA</label>
+                                    <input class="form-control" id="numero-factura-proveedor" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">FECHA FACTURA</label>
+                                    <input class="form-control" id="fecha-factura" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">FECHA VENCIMIENTO</label>
+                                    <input class="form-control" id="fecha-factura-vencimiento" readonly />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="control-label">FECHA REGISTRO</label>
+                                    <input class="form-control" id="fecha-factura-registro" readonly />
+                                </div>
+
+                                <div class="col-md-9">
+                                    <label class="control-label">OBSERVACIÓN</label>
+                                    <input class="form-control" id="observacion" readonly />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="control-label">USUARIO REGISTRÓ</label>
+                                    <input class="form-control" id="usuario-registro" readonly />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="control-label">ESTADO FACTURA</label>
+                                    <input class="form-control" id="estado-factura" readonly />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="control-label">SUBTOTAL FACTURA</label>
+                                    <input class="form-control" id="subtotal-factura" readonly />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="control-label">IMPUESTO</label>
+                                    <input class="form-control" id="impuesto-factura" readonly />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="control-label">TOTAL FACTURA</label>
+                                    <input class="form-control" id="total-factura" readonly />
+                                </div>
+
+                                <div class="col-md-5">
+                                    <br />
+                                    <a class="btn btn-secondary" target="_blank" id="adjunto">Descargar adjuntos</a>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title pull-left">
+                            <a data-toggle="collapse" href="#collapse-encabezado">
+                                <strong>DETALLE DESCUENTOS</strong>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="collapse-encabezado" class="panel-collapse collapse-encabezado">
+                        <div class="panel-body">
+                            <div class="form-horizontal small">
+
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(m => m.ImpuestoId, new { @class = "control-label" })
+                                    @Html.DropDownListFor(m => m.ImpuestoId, Model.ListaImpuestos, "Seleccione", new
+                               {
+                                   @class = "form-control selectpicker",
+                                   data_live_search = "true",
+                                   onchange = "registrarFacturaPagoProveedor.OnChangeImpuesto(this, '" + Url.Action("ConsultarDetalleImpuesto", "FacturaCliente", new { Area = "Produccion" }) + "');"
+                               })
+                                    @Html.ValidationMessageFor(m => m.ImpuestoId, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.LabelFor(m => m.ValorIvaFactura, new { @class = "control-label" })
+                                    @Html.TextBoxFor(m => m.ValorIvaFactura, new { @class = "form-control", data_format_price = "" })
+                                    @Html.ValidationMessageFor(m => m.ValorIvaFactura, "", new { @class = "text-danger" })
+                                </div>
+
+                                <br>
+                                <div class="clearfix"></div>
+                                <hr />
+                                <div class="col-md-12">
+                                    <button type="button" onclick="registrarFacturaPagoProveedor.AdicionarPresupuesto()" class="btn btn-secondary">
+                                        <span class="glyphicon glyphicon-plus">Adicionar</span>
+                                    </button>
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <div class="clearfix"></div>
+                                <table id="tabla-datos-impuestos2" class="table table-striped table-bordered compact text-center hidden" cellpadding="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Descuento</th>
+                                            <th>Valor Descuento</th>
+                                            <th>Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="2" style="text-align:right">Total:</th>
+                                            <th style="text-align: center"></th>
+                                            <th style="text-align: center"></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title pull-left">
+                            <a data-toggle="collapse" href="#collapse-encabezado">
+                                <strong>TOTAL PAGADO</strong>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="collapse-encabezado" class="panel-collapse collapse-encabezado">
+                        <div class="panel-body">
+                            <div class="form-horizontal small">
+
+                                <div class="col-md-4">
+                                    <label class="control-label">SUBTOTAL PAGO</label>
+                                    <input class="form-control" id="valor-subtotal-pago" readonly />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="control-label">TOTAL DESCUENTOS</label>
+                                    <input class="form-control" id="valor-descuentos" readonly />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="control-label">VALOR REAL PAGO</label>
+                                    <input class="form-control" id="valor-real-pago" readonly />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-right">
+                    @if (Sesion.HasPermission("PRO-FACTURA_PAGO_PROVEEDOR_CREAR"))
+                    {
+                        <button type="submit" class="btn btn-secondary" value="Guardar">Guardar</button>
+                    }
+                    <button type="button" class="btn btn-warning" onclick="registrarFacturaPagoProveedor.LimpiarDatos()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+}

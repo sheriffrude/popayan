@@ -1,0 +1,129 @@
+﻿@model ConsultarPresupuestoOrdenProduccionViewModel
+@{
+    ViewBag.Title = "Orden de producción # " + Model.OrdenProduccionId;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @Html.HiddenFor(m => m.OrdenProduccionId)
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.FechaEntrega, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaEntrega, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.FechaRadicacion, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaRadicacion, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.FechaVigenciaInicial, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaVigenciaInicial, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.FechaVigenciaFinal, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaVigenciaFinal, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.FormaPago, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FormaPago, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.LugarEntrega, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.LugarEntrega, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Observacion, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.Observacion, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NotaLegal, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.NotaLegal, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(m => m.Usuario, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(m => m.FechaHoraCreacion, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaHoraCreacion, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Estado, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="ln_solid"></div>
+
+    <!--Tabla Items-->
+    <div class="col-md-12">
+        <label class="control-label">Items</label>
+        <table id="tabla_orden_produccion_items" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center"></th>
+                    <th class="text-center">Grupo</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Días</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-center">Valor Unitario</th>
+                    <th class="text-center">SubTotal</th>
+                    <th class="text-center">Volumen</th>
+                    <th class="text-center">Costo</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="ln_solid"></div>
+
+    <!--Tabla Asociados-->
+    <div class="col-md-12">
+        <label class="control-label">Asociados</label>
+        <table id="tabla_orden_produccion_items_asociados" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Item</th>
+                    <th class="text-center"></th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Días</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-center">Valor Unitario</th>
+                    <th class="text-center">SubTotal</th>
+                    <th class="text-center">Volumen</th>
+                    <th class="text-center">Costo</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="form-group col-md-12 text-right">
+        @if (Sesion.HasPermission("PRO-ORDEN_PRODUCCION_LISTAR"))
+        {
+            <button class="btn btn-success" onclick="PresupuestoOrdenProduccionConsultar.DescargarInforme()"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Descargar</button>
+            <a href="@Url.Action("Listar", "PresupuestoOrdenProduccion", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-size="all" data-toggle="modal" data-target="#" data-execute-onload="PresupuestoOrdenProduccionListar.OnLoad">
+                <i class="fa fa-history" aria-hidden="true"></i> Histórico OP
+            </a>
+        }
+        @if (Sesion.HasPermission("PRO-ORDEN_COMPRA_CREAR") && Model.EstadoId == ProduccionCustom.EstadoPresupuestoOrdenProduccion.Registrada.GetHashCode())
+        {
+            <button type="button" class="btn btn-secondary" onclick="PresupuestoOrdenProduccionConsultar.CrearOrdenCompraApartirOrdenProduccion(@Model.OrdenProduccionId)">
+                Convertir en Orden de Compra
+            </button>
+        }
+        @if (Sesion.HasPermission("PRO-ORDEN_COMPRA_CANCELAR") && Model.EstadoId == ProduccionCustom.EstadoPresupuestoOrdenCompra.Registrada.GetHashCode())
+        {
+            <a href="@Url.Action("Cancelar", "PresupuestoOrdenProduccion", new { Area = "Produccion", id = Model.OrdenProduccionId })" class="btn btn-secondary" data-size="all" data-toggle="modal" data-target="#" data-execute-onload="PresupuestoOrdenCompraCancelar.OnLoad">
+                Cancelar-OP
+            </a>
+        }
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+    </div>
+    <div class="clearfix"></div>
+</div>

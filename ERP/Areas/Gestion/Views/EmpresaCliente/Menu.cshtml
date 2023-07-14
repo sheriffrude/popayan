@@ -1,0 +1,68 @@
+﻿@model MenuEmpresaClienteViewModel
+@{
+    ViewBag.Title = "Cliente";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+<div class="col-md-12 text-center">
+    <h3>@Model.NombreComercial</h3>
+    <br />
+    @if (Model.LogoPath != null)
+    {
+        <img src="@Url.Content(Model.LogoPath)" class="img-responsive img-center" />
+    }
+</div>
+
+<div class="clearfix"></div>
+<div class="ln_solid"></div>
+
+<div class="col-md-12 content-menu">
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "EmpresaCliente", new {Area = "Gestion", id = Model.EmpresaId})" >
+            <img src="@Url.Content("~/Content/images/Gestion/Deptos.svg")" class="img-response" alt="Información Cliente" />
+            <h4 class="text-center">Información Cliente</h4>
+        </a>
+    </div>
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "EmpresaClienteContacto", new {Area = "Gestion", id = Model.EmpresaId})" >
+            <img src="@Url.Content("~/Content/images/Gestion/Personas.svg")" class="img-response" alt="Contactos cliente" />
+            <h4 class="text-center">Contactos cliente</h4>
+        </a>
+    </div>
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "EmpresaClienteNegociacion", new {Area = "Gestion", id = Model.EmpresaId})" >
+            <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="img-response" alt="Negociaciones" />
+            <h4 class="text-center">Negociaciones</h4>
+        </a>
+    </div>
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "EmpresaClienteContratos", new {Area = "Gestion", id = Model.EmpresaId})" >
+            <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="img-response" alt="Contratos" />
+            <h4 class="text-center">Contratos</h4>
+        </a>
+    </div>
+
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "EmpresaClientePlanNegocio", new {Area = "Gestion", id = Model.EmpresaId})" >
+            <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="img-response" alt="Plan de negocio" />
+            <h4 class="text-center">Plan de negocio</h4>
+        </a>
+    </div>
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "EmpresaClienteTarifario", new {Area = "Gestion", id = Model.EmpresaId})" >
+            <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="img-response" alt="Tarifarios" />
+            <h4 class="text-center">Tarifarios</h4>
+        </a>
+    </div>
+</div>

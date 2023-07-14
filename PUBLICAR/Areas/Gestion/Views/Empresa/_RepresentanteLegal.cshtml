@@ -1,0 +1,101 @@
+﻿@model EmpresaRepresentanteLegalViewModel
+@{
+    var edicionDisabled = ViewBag.Edicion == "Si" ? "disabled" : "";
+    var lecturaDisabled = ViewBag.Lectura == "Si" ? "disabled" : "";
+}
+
+@Html.HiddenFor(p => p.PersonaRepresentanteLegalId, new { @class = "representante-legal" })
+<div class="col-md-6">
+    <div class="form-group">
+        @Html.LabelFor(m => m.DocumentoRepresentanteLegal, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.DocumentoRepresentanteLegal, new { @class = "form-control representante-legal representante-data" })
+        @Html.ValidationMessageFor(m => m.DocumentoRepresentanteLegal, "", new { @class = "text-danger" })
+    </div>
+    <div class="text-right">
+        <button type="button" onclick="Empresa_RepresentanteLegal.CambiarDocumento(true)" id="boton-cambiar-representante" class="btn btn-secondary" hidden>Cambiar</button>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoDocumentoRepresentanteLegalId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.TipoDocumentoRepresentanteLegalId, Model.ListaTiposDocumento, "Seleccione", new { @class = "form-control representante-data selectpicker", data_live_search = "true" })
+    @Html.ValidationMessageFor(m => m.TipoDocumentoRepresentanteLegalId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PrimerNombreRepresentanteLegal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PrimerNombreRepresentanteLegal, new { @class = "form-control representante-legal representante-data" })
+    @Html.ValidationMessageFor(m => m.PrimerNombreRepresentanteLegal, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SegundoNombreRepresentanteLegal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SegundoNombreRepresentanteLegal, new { @class = "form-control representante-legal representante-data" })
+    @Html.ValidationMessageFor(m => m.SegundoNombreRepresentanteLegal, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PrimerApellidoRepresentanteLegal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PrimerApellidoRepresentanteLegal, new { @class = "form-control representante-legal representante-data" })
+    @Html.ValidationMessageFor(m => m.PrimerApellidoRepresentanteLegal, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SegundoApellidoRepresentanteLegal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SegundoApellidoRepresentanteLegal, new { @class = "form-control representante-legal representante-data" })
+    @Html.ValidationMessageFor(m => m.SegundoApellidoRepresentanteLegal, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.SexoRepresentanteLegalId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.SexoRepresentanteLegalId, Model.ListaSexos, "Seleccione", new { @class = "form-control representante-data selectpicker" })
+    @Html.ValidationMessageFor(m => m.SexoRepresentanteLegalId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.FechaNacimientoRepresentanteLegal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaNacimientoRepresentanteLegal, new { @class = "form-control representante-legal representante-data" })
+    @Html.ValidationMessageFor(m => m.FechaNacimientoRepresentanteLegal, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.CorreoRepresentanteLegal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.CorreoRepresentanteLegal, new { @class = "form-control representante-legal representante-data" })
+    @Html.ValidationMessageFor(m => m.CorreoRepresentanteLegal, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.DireccionRepresentanteLegal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.DireccionRepresentanteLegal, new { @class = "form-control representante-legal representante-data" })
+    @Html.ValidationMessageFor(m => m.DireccionRepresentanteLegal, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TelefonoRepresentanteLegal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.TelefonoRepresentanteLegal, new { @class = "form-control representante-legal representante-data" })
+    @Html.ValidationMessageFor(m => m.TelefonoRepresentanteLegal, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.CelularRepresentanteLegal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.CelularRepresentanteLegal, new { @class = "form-control representante-legal representante-data" })
+    @Html.ValidationMessageFor(m => m.CelularRepresentanteLegal, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.RHRepresentanteLegalId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.RHRepresentanteLegalId, Model.ListaRH, "Seleccione", new { @class = "form-control representante-data selectpicker", data_live_search = "true" })
+    @Html.ValidationMessageFor(m => m.RHRepresentanteLegalId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.EstadoCivilRepresentanteLegalId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.EstadoCivilRepresentanteLegalId, Model.ListaEstadosCiviles, "Seleccione", new { @class = "form-control representante-data selectpicker", data_live_search = "true" })
+    @Html.ValidationMessageFor(m => m.EstadoCivilRepresentanteLegalId, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.FotoRepresentanteLegal, new { @class = "control-label" })<br />
+    <div id="content-logo-view_representante_legal" class="col-md-12">
+        @if (Model.FotoPathRepresentanteLegal != null)
+        {
+            <img src="Model.FotoPathRepresentanteLegal" class="img-responsive img-center" />
+        }
+    </div><br />
+    <a id="btn_upload_representante_legal" href="@Url.Action("CrearUploadImageRepresentanteLegal", "Empresa", new { Area = "Gestion" })" class="btn btn-secondary" data-size="lg" data-target="#modal" data-toggle="modal">
+        Cargar Foto
+    </a>
+    @Html.ValidationMessageFor(m => m.FotoRepresentanteLegal, "", new { @class = "text-danger" })
+
+</div>
+<div class="clearfix"></div>

@@ -1,0 +1,67 @@
+﻿@model ListarClienteTarifarioViewModel
+@{
+    ViewBag.Title = "Tarifario";
+}
+
+<!--Filtro de la tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div id="form-filtro-tabla" class="form-inline">
+                <div class="form-group">
+                    <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                    <input type="button" class="btn btn-secondary" value="BUSCAR" onclick="ListarTarifarios.reconstruirTabla()" />
+                    <input type="button" class="btn btn-secondary" value="VER TODO" onclick="ListarTarifarios.ResetearTablaPais()" />
+                </div>
+            </div>
+        </div>
+        @if (Sesion.HasPermission("GES-CLIENTE_TARIFARIO_CREAR"))
+        {
+            <div class="col-md-1 col-md-offset-5">
+                <a href="@Url.Action("Crear", "ClienteTarifario", new {Area = "Gestion", id = Model.ClienteId })" class="btn btn-primary" data-toggle="modal" data-target="#">Adicionar</a>
+            </div>
+        }
+    </div>
+</div>
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        @Html.HiddenFor(m => m.ClienteId)
+        <table id="tabla-cliente-tarifario" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Grupo tarifario</th>
+                    <th class="text-center">Tarifa</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <!--Script listar Empresa impuestos-->
+    <script type="text/javascript">
+        var URL_LISTAR_CLIENTE_TARIFARIO = "@Url.Action("Listar", "ClienteTarifario", new { Area = "Gestion", id = Model.ClienteId })";
+        var URL_EDITAR_CLIENTE_TARIFARIO = "@Url.Action("Editar", "ClienteTarifario", new { Area = "Gestion" })";
+        var URL_CAMBIAR_ESTADO_CLIENTES_TARIFARIO = "@Url.Action("CambiarEstado", "ClienteTarifario", new { Area = "Gestion" })";
+        var PERMISO_EDITAR_CLIENTE_TARIFARIO = ("@Sesion.HasPermission("GES-CLIENTE_TARIFARIO_EDITAR")" === "True");
+        var PERMISO_CAMBIAR_ESTADO_CLIENTE_TARIFARIO = ("@Sesion.HasPermission("GES-CLIENTE_TARIFARIO_CAMBIAR_ESTADO")" === "True");
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/ClienteTarifario/Listar.js")
+
+    <!--Script modal Crear Empresa impuestos-->
+    @Scripts.Render("~/Areas/Gestion/scripts/ClienteTarifario/Crear.js")
+
+    <!--Script modal Editar Empresa impuestos-->
+    @Scripts.Render("~/Areas/Gestion/scripts/ClienteTarifario/Editar.js")
+
+}

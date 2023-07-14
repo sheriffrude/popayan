@@ -1,0 +1,169 @@
+﻿@model VerInformeEntrevistaViewModel
+
+@{
+    ViewBag.Title = "Detalle informe";
+}
+<head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /></head>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    <div class="clearfix">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.CodigoOt, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.CodigoOt, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Titulo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Titulo, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.TipoReunionNombre, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.TipoReunionNombre, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.TipoInformeNombre, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.TipoInformeNombre, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.FechaReunion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaReunion, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.HoraInicio, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.HoraInicio, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.HoraFin, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.HoraFin, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DeptoNombre, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DeptoNombre, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.CiudadNombre, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.CiudadNombre, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.LugarReunion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.LugarReunion, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.InformacionGeneral, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.InformacionGeneral, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Asistentes agencia</div>
+            <div class="panel-body">
+                @if (Model.ListaAsistentes != null)
+                {
+                    foreach (var i in Model.ListaAsistentes)
+                    {
+
+                        <li>@i.Nombre</li>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Asistentes clientes</div>
+            <div class="panel-body">
+                @if (Model.ListaClientes != null)
+                {
+                    foreach (var i in Model.ListaClientes)
+                    {
+
+                        <li>@i.Nombre</li>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Temas tratados</div>
+            <div class="panel-body">
+                @if (Model.ListaTemas != null)
+            {
+                for (var i = 0; i < Model.ListaTemas.Count; i++)
+                {
+                        <li>@Server.HtmlDecode(Model.ListaTemas[i].ToString())</li>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Compromisos agencia</div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Fecha</th>
+                            <th>Compromiso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ListaCompromisosAgencia != null)
+                        {
+                            foreach (var i in Model.ListaCompromisosAgencia)
+                            {
+                                {
+                                    <tr><td>@i.Nombre</td><td>@i.Fecha</td><td>@i.Descripcion</td></tr>}
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Compromisos clientes</div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Fecha</th>
+                            <th>Compromiso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ListaCompromisosCliente != null)
+                        {
+                            foreach (var i in Model.ListaCompromisosCliente)
+                            {
+                                {
+                                    <tr><td>@i.Nombre</td><td>@i.Fecha</td><td>@i.Descripcion</td></tr>}
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="text-right">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+

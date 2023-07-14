@@ -1,0 +1,78 @@
+﻿@model CrearEmpleadoInfoLaboralViewModel
+
+@Html.HiddenFor(p => p.AreaId, new { id = "AreaAuxId" })
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.FechaIngreso, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaIngreso, new { @class = "form-control info-laboral", onchange = "onChangeFechaIngreso(this)" })
+    @Html.ValidationMessageFor(m => m.FechaIngreso, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.FechaRetiro, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaRetiro, new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.FechaRetiro, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.MotivoRetiro, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.MotivoRetiro, new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.MotivoRetiro, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TiempoLaborado, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.TiempoLaborado, new { @class = "form-control info-laboral", @disabled = "disabled" })
+    @Html.ValidationMessageFor(m => m.TiempoLaborado, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.UnidadNegocioId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.UnidadNegocioId, Model.UnidadesNegocio, "Seleccione", new { @class = "form-control info-laboral", onchange = "OnchangeUnidadNegocioInfoLaboral(this)" })
+    @Html.ValidationMessageFor(m => m.UnidadNegocioId, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.AreaId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.AreaId, Model.Areas, "Seleccione", new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.AreaId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.CargoId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.CargoId, Model.Cargos, "Seleccione", new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.CargoId, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.NivelEstudio, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.NivelEstudio, new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.NivelEstudio, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Profesion, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Profesion, new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.Profesion, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Extension, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Extension, new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.Extension, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.CorreoInstitucional, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.CorreoInstitucional, new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.CorreoInstitucional, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.FechaPeriodoPrueba, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaPeriodoPrueba, new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.FechaPeriodoPrueba, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoContratoId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.TipoContratoId, Model.TiposContratos, "Seleccione", new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.TipoContratoId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.FechaTerminacionContrato, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaTerminacionContrato, new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.FechaTerminacionContrato, "", new { @class = "text-danger" })
+</div>

@@ -1,0 +1,43 @@
+﻿@model ConfigSoftwareViewModel
+@{
+    ViewBag.Title = "Configuración Software";
+}
+
+<div class="row">
+    <div class="col-md-12 padding-left-0 padding-right-0">
+        @using (Ajax.BeginForm("Editar", "ConfigSoftware", new { Area = "Parametrizacion" },
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnComplete = "OnCompleteEditarConfigSoftware"
+            },
+            new { @class = "", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="clearfix"></div>
+            @Html.ValidationMessage("Error", new { @class = "text-danger" })
+            @Html.ValidationMessage("Success", new { @class = "text-success" })
+            @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+            <div class="clearfix"></div>
+
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.Empresas, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Empresas, new { @class = "form-control", type = "number" })
+                @Html.ValidationMessageFor(m => m.Empresas, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.Usuarios, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Usuarios, new { @class = "form-control", type = "number" })
+                @Html.ValidationMessageFor(m => m.Usuarios, "", new { @class = "text-danger" })
+            </div>
+            <div class="text-right col-md-12">
+                <button type="submit" class="btn btn-secondary">Guardar</button>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/Areas/Parametrizacion/scripts/ConfigSoftware/Editar.js")
+}

@@ -1,0 +1,37 @@
+﻿@model RedSocialEmpresaViewModel
+@{
+    ViewBag.Title = "Red social";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    <form id="agregar-red-social">
+        <div class="form-group">
+            @Html.LabelFor(m => m.NombreRedSocial, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NombreRedSocial, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.NombreRedSocial, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.UrlRedSocial, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.UrlRedSocial, new { @class = "form-control", placeholder = "http://redsocial.com" })
+            @Html.ValidationMessageFor(m => m.UrlRedSocial, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.LogoRedSocial, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.LogoRedSocial, new { @class = "form-control", type = "file", onchange = "Empresa_RedSocial.UploadImage(this)" })
+            @Html.ValidationMessageFor(m => m.LogoRedSocial, "", new { @class = "text-danger" })
+
+            <div class="col-md-12">
+                <img id="foto-view-Red-Social" class="img-responsive center-block" />
+            </div>
+        </div>
+    </form>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success" onclick="Empresa_RedSocial.Agregar()">Agregar</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+    </div>
+</div>

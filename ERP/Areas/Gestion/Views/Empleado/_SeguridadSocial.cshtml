@@ -1,0 +1,28 @@
+﻿@model CrearEmpleadoSeguridadSocialViewModel
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoEpsId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.TipoEpsId, Model.ListaTiposEps, "Seleccione", new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.TipoEpsId, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoCesantiaId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.TipoCesantiaId, Model.ListaTiposCesantias, "Seleccione", new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.TipoCesantiaId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoArlId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.TipoArlId, Model.ListaTiposArl, "Seleccione", new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.TipoArlId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoFondoPensionId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.TipoFondoPensionId, Model.ListaTiposFondosPensiones, "Seleccione", new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.TipoFondoPensionId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoCajaCompId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.TipoCajaCompId, Model.ListaTiposCajasComp, "Seleccione", new { @class = "form-control seguridad-social" })
+    @Html.ValidationMessageFor(m => m.TipoCajaCompId, "", new { @class = "text-danger" })
+</div>

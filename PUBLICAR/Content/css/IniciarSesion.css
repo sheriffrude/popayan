@@ -1,0 +1,21 @@
+﻿.content-form-login {
+    background-color: #fff;
+    border-radius: 10px;
+    top: 20%;
+}
+
+input[type=text], input[type=password] {
+    background-color: #E6E2E2;
+    height: 40px;
+    font-size: 18px;
+}
+
+button[type=submit] {
+    background-color: #50B848;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    height: 40px;
+    font-size: 18px;
+    padding: 0 18px;
+}

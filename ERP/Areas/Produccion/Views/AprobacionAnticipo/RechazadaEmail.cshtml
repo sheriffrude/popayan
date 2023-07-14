@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "layout";
+    ViewBag.Title = "Anticipo Rechazado";
+}
+<h2>Datos del Presupuesto</h2>
+<p><strong>Número de Presupuesto: </strong>@Model.PresupuestoId</p>
+<p><strong>Empresa: </strong>@Model.Empresa</p>
+<p><strong>Cliente: </strong>@Model.Cliente</p>
+<p><strong>Producto: </strong>@Model.Producto</p>
+<p><strong>Órden de Trabajo: </strong>@Model.OrdenTrabajo</p>
+<p><strong>Enviado por: </strong>@Model.EnviadoPor</p>
+<p><strong>Fecha y Hora de la solicitud: </strong>@Model.FechaHora</p>
+<br />
+<h2>Datos del anticipo</h2>
+<p><strong>Número del anticipo: </strong>@Model.AnticipoId</p>
+<p><strong>Razon de solicitud: </strong>@Model.RazonSolicitud</p>
+<p><strong>Fecha de registro: </strong>@Model.FechaRegistro</p>
+<p><strong>Fecha del anticipo: </strong>@Model.FechaAnticipo</p>
+<p><strong>Forma de pago: </strong>@Model.FormaPago</p>
+<p><strong>Total anticipo: </strong>@Model.TotalAnticipo</p>

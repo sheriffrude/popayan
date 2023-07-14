@@ -1,0 +1,90 @@
+﻿@model TarifarioViewModel
+@{
+    ViewBag.Title = "TARIFARIOS";
+}
+
+<div class="col-xs-3">
+    <!-- required for floating -->
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs tabs-left">
+        <!-- 'tabs-right' for right tabs -->
+        @Html.HiddenFor(m => m.EmpresaId)
+        <li class="active"><a href="#grupo" data-toggle="tab">GRUPO</a></li>
+        <li><a href="#sub-grupo" data-toggle="tab">SUBGRUPOS</a></li>
+        <li><a href="#item" data-toggle="tab">ITEMS</a></li>
+    </ul>
+</div>
+<div class="col-xs-9">
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="grupo">
+            
+            @Html.Partial("_Grupo", Model)
+           
+        </div>
+        <div class="tab-pane" id="sub-grupo">
+            
+            @Html.Partial("_SubGrupo", Model)
+        
+        </div>
+        <div class="tab-pane" id="item">
+            
+            @Html.Partial("_item", Model)
+           
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <!--Script listar Empresa impuestos-->
+    <script type="text/javascript">
+        var URL_LISTAR_TARIFARIO_GRUPO = "@Url.Action("ListarGrupo", "Tarifario", new { Area = "Gestion", id = Model.EmpresaId })";
+        var URL_EDITAR_TARIFARIO_GRUPO = "@Url.Action("EditarGrupo", "Tarifario", new { Area = "Gestion" })";
+        var URL_ELIMINAR_TARIFARIO_GRUPO = "@Url.Action("EliminarGrupo", "Tarifario", new { Area = "Gestion" })";
+        var PERMISO_EDITAR_TARIFARIO_GRUPO = ("@Sesion.HasPermission("GES-TARIFARIOGRUPO_EDITAR")" === "True");
+        var PERMISO_ELIMINAR_TARIFARIO_GRUPO = ("@Sesion.HasPermission("GES-TARIFARIOGRUPO_ELIMINAR")" === "True");
+
+        var URL_LISTAR_TARIFARIO_SUBGRUPO = "@Url.Action("ListarSubGrupo", "Tarifario", new { Area = "Gestion", id = Model.EmpresaId })";
+        var URL_EDITAR_TARIFARIO_SUBGRUPO = "@Url.Action("EditarSubGrupo", "Tarifario", new { Area = "Gestion" })";
+        var URL_ELIMINAR_TARIFARIO_SUBGRUPO = "@Url.Action("EliminarSubGrupo", "Tarifario", new { Area = "Gestion" })";
+        var PERMISO_EDITAR_TARIFARIO_SUBGRUPO = ("@Sesion.HasPermission("GES-TARIFARIOSUBGRUPO_EDITAR")" === "True");
+        var PERMISO_ELIMINAR_TARIFARIO_SUBGRUPO = ("@Sesion.HasPermission("GES-TARIFARIOSUBGRUPO_ELIMINAR")" === "True");
+
+        var URL_LISTAR_TARIFARIO_ITEM = "@Url.Action("ListarItem", "Tarifario", new { Area = "Gestion", id = Model.EmpresaId })";
+        var URL_EDITAR_TARIFARIO_ITEM = "@Url.Action("EditarItem", "Tarifario", new { Area = "Gestion" })";
+        var URL_ELIMINAR_TARIFARIO_ITEM = "@Url.Action("EliminarItem", "Tarifario", new { Area = "Gestion" })";
+        var PERMISO_EDITAR_TARIFARIO_ITEM = ("@Sesion.HasPermission("GES-TARIFARIOITEM_EDITAR")" === "True");
+        var PERMISO_ELIMINAR_TARIFARIO_ITEM = ("@Sesion.HasPermission("GES-TARIFARIOITEM_ELIMINAR")" === "True");
+    </script>
+
+    @Scripts.Render("~/Areas/Gestion/scripts/Tarifario/_ListarGrupo.js")
+
+    
+    @Scripts.Render("~/Areas/Gestion/scripts/Tarifario/CrearGrupo.js")
+
+    
+    @Scripts.Render("~/Areas/Gestion/scripts/Tarifario/EditarGrupo.js")
+
+
+    @Scripts.Render("~/Areas/Gestion/scripts/Tarifario/_ListarSubGrupo.js")
+
+
+    @Scripts.Render("~/Areas/Gestion/scripts/Tarifario/CrearSubGrupo.js")
+
+
+    @Scripts.Render("~/Areas/Gestion/scripts/Tarifario/EditarSubGrupo.js")
+
+
+    @Scripts.Render("~/Areas/Gestion/scripts/Tarifario/_ListarItem.js")
+
+
+    @Scripts.Render("~/Areas/Gestion/scripts/Tarifario/CrearItem.js")
+
+
+    @Scripts.Render("~/Areas/Gestion/scripts/Tarifario/EditarItem.js")
+
+}
+
+

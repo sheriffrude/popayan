@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Documentos pendientes por revisar";
+}
+
+<div class="modal-header">
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Tabs-->
+            <ul class="nav nav-tabs" id="nav-tabs-revisar-documento" role="tablist">
+                <li role="presentation" class="active"><a href="#RevisarDocumento" aria-controls="RevisarDocumento" role="tab" data-toggle="tab" data-number-tab="1">Documentos pendientes</a></li>
+                <li role="presentation"><a href="#HistoricoRevisarDocumento" aria-controls="HistoricoRevisarDocumento" role="tab" data-toggle="tab" data-number-tab="2">Histórico de documentos</a></li>
+            </ul>
+
+            <!--Content Tabs-->
+            <div class="tab-content">
+
+                <!--TAB PENDIENTES-->
+                <div role="tabpanel" class="tab-pane active" id="RevisarDocumento">
+                    @Html.Partial("~/Areas/Produccion/Views/RevisarDocumento/_RevisarDocumento.cshtml")
+                </div>
+
+
+
+                <!--TAB CONTESTADAS-->
+                <div role="tabpanel" class="tab-pane" id="HistoricoRevisarDocumento">
+                    @Html.Partial("~/Areas/Produccion/Views/RevisarDocumento/_RevisarDocumentoHistorico.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

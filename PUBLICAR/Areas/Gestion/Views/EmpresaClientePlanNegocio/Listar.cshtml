@@ -1,0 +1,153 @@
+﻿@model EmpresaClientePlanNegocioViewModel
+@{
+    ViewBag.Title = "Plan de negocio clientes";
+
+}
+
+<!-- Titulo y boton volver -->
+<div class="row">
+    <div class="col-md-10 text-left">
+        <h3>@ViewBag.Title</h3>
+    </div>
+
+    <div class="col-md-2 text-right">
+        <a href="@Url.Action("Crear", "EmpresaClientePlannegocio", new { Area = "Gestion",id= Model.EmpresaId})" class="btn btn-default">
+           Nuevo Plan de negocio
+        </a>
+        <a href="@Url.Action("Menu", "EmpresaCliente", new { Area = "Gestion",id= Model.EmpresaId} )">
+            <img src="@Url.Content("~/Content/images/boton-regresar-menu.png")" alt="" />
+        </a>
+    </div>
+</div>
+
+<div class="row margin-top-1">
+
+    <div class="modal-body">
+        @using (Html.BeginForm("Editar", "EmpresaClientePlannegocio",
+                                                                            new { Area = "Gestion", id = Model.EmpresaId },
+                                                                            FormMethod.Post,
+                                                                            new { @class = "", role = "form" }))
+        {
+            @Html.ValidationMessage("Error", new { @class = "text-danger" })
+            @Html.ValidationMessage("Success", new { @class = "text-success" })
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(m => m.EmpresaId)
+
+            <div class="col-md-10 text-left">
+
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.CentroCostoId, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.CentroCostoId, Model.ListaCentroCosto, "Seleccione", new
+               {
+                   @class = "form-control"
+
+               })
+                    @Html.ValidationMessageFor(m => m.CentroCostoId, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Anio, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.Anio, Model.ListaAnios, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+                    @Html.ValidationMessageFor(m => m.Anio, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.ClienteId, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.ClienteId, Model.ListaClientes, "Seleccione", new
+               {
+                   @class = "form-control"
+               })
+                    @Html.ValidationMessageFor(m => m.ClienteId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-12">
+                </div>
+                <div class="form-group col-md-6">
+
+                    <input type="button" class="btn btn-default" value="BUSCAR" onclick="MonstrarMes() " />
+                </div>
+
+            </div>
+            <div id="meses" class="display-none">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Enero, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Enero, new { @class = "form-control mes", data_mes = "1" })
+                    @Html.ValidationMessageFor(m => m.Enero, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Febrero, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Febrero, new { @class = "form-control mes", data_mes = "2" })
+                    @Html.ValidationMessageFor(m => m.Febrero, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Marzo, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Marzo, new { @class = "form-control mes", data_mes = "3" })
+                    @Html.ValidationMessageFor(m => m.Marzo, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Abril, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Abril, new { @class = "form-control mes", data_mes = "4" })
+                    @Html.ValidationMessageFor(m => m.Abril, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Mayo, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Mayo, new { @class = "form-control mes", data_mes = "5" })
+                    @Html.ValidationMessageFor(m => m.Mayo, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Junio, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Junio, new { @class = "form-control mes", data_mes = "6" })
+                    @Html.ValidationMessageFor(m => m.Junio, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Julio, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Julio, new { @class = "form-control mes", data_mes = "7" })
+                    @Html.ValidationMessageFor(m => m.Julio, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Agosto, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Agosto, new { @class = "form-control mes", data_mes = "8" })
+                    @Html.ValidationMessageFor(m => m.Agosto, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Septiembre, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Septiembre, new { @class = "form-control mes", data_mes = "9" })
+                    @Html.ValidationMessageFor(m => m.Septiembre, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Octubre, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Octubre, new { @class = "form-control mes", data_mes = "10" })
+                    @Html.ValidationMessageFor(m => m.Octubre, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Noviembre, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Noviembre, new { @class = "form-control mes", data_mes = "11" })
+                    @Html.ValidationMessageFor(m => m.Noviembre, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Diciembre, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Diciembre, new { @class = "form-control mes", data_mes = "12" })
+                    @Html.ValidationMessageFor(m => m.Diciembre, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-12 text-center">
+                    <input type="image" alt="Submit" src="@Url.Content("~/Content/images/boton-guardar.png")" class="btn" value="Guardar" />
+                    <img src="@Url.Content("~/Content/images/union-botones.png")" alt="" class="imagen-union-botones hidden-xs" />
+                    <a href="@Url.Action("Listar", "Empresa", new { Area = "Gestion" } )" class="btn">
+                        <img src="@Url.Content("~/Content/images/boton-cancelar.png")" alt="" />
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        var URL_LISTAR_MESES = "@Url.Action("Listar", "EmpresaClientePlannegocio", new { Area = "Gestion", id = Model.EmpresaId })";
+    </script>
+
+
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaClientePlanNegocio/Listar.js")
+}

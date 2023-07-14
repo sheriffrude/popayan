@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Aprobaciones Anticipo";
+}
+<!--Filtro de la tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-left">
+            <form id="form-filtro-tabla" class="form-inline">
+                <div class="form-group">
+                    <div class="form-group">
+                        <select name="Estado" id="Estado" class="btn dropdown-toggle btn-default">
+                            <option>todas</option>
+                            <option value="1">Pendiente</option>
+                            <option value="2">Aprobado</option>
+                            <option value="3">Rechazado</option>
+                        </select>
+                    </div>
+                    <input type="search" name="input-filtroinput-filtroinput-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                    <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+                    <input type="button" class="btn btn-secondary" value="VER TODO" onclick="AprobacionAnticipoListar.ResetearFiltroTabla()" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <table id="tabla_aprobaciones_anticipos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Presupuesto</th>
+                    <th>Aprobar/Rechazar</th>
+                    <th class="text-center">Empresa</th>
+                    <th class="text-center">Cliente</th>
+                    <th class="text-center">Producto</th>
+                    <th class="text-center">OT</th>
+                    <th class="text-center">Enviado Por</th>
+                    <th class="text-center">Fecha y Hora</th>
+                    <th class="text-center"># Anticipo</th>
+                    <th class="text-center">Razón solicitud</th>
+                    <th class="text-center">Fecha registro anticipo</th>
+                    <th class="text-center">Fecha anticipo</th>
+                    <th class="text-center">Forma pago</th>
+                    <th class="text-center">Total anticipo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        var URL_APROBACION_ANTICIPO_LISTAR = "@Url.Action("Listar", "AprobacionAnticipo", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_CONSULTAR = "@Url.Action("Consultar", "Presupuesto", new { Area = "Produccion" })";
+        var URL_APROBACION_ANTICIPO_RESPONDER = "@Url.Action("Responder", "AprobacionAnticipo", new { Area = "Produccion" })";
+        var URL_JERARQUIA_APROBACION_ANTICIPO_LISTAR = "@Url.Action("ListarJerarquia", "AprobacionAnticipo", new { Area = "Produccion" })";
+        var PERMISO_DESEMBOLSAR_ANTICIPO = ("@Sesion.HasPermission("PRO-ANTICIPO_DESEMBOLSAR_CREAR")" === "True");
+        var PERMISO_APROBACION_ANTICIPO = ("@Sesion.HasPermission("PRO-ANTICIPO_APROBACION_CREAR")" === "True");
+        var URL_APROBACION_ANTICIPO = "@Url.Action("Crear", "AprobacionAnticipo", new { Area = "Produccion" })";
+        var URL_JERARQUIA_APROBACION_ANTICIPO_LISTAR = "@Url.Action("ListarJerarquia", "AprobacionAnticipo", new { Area = "Produccion" })";
+    </script>
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionAnticipo/Listar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionAnticipo/Responder.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/Anticipo/Listar.js")
+    @* Jerarquia Aprobacion *@
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionAnticipo/ListarJerarquia.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/Anticipo/Listar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionAnticipo/Crear.js")
+   
+}

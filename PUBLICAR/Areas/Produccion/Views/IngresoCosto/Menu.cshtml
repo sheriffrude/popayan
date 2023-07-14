@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Ingresos y costos";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+<div class="col-sm-12 content-menu">
+    @if (Sesion.HasPermission("PRO-FACTURA_PROVEEDOR_MENU"))
+            {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "FacturaProveedor", new {Area = "Produccion"})">
+                <img src="@Url.Content("~/Content/images/Produccion/Facturas_Proveedor.svg")" class="img-responsive" alt="Nuevo Presupuesto" />
+                <h4 class="text-center">Facturas Proveedor</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("PRO-FACTURA_PAGO_PROVEEDOR_MENU"))
+            {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "FacturaPagoProveedor", new {Area = "Produccion"})">
+                <img src="@Url.Content("~/Content/images/Produccion/Pago_Proveedor.svg")" class="img-responsive" alt="Reportes" />
+                <h4 class="text-center">Pago Proveedor</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PRO-FACTURA_CLIENTE_MENU"))
+            {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "FacturaCliente", new {Area = "Produccion" })">
+                <img src="@Url.Content("~/Content/images/Produccion/Facturas_Clientes.svg")" class="img-responsive" alt="Buscar PPTO" />
+                <h4 class="text-center">Facturas Clientes</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PRO-FACTURA_PAGO_CLIENTE_MENU"))
+            {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "FacturaPagoCliente", new {Area = "Produccion"})">
+                <img src="@Url.Content("~/Content/images/Produccion/Pago_Clientes.svg")" class="img-responsive" alt="Facturación" />
+                <h4 class="text-center">Pago Clientes</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("PRO-ANTICIPO_DESEMBOLSAR_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Anticipo", new {Area = "Produccion"})">
+                <img src="@Url.Content("~/Content/images/Produccion/Legalizaciones.svg")" class="img-responsive" alt="Anticipos" />
+                <h4 class="text-center">Anticipos</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PRO-LEGALIZACION_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Legalizacion", new {Area = "Produccion"})">
+                <img src="@Url.Content("~/Content/images/Produccion/Legalizaciones.svg")" class="img-responsive" alt="Legalizaciones" />
+                <h4 class="text-center">Legalizaciones</h4>
+            </a>
+        </div>
+    }
+</div>

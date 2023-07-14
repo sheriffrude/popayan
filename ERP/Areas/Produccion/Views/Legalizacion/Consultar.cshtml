@@ -1,0 +1,90 @@
+﻿@model ConsultarDetalleLegalizacionViewModel  
+    @{
+    ViewBag.Title = "Consultar detalle de legalización";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+ 
+
+<div class="modal-body">
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.LegalizacionId, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.LegalizacionId, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.LegalizacionId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.Version, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Version, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Version, "", new { @class = "text-danger" })
+    </div> 
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.AnticipoId, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.AnticipoId, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.AnticipoId, "", new { @class = "text-danger" })
+    </div> 
+    <div class="form-group   col-xs-6 padding-left-0"> 
+        @Html.LabelFor(m => m.FechaRegistro, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaRegistro, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.FechaRegistro, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.UsuarioRegistro, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.UsuarioRegistro, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.UsuarioRegistro, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Estado, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.Valor, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Valor, "{0:c}", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Valor, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.Impuestos, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Impuestos, "{0:c}", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Impuestos, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.Total, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Total, "{0:c}", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Total, "", new { @class = "text-danger" })
+    </div>
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
+    <h2>Items de la legalización</h2>
+
+    <div class="col-md-12">
+        <table id="tabla_legalizacion_detalle" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Número de factura</th>
+                    <th class="text-center">Concepto</th>
+                    <th class="text-center">Fecha de factura</th>
+                    <th class="text-center">NIT</th>
+                    <th class="text-center">Beneficiario</th>
+                    <th class="text-center">Dirección</th>
+                    <th class="text-center">Teléfono</th>
+                    <th class="text-center">Ciudad</th>
+                    <th class="text-center">Valor</th>
+                    <th class="text-center">Impuestos</th>
+                    <th class="text-center">Total</th>
+                    <th class="text-center">Adjuntos</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="text-right">
+        <button class="btn btn-success" onclick="LegalizacionListar.DescargarInforme()"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Descargar</button>
+
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+    </div>
+    <div class="clearfix"></div>
+</div>

@@ -1,0 +1,39 @@
+﻿@model  AsociarEmpresaClienteViewModel
+@{
+    ViewBag.Title = "Asociar Empresas";
+}
+
+<script type="text/javascript" src="~/Areas/Gestion/scripts/Cliente/AsociarEmpresa.js"></script>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<input type="hidden" id="metodoAsociacion" value="@ViewBag.metodoRegistro" />
+<input type="hidden" id="nombreTablaAsociacion" value="@ViewBag.nombreTabla" />
+
+<div class="modal-body">
+    <form name="form-crear-asociacion" action="#" onsubmit="asociarEmpresa.asociarEmpresa(this)">
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmpresaId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.EmpresaId, Model.ListaEmpresas, "Seleccione", new { @class = "form-control", required = "required" })
+            @Html.ValidationMessageFor(m => m.EmpresaId, "", new { @class = "text-danger" })
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(m => m.Identificador, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Identificador, new { @class = "form-control", required = "required" })
+            @Html.ValidationMessageFor(m => m.Identificador, "", new { @class = "text-danger" })
+        </div>
+        
+        <div class="text-right">
+            <button type="submit" class="btn btn-success" id="guardar" name="guardar">GUARDAR</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">CERRAR</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    asociarEmpresa.init();
+</script>

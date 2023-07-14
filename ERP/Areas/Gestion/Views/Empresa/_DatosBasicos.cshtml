@@ -1,0 +1,134 @@
+﻿@model CrearEmpresaDatosBasicosViewModel
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.NombreComercial, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.NombreComercial, new { @class = "form-control datos-basicos" })
+    @Html.ValidationMessageFor(m => m.NombreComercial, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.RazonSocial, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.RazonSocial, new { @class = "form-control datos-basicos" })
+    @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Nit, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Nit, new { @class = "form-control datos-basicos" })
+    @Html.ValidationMessageFor(m => m.Nit, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-2">
+    @Html.LabelFor(m => m.PaisId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.PaisId, Model.ListaPaises, "Seleccione", new
+    {
+        @class = "form-control selectpicker",
+        data_live_search = "true",
+        onchange = "Empresa_DatosBasicos.OnChangePais(this, " +"'" + Url.Action("ListaOpcionesPorPais", "Departamento", new { Area = "Parametrizacion" }) + "', " + "'" + Url.Action("ListarOpcionesPorPais", "CajaCompensacion", new { Area = "Parametrizacion" }) + "');"
+    })
+    @Html.ValidationMessageFor(m => m.PaisId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-2">
+    @Html.LabelFor(m => m.DepartamentoId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.DepartamentoId, Model.ListaDepartamentos, "Seleccione", new
+    {
+        @class = "form-control selectpicker",
+        data_live_search = "true",
+        onchange = "Empresa_DatosBasicos.OnChangeDepartamento(this, '" + Url.Action("ListaOpcionesCiudadesPorDepartamento", "Ciudad", new { Area = "Parametrizacion" }) + "');"
+    })
+    @Html.ValidationMessageFor(m => m.DepartamentoId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-2">
+    @Html.LabelFor(m => m.CiudadId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.CiudadId, Model.ListaCiudades, "Seleccione", new
+    {
+        @class = "form-control selectpicker", data_live_search = "true"
+    })
+    @Html.ValidationMessageFor(m => m.CiudadId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Direccion, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control datos-basicos" })
+    @Html.ValidationMessageFor(m => m.Direccion, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.FechaAniversario, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaAniversario, new { @class = "form-control datos-basicos" })
+    @Html.ValidationMessageFor(m => m.FechaAniversario, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Telefono, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control datos-basicos" })
+    @Html.ValidationMessageFor(m => m.Telefono, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Correo, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Correo, new { @class = "form-control datos-basicos" })
+    @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.NotaLegalGeneral, new { @class = "control-label" })
+    @Html.TextAreaFor(m => m.NotaLegalGeneral, new { @class = "form-control datos-basicos" })
+    @Html.ValidationMessageFor(m => m.NotaLegalGeneral, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.NotaLegalOC, new { @class = "control-label" })
+    @Html.TextAreaFor(m => m.NotaLegalOC, new { @class = "form-control datos-basicos" })
+    @Html.ValidationMessageFor(m => m.NotaLegalOC, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.NotaLegalOP, new { @class = "control-label" })
+    @Html.TextAreaFor(m => m.NotaLegalOP, new { @class = "form-control datos-basicos" })
+    @Html.ValidationMessageFor(m => m.NotaLegalOP, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.CajaCompensacionId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.CajaCompensacionId, Model.ListaCajasCompensacion, "Seleccione", new
+    {
+        @class = "form-control selectpicker",
+        data_live_search = "true"
+    })
+    @Html.ValidationMessageFor(m => m.CajaCompensacionId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.Volumen, new { @class = "control-label" })
+    @Html.CheckBoxFor(m => m.Volumen, new { @class = "" })
+    @Html.ValidationMessageFor(m => m.Volumen, "", new { @class = "text-danger" })
+</div>
+<div class="clearfix"></div>
+<div class="form-group col-md-12">
+    @Html.LabelFor(m => m.Logo, new { @class = "control-label" }) <br />
+    <div id="content-logo-view" class="col-md-12">
+        @if (Model.LogoPath != null)
+        {
+            <img id="LogoPath" src="@Model.LogoPath" class="img-responsive img-center" />
+            @Html.HiddenFor(m => m.LogoPath, new { @class = "datos-basicos" })
+        }
+    </div>
+    <br />
+    <a href="@Url.Action("CrearUploadImageEmpresa", "Empresa", new { Area = "Gestion" })" class="btn btn-secondary" data-size="lg" data-target="#modal" data-toggle="modal">
+        Cargar Imagen
+    </a>
+    @Html.ValidationMessageFor(m => m.Logo, "", new { @class = "text-danger" })
+   
+</div>
+
+<div class="clearfix"></div>
+<div class="ln_solid"></div>
+
+@if (ViewBag.Edicion != null && ViewBag.Edicion == "Si")
+{
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+        <div class="radio">
+            <label>
+                @Html.RadioButtonFor(m => m.Estado, false, new { @class = "estado-empresa" })
+                Inactivar
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                @Html.RadioButtonFor(m => m.Estado, true, new { @class = "estado-empresa" })
+                Activar
+            </label>
+        </div>
+        @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+    </div>
+}

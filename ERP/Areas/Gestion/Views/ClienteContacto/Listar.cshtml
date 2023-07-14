@@ -1,0 +1,73 @@
+﻿@model ListarEmpresaClienteContactoViewModel
+@{
+    ViewBag.Title = "Contactos clientes";
+}
+
+<div>
+    <!--Filtro de la tabla-->
+    <div class="text-left">
+        <form id="form-filtro-tabla" action="#" class="form-inline">
+            <div class="form-group">
+
+                @Html.LabelFor(m => m.EmpresaId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.EmpresaId, Model.ListaEmpresas, "Seleccione Empresa", new
+                   {
+                       @class = "form-control selectpicker",
+                       onchange = "ListarContactos.OnChangeEmpresa(this);"
+                   })
+                @Html.ValidationMessageFor(m => m.EmpresaId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <br />
+                <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+            </div>
+        </form>
+    </div>
+
+    <hr />
+    <!--Tabla-->
+    <div class="row">
+        <div class="col-md-12">
+            <table id="tabla-Contactos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Agencia</th>
+                        <th class="text-center">Cliente</th>
+                        <th class="text-center">Nombre Contacto</th>
+                        <th class="text-center">Cargo</th>
+                        <th class="text-center">Correo</th>
+                        <th class="text-center">Teléfono</th>
+                        <th class="text-center">Celular</th>
+                        <th class="text-center">Mes nacimiento</th>
+                        <th class="text-center">Día nacimiento</th>
+                        <th class="text-center">Editar</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/Scripts/ClienteContacto/Listar.js")
+    @*@Scripts.Render("~/Areas/Gestion/scripts/EmpresaClienteContacto/Editar.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaClienteContacto/Listar.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaClienteContacto/Crear.js")*@
+
+    <script type="text/javascript">
+        var urlListar = "@Url.Action("Listar", "ClienteContacto", new { area = "Gestion", Id = ViewBag.Id })";
+        var urlEditar = "@Url.Action("Editar", "ClienteContacto", new { area = "Gestion" })";
+        var URL_EMPRESA_CLIENTE_CONTACTO_EDITAR = "@Url.Action("Editar", "EmpresaClienteContacto", new { Area = "Gestion" })";
+        var URL_EMPRESA_CLIENTE_CONTACTO_CAMBIAR_ESTADO = "@Url.Action("CambiarEstado", "EmpresaClienteContacto", new { Area = "Gestion"})";
+        var PERMISO_EMPRESA_CLIENTE_CONTACTO_EDITAR = ("@Sesion.HasPermission("GES-EMPRESA_CLIENTE_CONTACTOS_EDITAR")" === "True");
+
+    </script>
+}
+
+

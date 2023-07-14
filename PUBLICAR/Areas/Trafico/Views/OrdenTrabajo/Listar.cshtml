@@ -1,0 +1,449 @@
+﻿@model OrdenTrabajoListarViewModel
+@{
+    ViewBag.Title = "Tráfico";
+}
+
+<div id="container_ordenes_trabajo_btn_add" class="pull-right" hidden>
+    @if (Sesion.HasPermission("TRA-BRIEF_LISTAR"))
+    {
+        <button class="btn btn-secondary" onclick="ORDEN_TRABAJO_LISTAR.ListarBrief()">Briefs</button>
+    }
+    @if (Sesion.HasPermission("TRA-INFORME_ENTREVISTA_LISTAR"))
+    {
+        <button class="btn btn-secondary" onclick="ORDEN_TRABAJO_LISTAR.ListarInformeEntrevista()">Informes de reunión</button>
+    }
+</div>
+
+<div class="clearfix"></div>
+
+<!--Tabs-->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#ot" aria-controls="ot" role="tab" data-toggle="tab">Órdenes de Trabajo</a></li>
+    <li role="presentation"><a href="#Asignadas" aria-controls="Asignadas" role="tab" data-toggle="tab">Tareas que Asignó</a></li>
+    <li role="presentation"><a href="#pendientes" aria-controls="pendientes" role="tab" data-toggle="tab">Tareas Pendientes</a></li>
+    <li role="presentation"><a href="#Contestadas" aria-controls="Contestadas" role="tab" data-toggle="tab">Tareas Contestadas</a></li>
+
+</ul>
+
+<!--Content Tabs-->
+<div class="tab-content">
+    <!--TAB OT-->
+    <div role="tabpanel" class="tab-pane active" id="ot">
+        <div class="clearfix"></div>
+        <br />
+        <div class="pull-left">
+            <form id="form_filtro_tabla_ordenes_trabajo" class="form-inline">
+                <div class="form-group">
+                    @Html.DropDownListFor(m => m.EstadoId, Model.ListaEstados, null, new { @class = "form-control selectpicker" })
+                </div>
+                <div class="form-group">
+                    @Html.DropDownListFor(m => m.AnioId, Model.ListaAnios, "Todos los años", new { @class = "form-control selectpicker" })
+                </div>
+                <div class="form-group">
+                    @Html.DropDownListFor(m => m.TipoCreacionId, Model.ListaTiposCreacion, null, new { @class = "form-control selectpicker" })
+                </div>
+                <div class="form-group">
+                    <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                    <input type="submit" class="btn btn-secondary" value="Buscar" />
+                    <input type="button" class="btn btn-secondary" value="Ver todo" onclick="ORDEN_TRABAJO_LISTAR.ResetearFiltroTabla()" />
+                </div>
+            </form>
+        </div>
+
+        <div class="pull-right">
+            @if (Sesion.HasPermission("TRA-ORDEN_TRABAJO_CREAR"))
+            {
+                <div class="pull-right">
+                    <a href="@Url.Action("Crear", "OrdenTrabajo", new { Area = "Trafico" })" data-toggle="modal" data-target="#" class="btn btn-primary" data-size="lg">Nueva OT</a>
+                </div>
+            }
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!--Tabla OTS-->
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tabla-Ot" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center"></th>
+                            <th class="text-center">Código</th>
+                            <th class="text-center">Referencia</th>
+                            <th class="text-center">Ejecutivo</th>
+                            <th class="text-center">Director</th>
+                            <th class="text-center">Empresa</th>
+                            <th class="text-center">Unidad Negocio</th>
+                            <th class="text-center">Cliente</th>
+                            <th class="text-center">Producto</th>
+                            <th class="text-center">Fecha y Hora Creación</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Presupuesto</th>
+                            <th class="text-center">Cerrar/<br />Reactivar</th>
+                            <th class="text-center">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="ln_solid"></div>
+
+        <!--Tareas-->
+        <div id="Container_tareas" hidden>
+            <div class="pull-left">
+                <h2>Tareas de la Orden de trabajo <strong id="orden_trabajo_codigo"></strong></h2>
+            </div>
+            <div class="pull-right">
+                <ul class="list-inline prod_color">
+                    <li>
+                        <label>Creadas por mí</label>
+                        <div class="color bg-white"></div>
+                    </li>
+                    <li>
+                        <label>Creadas por otros</label>
+                        <div class="color bg-blue-sky"></div>
+                    </li>
+                    <li>
+                        <label>Tareas finalizadas</label>
+                        <div class="color bg-gray"></div>
+                    </li>
+                    <li>
+                        <label>Tareas canceladas</label>
+                        <div class="color bg-red"></div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="ln_solid"></div>
+
+            <div class="pull-left">
+                <form id="form_filtro_tabla_tareas" class="form-inline">
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.TareaTipoCreacionId, Model.ListaTareaTiposCreacion, "Tipo tarea", new { @class = "form-control selectpicker" })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.TareaEstadoId, Model.ListaTareasEstados, "Estado tarea", new { @class = "form-control selectpicker" })
+                    </div>
+                    <div class="form-group">
+                        <input type="search" name="input-filtro-tareas" id="input-filtro-tareas" class="form-control" placeholder="Filtro" />
+                        <input type="submit" class="btn btn-secondary" value="Buscar" />
+                        <input type="button" class="btn btn-secondary" value="Ver todo" onclick="TAREA_LISTAR.ResetearFiltroTabla()" />
+                    </div>
+                </form>
+            </div>
+            <div class="pull-right">
+                @if (Sesion.HasPermission("TRA-TAREA_CREAR"))
+                {
+                    <button type="button" class="btn btn-primary" onclick="TAREA_LISTAR.Crear()">Nueva Tarea</button>
+                }
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!--Tabla Tareas-->
+            <div class="col-md-12">
+                <table id="tabla_tareas" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center"></th>
+                            <th class="text-center"># Tarea</th>
+                            <th class="text-center">Tipo de tarea</th>
+                            <th class="text-center">Titulo</th>
+                            <th class="text-center">Departamento de Tráfico</th>
+                            <th class="text-center">Fecha entrega</th>
+                            <th class="text-center">Hora entrega</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Status Cliente</th>
+                            <th class="text-center">Enviada por</th>
+                            <th class="text-center">Fecha y hora de creación</th>
+                            <th class="text-center">Responsable(s)</th>
+                            <th class="text-center">Asignado(s)</th>
+                            <th class="text-center">Cantidad de Adjuntos</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!--TAB Asignadas-->
+    <div role="tabpanel" class="tab-pane" id="Asignadas">
+        <div class="clearfix"></div>
+        <br />
+        <div class="pull-left">
+            <form id="form_tareas_asignadas" class="form-inline">
+                @*<div class="form-group">
+                        @Html.DropDownListFor(m => m.TipoAsignacionId, Model.ListaTiposAsignaciones, "Tipo de asignación", new
+                       {
+                           @class = "form-control selectpicker"
+                       })
+                    </div>*@
+                <div class="form-group">
+                    <input type="search" id="input_search_tareas_asignadas" class="form-control" placeholder="Filtro" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-secondary" value="Buscar" />
+                    <input type="button" class="btn btn-secondary" value="Ver todo" onclick="TAREA_ASIGNADA_LISTAR.ResetearFiltroTabla()" />
+                </div>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12">
+            <table id="tabla_tareas_asignadas" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center"></th>
+                        <th class="text-center">Orden Trabajo</th>
+                        <th class="text-center"># Tarea</th>
+                        <th class="text-center">Tipo de tarea</th>
+                        <th class="text-center">Titulo</th>
+                        <th class="text-center">Departamento de tráfico</th>
+                        <th class="text-center">Fecha entrega</th>
+                        <th class="text-center">Hora entrega</th>
+                        <th class="text-center">Enviada por</th>
+                        <th class="text-center">Fecha y hora de creación</th>
+                        <th class="text-center">Responsable(s)</th>
+                        <th class="text-center">Asignado(s)</th>
+                        <th class="text-center">Cantidad de Adjuntos</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <hr />
+        <div class="clearfix"></div>
+    </div>
+
+    <!--TAB PENDIENTES-->
+    <div role="tabpanel" class="tab-pane" id="pendientes">
+        <div class="clearfix"></div>
+        <br>
+        <div class="pull-left">
+            <form id="form_tareas_pendientes" class="form-inline">
+                <div class="form-group">
+                    @Html.DropDownListFor(m => m.TipoAsignacionId, Model.ListaTiposAsignaciones, "Tipo de asignación", new
+               {
+                   @class = "form-control selectpicker"
+               })
+                </div>
+                <div class="form-group">
+                    <input type="search" id="input_search_tareas_pendiente" class="form-control" placeholder="Filtro" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-secondary" value="Buscar" />
+                    <input type="button" class="btn btn-secondary" value="Ver todo" onclick="TAREA_PENDIENTE_LISTAR.ResetearFiltroTabla()" />
+                </div>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tabla_tareas_pendientes" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center"></th>
+                            <th class="text-center">Orden Trabajo</th>
+                            <th class="text-center"># Tarea</th>
+                            <th class="text-center">Tipo de tarea</th>
+                            <th class="text-center">Titulo</th>
+                            <th class="text-center">Departamento de tráfico</th>
+                            <th class="text-center">Fecha entrega</th>
+                            <th class="text-center">Hora entrega</th>
+                            <th class="text-center">Enviada por</th>
+                            <th class="text-center">Fecha y hora de creación</th>
+                            <th class="text-center">Responsable(s)</th>
+                            <th class="text-center">Asignado(s)</th>
+                            <th class="text-center">Cantidad de Adjuntos</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <hr />
+        <div class="clearfix"></div>
+    </div>
+
+    <!--TAB CONTESTADAS-->
+    <div role="tabpanel" class="tab-pane" id="Contestadas">
+        <div class="clearfix"></div>
+        <br />
+        <div class="pull-left">
+            <form id="form_tareas_contestadas" class="form-inline">
+                @*<div class="form-group">
+                        @Html.DropDownListFor(m => m.TipoAsignacionId, Model.ListaTiposAsignaciones, "Tipo de asignación", new
+                       {
+                           @class = "form-control selectpicker"
+                       })
+                    </div>*@
+                <div class="form-group">
+                    <input type="search" id="input_search_tareas_contestadas" class="form-control" placeholder="Filtro" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-secondary" value="Buscar" />
+                    <input type="button" class="btn btn-secondary" value="Ver todo" onclick="TAREA_CONTESTADA_LISTAR.ResetearFiltroTabla()" />
+                </div>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12">
+            <table id="tabla_tareas_contestadas" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center"></th>
+                        <th class="text-center">Orden Trabajo</th>
+                        <th class="text-center"># Tarea</th>
+                        <th class="text-center">Tipo de tarea</th>
+                        <th class="text-center">Titulo</th>
+                        <th class="text-center">Departamento de tráfico</th>
+                        <th class="text-center">Fecha entrega</th>
+                        <th class="text-center">Hora entrega</th>
+                        <th class="text-center">Enviada por</th>
+                        <th class="text-center">Fecha y hora de creación</th>
+                        <th class="text-center">Responsable(s)</th>
+                        <th class="text-center">Asignado(s)</th>
+                        <th class="text-center">Cantidad de Adjuntos</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <hr />
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+
+
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/bundles/Tinymce.js")
+
+    <script type="text/javascript">
+        //Ordenes de Trabajo
+        var URL_ORDEN_TRABAJO_LISTAR = "@Url.Action("Listar", "OrdenTrabajo", new { Area = "Trafico" })";
+        var URL_ORDEN_TRABAJO_CONSULTAR = "@Url.Action("Consultar", "OrdenTrabajo", new { Area = "Trafico" })";
+        var URL_USUARIO_CLIENTE_LISTAR_OPCIONES_POR_EMPRESA = "@Url.Action("ListarOpcionesPorEmpresa", "UsuarioCliente", new { Area = "Gestion" })";
+        var URL_USUARIO_EMPRESA_LISTAR_OPCIONES_USUARIOS_POR_EMPRESA = "@Url.Action("ListarOpcionesUsuariosPorEmpresa", "UsuarioEmpresa", new { Area = "Gestion" })";
+
+        var URL_USUARIO_EMPRESA_LISTAR_UNIDAD_NEGOCIO_USUARIOS_POR_EMPRESA = "@Url.Action("ListarOpcionesUsuariosUnidadNegocio", "OrdenTrabajo", new { Area = "Trafico" })";
+        var URL_USUARIO_CLIENTE_LISTAR_OPCIONES_PRODUCTOS_POR_EMPRESA_Y_CLIENTE = "@Url.Action("ListarOpcionesProductoPorEmpresaYCliente", "UsuarioCliente", new { Area = "Gestion" })";
+        var URL_USUARIO_CLIENTE_LISTAR_OPCIONES_CONTACTOS_POR_CLIENTE = "@Url.Action("ListarOpciones", "ClienteContacto", new { Area = "Gestion" })";
+        var URL_ORDEN_TRABAJO_LISTAR_HISTORICO_CAMBIOS = "@Url.Action("ListarHistorialCambios", "OrdenTrabajo", new { Area = "Trafico" })";
+        var URL_ORDEN_TRABAJO_CAMBIAR_ESTADO = "@Url.Action("CambiarEstado", "OrdenTrabajo", new { Area = "Trafico" })";
+        var URL_ORDEN_TRABAJO_BLOQUEO = "@Url.Action("Bloqueo", "OrdenTrabajo", new { Area = "Trafico" })";
+
+        var URL_CAMBIO_DEPTO = "@Url.Action("ListaOpcionesCiudadesPorDepartamento", "Ciudad", new { Area = "Parametrizacion" })";
+        var URL_ORDEN_TRABAJO_CAMBIO_EJECUTIVO = "@Url.Action("ListaEjecutivos", "OrdenTrabajo", new { Area = "Trafico" })";
+        var URL_ORDEN_TRABAJO_EDITAR = "@Url.Action("Editar", "OrdenTrabajo", new { Area = "Trafico"})";
+        var URL_ORDEN_TRABAJO_TRASLADAR = "@Url.Action("Trasladar", "OrdenTrabajo", new { Area = "Trafico"})";
+        var URL_CARGA_ASISTENTES_PREDETERMINADOS = "@Url.Action("CargaAsistentesPredeterminados", "InformeEntrevista", new { Area = "Trafico"})";
+
+        //Tarea
+        var URL_TAREA_LISTAR = "@Url.Action("Listar", "Tarea", new { Area = "Trafico" })";
+        var URL_TAREA_ASIGNADAS_LISTAR = "@Url.Action("ListarAsignadas", "Tarea", new { Area = "Trafico" })";
+        var URL_TAREA_PENDIENTE_LISTAR = "@Url.Action("ListarPendientes", "Tarea", new { Area = "Trafico" })";
+       
+       
+        var URL_TAREA_CONTESTADA_LISTAR = "@Url.Action("ListarContestadas", "Tarea", new { Area = "Trafico"})";
+        var URL_TAREA_CONSULTAR = "@Url.Action("Consultar", "Tarea", new { Area = "Trafico" })";
+        var URL_TAREA_LISTAR_CAMBIOS_FECHA_HORA_ENTREGA = "@Url.Action("ListarCambiosFechaHoraEntrega", "Tarea", new { Area = "Trafico" })";
+        var URL_TAREA_STATUS_CLIENTE_LISTAR = "@Url.Action("ListarStatusCliente", "Tarea", new { Area = "Trafico" })";
+        var URL_TIPO_TAREA_TRAFICO_LISTAR_OPCIONES_POR_DEPARTAMENTO_TRAFICO = "@Url.Action("ListarOpcionesPorDepartamento", "TipoTareaTrafico", new { Area = "Gestion" })";
+
+        var URL_TAREA_RESPONSABLE_LISTAR = "@Url.Action("ListarResponsables", "Tarea", new { Area = "Trafico" })";
+        var URL_TAREA_ASIGNADO_LISTAR = "@Url.Action("ListarAsignados", "Tarea", new { Area = "Trafico" })";
+
+        //Listar por tarea los usuarios responsables/asignados
+         var URL_TAREA_ASIGNADO_TAREA_LISTAR = "@Url.Action("ListarUsuariosAsignados", "Tarea", new { Area = "Trafico" })";
+
+
+
+        var URL_TAREA_CANCELAR = "@Url.Action("Cancelar", "Tarea", new { Area = "Trafico" })";
+        var URL_TAREA_RESPONDER = "@Url.Action("Responder", "Tarea", new { Area = "Trafico" })";
+        var URL_TAREA_FINALIZAR = "@Url.Action("Finalizar", "Tarea", new { Area = "Trafico" })";
+        var URL_TAREA_CREAR = "@Url.Action("Crear", "Tarea", new { Area = "Trafico" } )";
+
+        //BORRAR
+        var URL_EDITAR_FECHA = "@Url.Action("EditarFecha", "Tarea", new { Area = "Trafico" } )";
+        var URL_LISTAR_HISTORIAL = "@Url.Action("ListarHistorial", "Tarea", new { Area = "Trafico" })";
+        var URL_ABRIRMODAL_RESPONDER = "@Url.Action("ResponderTarea", "Tarea", new { Area = "Trafico"})";
+        var URL_CANCELAR_TAREA = "@Url.Action("Cancelar", "Tarea", new { Area = "Trafico"})";
+        var URL_SUBIR_CREAR_TAREA = "@Url.Action("UploadFileCrear", "Tarea", new { Area = "Trafico" })";
+        var URL_LISTAR_PRESUPUESTOS = "@Url.Action("ListarPresupuesto", "Tarea", new { Area = "Trafico" })";
+        var URL_CANCELAR_TAREA = "@Url.Action("Cancelar", "Tarea", new { Area = "Trafico" })";
+
+        //Informe Entrevista
+        var URL_INFORME_ENTREVISTA_LISTAR = "@Url.Action("Listar", "InformeEntrevista", new { Area = "Trafico" })";
+        var URL_AUTOCOMPLETAR_USUARIO = "@Url.Action("ListarUsuarios", "InformeEntrevista", new { Area = "Trafico"})";
+        var URL_LISTAR_LISTAR_INFORMES_ENTREVISTA = "@Url.Action("Listar", "InformeEntrevista", new { Area = "Trafico"})";
+        var URL_SUBIR_ARCHIVOS_TEMP_INFOME_ENTREVISTA = "@Url.Action("UploadFile", "InformeEntrevista", new { Area = "Trafico"})";
+        var URL_VER_INFORME ="@Url.Action("Ver", "InformeEntrevista", new { Area = "Trafico"})";
+        var URL_CREAR_VERSION_INFORME = "@Url.Action("CrearVersion", "InformeEntrevista", new { Area = "Trafico"})";
+
+        //Brief
+        var URL_BRIEF_LISTA = "@Url.Action("Listar", "Brief", new { Area = "Trafico"})";
+        var URL_CONSULTAR_PREGUNTAS_BRIEF = "@Url.Action("ConsultarPreguntasPorUnidad", "Brief", new { Area = "Trafico"})";
+        var URL_LISTAR_LISTAR_BRIEF = "@Url.Action("Listar", "Brief", new { Area = "Trafico"})";
+        var URL_SUBIR_ARCHIVOS_TEMP = "@Url.Action("UploadFile", "Brief", new { Area = "Trafico"})";
+        var URL_CREAR_VERSION_BRIEF = "@Url.Action("CrearVersion", "Brief", new { Area = "Trafico"})";
+        var URL_VER_BRIEF = "@Url.Action("Ver", "Brief", new { Area = "Trafico"})";
+
+        //Permisos Ordenes de Trabajo
+        var PERMISO_ORDEN_TRABAJO_EDITAR = ("@Sesion.HasPermission("TRA-ORDEN_TRABAJO_EDITAR")" === "True");
+        var PERMISO_ORDEN_TRABAJO_TRASLADAR = ("@Sesion.HasPermission("TRA-ORDEN_TRABAJO_TRASLADAR")" === "True");
+        var PERMISO_ORDEN_TRABAJO_CONSULTAR = ("@Sesion.HasPermission("TRA-ORDEN_TRABAJO_CONSULTAR")" === "True");
+        var PERMISO_ORDEN_TRABAJO_CAMBIAR_ESTADO = ("@Sesion.HasPermission("TRA-ORDEN_TRABAJO_CAMBIAR_ESTADO")" === "True");
+
+        //Permisos Tareas
+        var PERMISO_TAREA_CONSULTAR = ("@Sesion.HasPermission("TRA-TAREA_CONSULTAR")" === "True");
+        var PERMISO_TAREA_RESPONDER = ("@Sesion.HasPermission("TRA-TAREA_RESPONDER")" === "True");
+        var PERMISO_TAREA_CANCELAR = ("@Sesion.HasPermission("TRA-TAREA_CANCELAR")" === "True");
+        var PERMISO_TAREA_FINALIZAR = ("@Sesion.HasPermission("TRA-TAREA_FINALIZAR")" === "True");
+    </script>
+
+    @* Tarea *@
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/Listar.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/ListarAsignada.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/ListarPendiente.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/ListarContestada.js")
+
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/Crear.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/Consultar.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/Responder.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/Cancelar.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/Finalizar.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/EditarFechaHoraEntrega.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/ListarCambiosFechaHoraEntrega.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/ListarStatusCliente.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/CrearStatusCliente.js")
+
+    @* Informe Entrevista *@
+    @Scripts.Render("~/Areas/Trafico/scripts/InformeEntrevista/Listar.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/InformeEntrevista/Crear.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/InformeEntrevista/CrearVersion.js")
+
+    @* Brief *@
+    @Scripts.Render("~/Areas/Trafico/scripts/Brief/Listar.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Brief/Crear.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Brief/CrearVersion.js")
+
+    @* Ordenes de Trabajo *@
+    @Scripts.Render("~/Areas/Trafico/scripts/OrdenTrabajo/Listar.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/OrdenTrabajo/Crear.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/OrdenTrabajo/Editar.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/OrdenTrabajo/ListarHistorialCambios.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/OrdenTrabajo/CambiarEstado.js")
+
+    @Scripts.Render("~/Areas/Trafico/scripts/OrdenTrabajo/Trasladar.js")
+}

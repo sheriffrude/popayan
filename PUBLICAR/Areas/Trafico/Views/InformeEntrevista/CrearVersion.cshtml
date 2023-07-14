@@ -1,0 +1,291 @@
+﻿@model CrearVersionInformeEntrevistaViewModel
+
+@{
+    ViewBag.Title = "Crear versión informe";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("CrearVersion", "InformeEntrevista", new { Area = "Trafico" },
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnBegin = "OnBeginFormCrearVersionInformeEntrevista",
+            OnSuccess = "OnSuccessCrearVersionInformeEntrevista"
+        },
+        new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(m => m.Nota)
+
+        <div class="clearfix">
+            <div class="form-group col-md-6">
+                @Html.HiddenFor(m => m.OtId)
+                @Html.LabelFor(m => m.CodigoOt, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.CodigoOt, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.Titulo, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Titulo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Titulo, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.TipoReunionId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.TipoReunionId, Model.ListaTipoReunion, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+                @Html.ValidationMessageFor(m => m.TipoReunionId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.TipoInformeId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.TipoInformeId, Model.ListaTipoInforme, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+                @Html.ValidationMessageFor(m => m.TipoInformeId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.FechaReunion, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.FechaReunion, new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.FechaReunion, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.HoraInicio, new { @class = "control-label" })
+                <div class="input-group bootstrap-timepicker timepicker">
+                    @Html.TextBoxFor(m => m.HoraInicio, new { @class = "form-control" })
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.HoraFin, new { @class = "control-label" })
+                <div class="input-group bootstrap-timepicker timepicker">
+                    @Html.TextBoxFor(m => m.HoraFin, new { @class = "form-control" })
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.DeptoId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.DeptoId, Model.ListaDepartamentos, "Seleccione", new
+       {
+           @class = "form-control",
+           onchange = "OnchangeDepartamentoVersion(this, '" + Url.Action("ListaOpcionesCiudadesPorDepartamento", "Ciudad", new { Area = "Parametrizacion" }) + "');"
+       })
+                @Html.ValidationMessageFor(m => m.DeptoId, "", new { @class = "text-danger" })
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.CiudadId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.CiudadId, Model.ListaCiudades, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+                @Html.ValidationMessageFor(m => m.CiudadId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.LugarReunion, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.LugarReunion, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.Motivo, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Motivo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Motivo, "", new { @class = "text-danger" })
+
+
+            </div>
+            <div class="form-group col-md-12">
+                @Html.LabelFor(m => m.InformacionGeneral, new { @class = "control-label" })
+                @Html.TextAreaFor(m => m.InformacionGeneral, new { @class = "form-control" })
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading">Asistentes</div>
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <label>Agencia</label>
+                </div>
+                <div class="col-md-6">
+                    <label>Cliente</label>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="form-group col-md-3">
+                    <label>Ingrese los asistentes agencia:</label>
+                    <input type="search" name="input-filtro-empleado" id="input-filtro-empleado" class="form-control" placeholder="Filtro" />
+                    <table id="tabla-usuario" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label>Copiar a:</label>
+                    <input type="search" name="input-filtro-copiar" id="input-filtro-copiar" class="form-control" placeholder="Filtro" />
+                    <table id="tabla-copiados" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table id="tabla-opcion" cellpadding="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ListaUsuarioPorDefectoVersion != null)
+                            {
+                                foreach (var item in Model.ListaUsuarioPorDefectoVersion)
+                                {
+                                    <tr>
+                                        <td>@item.Nombre</td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Agregar asistente del cliente:</label>
+
+                    <div class="col-md-12 padding-left-0">
+                        <div class="col-md-4 padding-left-0">
+                            <input type="text" id="Nombre" class="form-control" placeholder="Nombre" />
+                        </div>
+                        <div class="col-md-4 padding-left-0">
+                            <input type="text" id="correo" class="form-control" placeholder="Correo" />
+                        </div>
+                        <div class="col-md-2 padding-left-0">
+                            <label><input type="checkbox" id="checkinforme_etrevista_copiar_a" name="checkinforme_etrevista_copiar_a" class="form-control" />Copia</label>
+                        </div>
+                        <button type="button" onclick="AdicionarNombre()" class="btn btn-info col-md-1">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+
+                    <br>
+                    <table id="tabla-clientes_informe_entrevista" class="table table-striped table-bordered compact text-center hidden" cellpadding="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Copia</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Temas tratados y compromisos</div>
+            <div class="panel-body">
+                <div class="col-md-6 form-group">
+                    <label>Temas tratados en la Reunión:</label>
+
+                    <input type="text" id="Tema_informe_entrevista" class="form-control" placeholder="Ingrese tema" />
+                    <button type="button" onclick="AdicionarTema()" class="btn btn-info col-md-1">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+
+                    <br>
+                    <table id="tabla-temas_informe_entrevista" class="table table-striped table-bordered compact text-center hidden" cellpadding="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Tema</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id="Compromiso_Agencia_Informe_Entrevista" class="hidden">
+                    <div class="col-md-6 form-group">
+                        <label>Compromisos de la Agencia:</label>
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(m => m.UsuariosId, new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.UsuariosId, Model.ListaUsuarios, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+                            @Html.ValidationMessageFor(m => m.UsuariosId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(m => m.FechaCompromiso, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.FechaCompromiso, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.FechaCompromiso, "", new { @class = "text-danger" })
+                        </div>
+                        @Html.LabelFor(m => m.DescripcionCompromiso, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.DescripcionCompromiso, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DescripcionCompromiso, "", new { @class = "text-danger" })
+                        <button type="button" onclick="AdicionarCompromiso_Agencia()" class="btn btn-info col-md-1">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <br>
+                        <table id="tabla-compromiso-agencia-entrevista" class="table table-striped table-bordered compact text-center hidden" cellpadding="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Fecha</th>
+                                    <th>Compromiso</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div id="Compromiso_Cliente_Informe_Entrevista" class="hidden">
+                    <div class="col-md-6 form-group">
+                        <label>Compromisos del cliente:</label>
+                        <div class="form-group col-md-6">
+                            <label>Persona</label>
+                            <input type="text" id="Persona_Compromiso_Cliente" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(m => m.FechaCompromisoCliente, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.FechaCompromisoCliente, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.FechaCompromisoCliente, "", new { @class = "text-danger" })
+                        </div>
+                        @Html.LabelFor(m => m.DescripcionCompromiso, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.DescripcionCompromisoCliente, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DescripcionCompromisoCliente, "", new { @class = "text-danger" })
+                        <button type="button" onclick="AdicionarCompromiso_Cliente()" class="btn btn-info col-md-1">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <br>
+                        <table id="tabla-compromiso-cliente-entrevista" class="table table-striped table-bordered compact text-center hidden" cellpadding="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Fecha</th>
+                                    <th>Compromiso</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12 " id="file">
+                    <input type="file" id="uploadFile" onchange="SubirArchivo(this)" />
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+
+        <div class="text-right">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+            <button type="submit" id="Guardar" class="btn btn-success">Guardar</button>
+        </div>
+    }
+</div>
+<div class="clearfix"></div>

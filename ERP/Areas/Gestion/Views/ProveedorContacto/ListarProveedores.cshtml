@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Listar proveedores";
+}
+
+<div>
+    <div class="help-block"></div>
+    <!--Filtro de la tabla-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div id="form-filtro-tabla" class="form-inline">
+                    <div class="form-group">
+                        <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                        <input type="button" class="btn btn-parametrizacion" value="BUSCAR" onclick="ListarClientes.reconstruirTabla()" />
+                        <input type="button" class="btn btn-parametrizacion" value="VER TODO" onclick="ListarClientes.ResetearTablaPais()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+
+    <!--Tabla-->
+    <div class="row">
+        <div class="col-md-12">
+            <table id="tabla-Proveedores" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nit</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Dirección</th>
+                        <th class="text-center">Correo</th>
+                        <th class="text-center"></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/Scripts/ProveedorContacto/ListarProveedores.js")
+
+    <script type="text/javascript">
+        var urlContactos = "@Url.Action("Listar", "ProveedorContacto", new { area = "Gestion" })";
+        var urlListar = "@Url.Action("Listar", "Proveedor", new { Area = "Gestion"})"
+    </script>
+}
+
+

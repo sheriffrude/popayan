@@ -1,0 +1,116 @@
+﻿@model ConsultarDetalleFacturaPagoClienteViewModel
+@{
+    ViewBag.Title = "Consultar detalle de pago de factura de cliente";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.NumeroFacturaInterno, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.NumeroFacturaInterno, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.NumeroFacturaInterno, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.Empresa, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Empresa, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Empresa, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.Cliente, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Cliente, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Cliente, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.Producto, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Producto, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Producto, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.OrdenTrabajo, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.OrdenTrabajo, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.OrdenTrabajo, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.NumeroPresupuesto, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.NumeroPresupuesto, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.NumeroPresupuesto, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.NumeroFactura, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.NumeroFactura, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.NumeroFactura, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.FechaFactura, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaFactura, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.FechaFactura, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.Subtotal, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Subtotal, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Subtotal, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.Impuesto, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Impuesto, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Impuesto, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.ValorTotal, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.ValorTotal, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.ValorTotal, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.UsuarioRegistro, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.UsuarioRegistro, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.UsuarioRegistro, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.FechaRegistro, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaRegistro, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.FechaRegistro, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.EstadoFactura, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EstadoFactura, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.EstadoFactura, "", new { @class = "text-danger" })
+    </div>
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
+    <h2>DATOS DEL PAGO</h2>
+
+    <div class="clearfix"></div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.TipoPago, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.TipoPago, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.TipoPago, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.FechaPago, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaPago, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.FechaPago, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.UsuarioRegistroPago, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.UsuarioRegistroPago, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.UsuarioRegistroPago, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.TotalPago, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.TotalPago, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.TotalPago, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.EstadoPago, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EstadoPago, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.EstadoPago, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="text-right">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+    </div>
+</div>

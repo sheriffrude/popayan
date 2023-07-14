@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Horas Hombre";
+}
+
+<div class="col-sm-12 content-menu">
+    <div class="col-md-2 col-sm-4 text-center">
+        @if (Sesion.HasPermission("HOH-ACTIVIDAD_LISTAR"))
+        {
+            <a href="@Url.Action("Listar", "Actividad", new { Area = "HorasHombre" })">
+                <img src="@Url.Content("~/Content/images/HorasHombre/Registar_actividades.svg")" class="img-responsive" alt="Registrar Actividad" />
+                <h4 class="text-center">Registrar Actividad</h4>
+            </a>
+        }
+    </div>
+</div>

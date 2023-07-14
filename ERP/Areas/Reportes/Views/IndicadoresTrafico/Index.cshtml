@@ -1,0 +1,54 @@
+﻿@model IndicadoresTraficoViewModel
+@{
+    ViewBag.Title = "Indicadores de gestión de tráfico";
+}
+
+<div class="col-md-12">
+    <div class="col-md-3" style="overflow:scroll;height:600px;">
+        <h4 class="text-center">FILTROS</h4>
+        <hr />
+        <!--Fechas-->
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>Fechas OT</b></div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FechaInicial, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.FechaInicial, new { @class = "form-control", placeholder = "dd/mm/aaaa", onkeydown = "javascript:return false;" })
+                    @Html.ValidationMessageFor(m => m.FechaInicial, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FechaFinal, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.FechaFinal, new { @class = "form-control", placeholder = "dd/mm/aaaa", onkeydown = "javascript:return false;" })
+                    @Html.ValidationMessageFor(m => m.FechaFinal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <!--Empresas-->
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>Empresas</b></div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.Raw("<p><input type = 'checkbox' id='checkall' value='0'>&nbsp;<small><b>TODOS</b></small></p>")
+                    @foreach (dynamic item in Model.Empresas)
+                    {
+                        @Html.Raw("<p><input type = 'checkbox' value = '" + item.Value + "' onchange = 'SeleccionaEmpresaUnica(this.value)'>&nbsp;<small>" + item.Text + "</small></p>");
+                    }
+                    @Html.ValidationMessageFor(m => m.Empresas, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <ol class="breadcrumb" id="breadcrumb"></ol>
+        <div id="PieChart" style="width: 100%; height: 500px;">
+        </div>
+        <div id="table_div" style="width: 100%;"></div>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/Areas/Reportes/Scripts/Trafico/IndicadoresTrafico/loader.js")
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Reportes/Scripts/Trafico/IndicadoresTrafico/Index.js")
+}

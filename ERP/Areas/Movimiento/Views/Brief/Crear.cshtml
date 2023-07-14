@@ -1,0 +1,170 @@
+﻿@model CrearBriefOtViewModel
+@{
+    ViewBag.Title = "CREAR BRIEFS";
+    //Clase body personalizado
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-10 text-left">
+            <h3>@ViewBag.Title</h3>
+        </div>
+        <div class="col-md-2 text-right">
+            <a href="@Url.Action("Listar", "Brief", new { Area = "Trafico",id = Model.OtId, idEmpresa = Model.EmpresaId} )" data-toggle="modal" data-target="#" data-size="all" data-execute-onload="OnLoadListarBrief" id="atras_listar_Brief">
+                <img src="@Url.Content("~/Content/images/boton-regresar-menu.png")" alt="" />
+            </a>
+        </div>
+    </div>
+</div>
+<div class="modal-body">
+    @using (Ajax.BeginForm("Crear", "Brief", new { Area = "Trafico" }, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginFormCrearBrief", OnSuccess = "OnSuccessCrearBrief" },
+                                                                                                                                new { @class = "", role = "form", id = "FormCrearBrief" }))
+    {
+        @Html.HiddenFor(m => m.OtId)
+        <div class="form-group col-md-2">
+            @Html.LabelFor(m => m.UnidadNegocioId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.UnidadNegocioId, Model.ListaUniadesNegocio, "Seleccione", new
+       {
+           @class = "form-control",
+           onchange = "OnchangeUnidadNegocio(this)"
+       })
+            @Html.ValidationMessageFor(m => m.UnidadNegocioId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group  col-md-2">
+            @Html.LabelFor(m => m.Producto, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Producto, new { @class = "form-control", @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.Producto, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group  col-md-3">
+            @Html.LabelFor(m => m.DesarrolladoPor, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DesarrolladoPor, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.DesarrolladoPor, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group  col-md-2">
+            @Html.LabelFor(m => m.FechaElaboracion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaElaboracion, new { @class = "form-control", @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.FechaElaboracion, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group  col-md-3">
+            @Html.LabelFor(m => m.FechaEntrega, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaEntrega, new { @class = "form-control", @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.FechaEntrega, "", new { @class = "text-danger" })
+        </div>
+   
+    <div class="clearfix"></div>
+    <div id="Html-Preguntas-Brief" class="col-md-12">
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-6 hidden" id="file">
+        <input type="file" id="uploadFile" onchange="SubirArchivo(this)" />
+    </div>
+    @*<div class="col-md-6 hidden" id="dvCrearTarea">
+        <input type="button" class="btn btn-default" onclick="CrearTarea()" value="CREAR TAREA">
+    </div>*@
+        <div class="clearfix"></div>
+        <br />
+
+        @*<div id="crearTarea" style="display:none">
+            @Html.HiddenFor(m=> m.existeTarea)
+            <div class="panel panel-default">
+                <div class="panel-heading">Tarea</div>
+                <div class="panel-body">
+                    <div class="col-md-6  padding-left-0">
+                        @Html.LabelFor(m => m.DeptoId, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.DeptoId, Model.ListaDepto, "Seleccione", new { @class = "form-control", onchange = "OnchangeDeptoBrief(this)" })
+                        @Html.ValidationMessageFor(m => m.DeptoId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="clearfix"></div>
+                    <br />
+                    <div class="col-md-6  padding-left-0">
+                        <span>Responsable(s) del Departamento:</span>
+                        <table id="tabla-Directores-Brief" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"></th>
+                                    <th class="text-center">Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-6 padding-left-0">
+                        <span>Seleccione Por lo menos un Asignado:</span>
+                        <table id="tabla-Ejecutivos-Brief" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"></th>
+                                    <th class="text-center">Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="col-md-3  padding-left-0">
+                        @Html.LabelFor(m => m.Fecha, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(m => m.Fecha, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3  padding-left-0">
+                        @Html.LabelFor(m => m.Hora, new { @class = "control-label" })
+                        <div class="input-group bootstrap-timepicker timepicker">
+                            @Html.TextBoxFor(m => m.Hora, new { @class = "form-control input-small" })
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Hora, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6  padding-left-0">
+                        @Html.LabelFor(m => m.TareaId, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.TareaId, Model.ListaTareas, "Seleccione", new { @class = "form-control", onchange = "OnChangeTareaId(this)" })
+                        @Html.ValidationMessageFor(m => m.TareaId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="clearfix"></div>
+                    <br />
+                    <div class="col-md-6  padding-left-0">
+                        @Html.LabelFor(m => m.Titulo, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Titulo, "Seleccione", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Titulo, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6 hidden" id="MostrasPresupuesto">
+                        <span>Seleccione Por lo menos un Asignado:</span>
+                        <table id="tabla-Presupuestos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"></th>
+                                    <th class="text-center">Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <br />
+                    <div class="col-md-12  padding-left-0">
+                        @Html.LabelFor(m => m.Descripcion, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-12 " id="file">
+                        <input type="file" id="uploadFile" onchange="SubirArchivoCrearBrief(this)" />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>*@
+    }
+
+
+        <div class="col-md-12 hidden" id="Botones">
+            <center>
+                <input type="button" class="btn btn-trafico" onclick="GuardarPreguntas()" value="CREAR BRIEF">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+            </center>
+        </div>
+        <div class="clearfix"></div>
+    </div>

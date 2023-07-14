@@ -1,0 +1,67 @@
+﻿@model CrearEmpleadoHijoViewModel
+@{
+    ViewBag.Title = "Agregar Hijo";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @Html.AntiForgeryToken()
+
+    <div class="clearfix"></div>
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+    <div class="clearfix"></div>
+
+    <form id="agregar-hijo">
+        <div class="form-group">
+            @Html.LabelFor(m => m.DocumentoHijo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DocumentoHijo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.DocumentoHijo, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.TipoDocumentoHijoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.TipoDocumentoHijoId, Model.ListaTiposDocumento, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+            @Html.ValidationMessageFor(m => m.TipoDocumentoHijoId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.FechaNacimientoHijo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaNacimientoHijo, new { @class = "form-control", placeholder = "dd/mm/aaaa", onkeydown = "javascript:return false;" })
+            @Html.ValidationMessageFor(m => m.FechaNacimientoHijo, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PrimerNombreHijo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.PrimerNombreHijo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.PrimerNombreHijo, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.SegundoNombreHijo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.SegundoNombreHijo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.SegundoNombreHijo, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PrimerApellidoHijo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.PrimerApellidoHijo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.PrimerApellidoHijo, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.SegundoApellidoHijo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.SegundoApellidoHijo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.SegundoApellidoHijo, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.SexoHijoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.SexoHijoId, Model.ListaSexos, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+            @Html.ValidationMessageFor(m => m.SexoHijoId, "", new { @class = "text-danger" })
+        </div>
+    </form>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success" onclick="agregarHijo()">Agregar</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+    </div>
+</div>
+<script>initAgregarHijo();</script>

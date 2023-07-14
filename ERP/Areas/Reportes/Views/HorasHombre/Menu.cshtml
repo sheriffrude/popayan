@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Reportes Horas Hombre";
+}
+
+<div class="col-md-12 content-menu">
+
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("ReporteActividadesDiariasxPersona", "HorasHombre", new {Area = "Reportes"})">
+            <img src="/Content/images/Menu/Hoh.svg" class="img-responsive" alt="">
+            <h4 class="text-center">Reporte Actividades Diarias por Persona</h4>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("ReporteCostosActividadesxPersona", "HorasHombre", new {Area = "Reportes"})">
+            <img src="/Content/images/Menu/Hoh.svg" class="img-responsive" alt="">
+            <h4 class="text-center">Reporte Costos Actividades por Persona</h4>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("ReporteHorasCostosxCliente", "HorasHombre", new {Area = "Reportes"})">
+            <img src="/Content/images/Menu/Hoh.svg" class="img-responsive" alt="">
+            <h4 class="text-center">Reporte de Horas Costos por Cliente</h4>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("ReporteHorasCostosxOT", "HorasHombre", new {Area = "Reportes"})">
+            <img src="/Content/images/Menu/Hoh.svg" class="img-responsive" alt="">
+            <h4 class="text-center">Reporte de Horas Costos por OT</h4>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("ReporteHorasCostosxPresupuesto", "HorasHombre", new {Area = "Reportes"})">
+            <img src="@Url.Content("/Content/images/Menu/Hoh.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Reporte de Horas Costos por Presupuesto</h4>
+        </a>
+    </div>
+    
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("ReporteHorasHombrexEmpresa", "HorasHombre", new {Area = "Reportes"})">
+            <img src="@Url.Content("/Content/images/Menu/Hoh.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Horas Hombre por Empresa</h4>
+        </a>
+    </div>
+    
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="/informes_process/ReporteComparativoEmpleadoDia.html" target = "_blanck">
+            <img src="@Url.Content("/Content/images/Menu/Hoh.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Comparativo de Empleado por día</h4>
+        </a>
+    </div>
+        <div class="col-md-3 col-sm-4 text-center">
+        <a href="/informes_process/ReporteConsolidadoTipoTarea.html" target = "_blanck">
+            <img src="@Url.Content("/Content/images/Menu/Hoh.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Consolidado por tipo de Tareas</h4>
+        </a>
+    </div>
+</div>

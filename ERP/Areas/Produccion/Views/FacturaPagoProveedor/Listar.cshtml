@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Consultar facturas radicadas de proveedores";
+}
+<div class="x_panel">
+    <div class="x_title">
+        <h2>@ViewBag.Title</h2>
+        <ul class="nav navbar-right panel_toolbox text-right">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+
+        <div class="col-md-12">
+            <div class="form-group col-md-12">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="texto">Ingrese el texto:</label>
+                        <input type="text" class="form-control" id="texto">
+                    </div>
+                    <div class="form-group col-md-3" id="select-empresa-id">
+                        <label class="control-label">Seleccione una empresa</label>
+                        <select class="form-control selectpicker" data-live-search="true" onchange="consultarFacturaPagoProveedor.OnChangeEmpresa(this)" id="select-empresa"></select>
+                    </div>
+                    <div class="form-group col-md-3" id="select-cliente-id">
+                        <label class="control-label">Seleccione un cliente</label>
+                        <select class="form-control selectpicker" data-live-search="true" onchange="consultarFacturaPagoProveedor.OnChangeCliente(this)" id="select-cliente"></select>
+                    </div>
+                    <div class="form-group col-md-3" id="select-producto-id">
+                        <label class="control-label">Seleccione un producto</label>
+                        <select class="form-control selectpicker" data-live-search="true" onchange="consultarFacturaPagoProveedor.OnChangeProducto(this)" id="select-producto"></select>
+                    </div>
+                    <div class="form-group col-md-3" id="select-ot-id">
+                        <label class="control-label">Seleccione una OT</label>
+                        <select class="form-control selectpicker" data-live-search="true" id="select-ot"></select>
+                    </div>
+                    <div class="form-group col-md-3 ">
+                        <br />
+                        <a class="btn btn-warning" onclick="consultarFacturaPagoProveedor.CrearTablaFacturasPagoProveedor()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                    </div>
+                </div>
+                <div class="form-group col-md-12" id="factura-pago-proveedor">
+                    <table id="tabla_factura_pago_proveedor" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Número de OC</th>
+                                <th>Empresa</th>
+                                <th>Cliente</th>
+                                <th>OT</th>
+                                <th>Referencia OT</th>
+                                <th>Número de ppto</th>
+                                <th>Versión de presupuesto interno</th>
+                                <th>Versión de presupuesto externo</th>
+                                <th>Proveedor</th>
+                                <th>Nit proveedor</th>
+                                <th>Tipo documento</th>
+                                <th>Número de la factura</th>
+                                <th>Fecha de la factura</th>
+                                <th>Fecha de vencimiento factura</th>
+                                <th>Fecha de registro</th>
+                                <th>Estado de la factura</th>
+                                <th>Número de pago</th>
+                                <th>Subtotal</th>
+                                <th>Total impuestos</th>
+                                <th>Total</th>
+                                <th>Estado del pago</th>
+                                <th>Observación</th>
+                                <th>Fecha del pago</th>
+                                <th>Usuario que registró</th>
+                                <th>Activar/Cancelar</th>
+                                <th>Ver detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

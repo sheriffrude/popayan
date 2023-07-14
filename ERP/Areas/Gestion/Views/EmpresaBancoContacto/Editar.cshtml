@@ -1,0 +1,167 @@
+﻿@model EditarEmpresaBancoContactoViewModel
+@{
+    //Titulo
+    ViewBag.Title = "Editar Contacto Banco";
+
+    //Clase body personalizado
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<!-- Titulo y boton volver -->
+<div class="row">
+    <div class="col-md-6 col-xs-6">
+        @if (Model.LogoModel != null)
+        {
+            <div class="col-md-6">
+                <img src="@($"data:{Model.LogoModel.FileContentType};base64,{Convert.ToBase64String(Model.LogoModel.FileContent)}")" alt="" class="img-responsive img-center" />
+            </div>
+        }
+        <h3 class="col-md-12 text-left"><strong>@ViewBag.Title</strong></h3>
+    </div>
+</div>
+
+<!--Espacio vertical-->
+<div class="help-block"></div>
+
+<!--Formulario-->
+@using (Html.BeginForm("Editar", "EmpresaBancoContacto",
+                new { Area = "Gestion" },
+                FormMethod.Post,
+                new { @class = "", role = "form" }))
+{
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.BancoId)
+    @Html.HiddenFor(m => m.EmpresaId)
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.PrimerNombre, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PrimerNombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PrimerNombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.SegundoNombre, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.SegundoNombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SegundoNombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.PrimerApellido, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PrimerApellido, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PrimerApellido, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.SegundoApellido, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.SegundoApellido, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SegundoApellido, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Area, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Area, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Area, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Cargo, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Cargo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Cargo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Correo, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.FechaNacimiento, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FechaNacimiento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-12"></div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Telefonos, new { @class = "control-label" })
+        <div class="col-md-11 padding-left-0">
+            <input type="text" id="telefono" class="form-control" />
+        </div>
+        <button type="button" onclick="AdicionarTelefono()" class="btn btn-info col-md-1">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        @Html.ValidationMessageFor(m => m.Telefonos, "", new { @class = "text-danger" })
+        <div class="col-md-12 padding-right-0 padding-left-0">
+            <table id="tabla-telefonos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Telefono</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(Model.ListaTelefonos != null){
+                        foreach(var item in Model.ListaTelefonos)
+                        {
+                            <tr>
+                                <td>@item</td>
+                                <td></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Celulares, new { @class = "control-label" })
+        <div class="col-md-11 padding-left-0">
+            <input type="text" id="celular" class="form-control" />
+        </div>
+        <button type="button" onclick="AdicionarCelular()" class="btn btn-info col-md-1">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        @Html.ValidationMessageFor(m => m.Celulares, "", new { @class = "text-danger" })
+        <div class="col-md-12 padding-right-0 padding-left-0">
+            <table id="tabla-celulares" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Celular</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListaCelulares != null)
+                    {
+                        foreach (var item in Model.ListaCelulares)
+                        {
+                            <tr>
+                                <td>@item</td>
+                                <td></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-12 text-right">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a type="button" href="@Url.Action("Listar", "EmpresaBancoContacto", new { Area = "Gestion" , id = Model.EmpresaId, bancoId = Model.BancoId  } )" class="btn btn-warning">Cerrar</a>
+    </div>
+
+}
+
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+@Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaBancoContacto/Editar.js")
+}

@@ -1,0 +1,48 @@
+﻿@model CargarNominaViewModel
+@{
+    ViewBag.Title = "Cargar Nomina";
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<!--Formulario-->
+@using (Html.BeginForm("Crear", "Nomina", new { Area = "Gestion" },
+    FormMethod.Post,
+    new { enctype = "multipart/form-data", @class = "", role = "form" }))
+{
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(m => m.EmpresaId)
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.Ano, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.Ano, Commons.GenerateSelectListYears(), "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+        @Html.ValidationMessageFor(m => m.Ano, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.Mes, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.Mes, Constants.CONST_MESES, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+        @Html.ValidationMessageFor(m => m.Mes, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Nomina, new { @class = "control-label" })
+        <input type="file" id="Nomina" name="Nomina" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Nomina, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-12 text-center">
+        <input type="image" alt="Submit" src="@Url.Content("~/Content/images/boton-guardar.png")" class="btn" value="Guardar" />
+        <img src="@Url.Content("~/Content/images/union-botones.png")" alt="" class="imagen-union-botones hidden-xs" />
+        <a href="@Url.Action("Menu", "Nomina", new { Area = "Gestion", id = Model.EmpresaId })" class="btn">
+            <img src="@Url.Content("~/Content/images/boton-cancelar.png")" alt="" />
+        </a>
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/Areas/Gestion/scripts/Nomina/Crear.js")
+}

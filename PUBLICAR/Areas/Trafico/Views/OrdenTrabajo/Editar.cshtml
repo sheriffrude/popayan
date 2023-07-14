@@ -1,0 +1,86 @@
+﻿@model EditarOrdenTrabajoViewModel
+@{
+    ViewBag.Title = $"Editar orden de trabajo {Model.Codigo}";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("Editar", "OrdenTrabajo", new { Area = "Trafico" },
+            new AjaxOptions {
+                HttpMethod = "POST",
+                OnComplete = "ORDEN_TRABAJO_EDITAR.OnComplete"
+            },
+            new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="clearfix"></div>
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+        <div class="clearfix"></div>
+
+        @Html.HiddenFor(m => m.OrdenTrabajoId)
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Empresa, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Empresa, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Cliente, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Cliente, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Producto, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Producto, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.ProfesionalClienteId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.ProfesionalClienteId, Model.ListaProfesionalesCliente, "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true" })
+            @Html.ValidationMessageFor(m => m.ProfesionalClienteId, "", new { @class = "text-danger" })
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.DirectorId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.DirectorId, Model.ListaDirectores, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+            @Html.ValidationMessageFor(m => m.DirectorId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.EjecutivoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.EjecutivoId, Model.ListaEjecutivos, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+            @Html.ValidationMessageFor(m => m.EjecutivoId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.ProductorEjecutivoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.ProductorEjecutivoId, Model.ListaProductoresEjecutivos, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+            @Html.ValidationMessageFor(m => m.ProductorEjecutivoId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.Referencia, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Referencia, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Referencia, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.Descripcion, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.Observaciones, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Observaciones, "", new { @class = "text-danger" })
+        </div>
+        <div class="text-right">
+            <a href="@Url.Action("Consultar", "OrdenTrabajo", new { Area = "Trafico", id = Model.OrdenTrabajoId })" class="btn btn-secondary" data-toggle="modal" data-target="#" data-size="lg">
+                Volver
+            </a>
+            <button type="submit" class="btn btn-success">Editar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+        <div class="clearfix"></div>
+    }
+</div>

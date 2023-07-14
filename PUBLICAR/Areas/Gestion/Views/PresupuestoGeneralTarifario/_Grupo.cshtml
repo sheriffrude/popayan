@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Grupos";
+}
+
+<!-- Titulo y boton volver -->
+<div class="col-md-12">
+    <div class="pull-left">
+        <h3><strong>@ViewBag.Title</strong></h3>
+    </div>
+</div>
+
+<!--Espacio vertical-->
+<div class="help-block"></div>
+
+<div class="col-md-12">
+    <div class="pull-left">
+        <form id="form-filtro-tabla-grupo" action="#" class="form-inline">
+            <div class="form-group">
+                <input type="search" class="form-control" placeholder="Filtro" />
+                <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+            </div>
+        </form>
+    </div>
+    <div class="pull-right">
+        @*@if (Sesion.HasPermission("GES-PRESUPUESTO_GENERAL_GRUPO_CREAR"))
+            {*@
+        <a href="@Url.Action("CrearGrupo", "PresupuestoGeneralTarifario", new { Area = "Gestion" })" class="btn btn-secondary" data-toggle="modal" data-target="#">Adicionar</a>
+        @*}*@
+    </div>
+</div>
+
+<!--Tabla-->
+<div class="col-md-12">
+    <table id="tabla-presupuesto-general-grupo" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th class="text-center">Nombre</th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>

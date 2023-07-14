@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "layout";
+    ViewBag.Title = "Anticipo Aprobado";
+}
+<h2>Datos del Presupuesto</h2>
+<p><strong>Número de Presupuesto: </strong>@Model.PresupuestoId</p>
+<p><strong>Empresa: </strong>@Model.Empresa</p>
+<p><strong>Cliente: </strong>@Model.Cliente</p>
+<p><strong>Producto: </strong>@Model.Producto</p>
+<p><strong>Órden de Trabajo: </strong>@Model.OrdenTrabajo</p>
+<p><strong>Enviado por: </strong>@Model.EnviadoPor</p>
+<p><strong>Fecha y Hora de la solicitud: </strong>@Model.FechaHora</p>
+<br />
+<h2>Datos de la legalización</h2>
+<p><strong>Número del anticipo:  </strong>@Model.AnticipoId</p>
+<p><strong>Número de la legalizacón:  </strong>@Model.LegalizacionId</p>
+<p><strong>Versión:  </strong>@Model.Version</p>
+<p><strong>Valor legalización:  </strong>@Model.TotalValor</p>
+<p><strong>Impuestos:  </strong>@Model.TotalImpuestos</p>
+<p><strong>Total:  </strong>@Model.Total</p>
+<p><strong>Estado legalización:  </strong>@Model.EstadoLegalizacion</p>

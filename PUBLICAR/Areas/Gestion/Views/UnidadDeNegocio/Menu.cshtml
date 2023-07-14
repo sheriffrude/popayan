@@ -1,0 +1,39 @@
+﻿@model UnidadDeNegocioViewModel
+@{
+    ViewBag.Title = "Unidad de negocio: " + Model.Nombre;
+}
+
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("GES-UNIDAD_NEGOCIO_EDITAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Editar", "UnidadDeNegocio", new { Area = "Gestion", Id = @Model.Id })" class="content-icono-menu" data-toggle="modal" data-target="#">
+                <img src="@Url.Content("~/Content/images/Gestion/Deptos.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Editar unidad de negocio</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-AREA_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Area", new { Area = "Gestion", Id = @Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Deptos.svg")" class="img-response" alt="Areas" />
+                <h4 class="text-center">Areas</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-BRIEF_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Brief", new { Area = "Gestion", Id = @Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="img-response" alt="Brief" />
+                <h4 class="text-center">Briefs</h4>
+            </a>
+        </div>
+    }
+  
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/Areas/Gestion/scripts/UnidadDeNegocio/Editar.js")
+}

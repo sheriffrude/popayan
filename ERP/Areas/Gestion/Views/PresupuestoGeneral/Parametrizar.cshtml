@@ -1,0 +1,175 @@
+﻿@model ParametrizarPresupuestoGeneralViewModel
+@{
+    ViewBag.Title = "Parametrización Empresas: Presupuesto " + Model.Anio;
+}
+
+<style>
+    /*****TABLA PARAMETRIZAR PRESUPUESTO GENERAL*****/
+    .table-parametrizar-presupuesto {
+        border: 0px;
+        color: #222;
+    }
+
+    table.table-parametrizar-presupuesto thead {
+        margin-bottom: 10px !important;
+    }
+
+        table.table-parametrizar-presupuesto thead th,
+        table.table-parametrizar-presupuesto tfoot th {
+            margin-bottom: 10px;
+            font-size: 13px;
+            background-color: #4abee8;
+            border: 2px solid #fff;
+            color: #fff;
+        }
+
+            table.table-parametrizar-presupuesto thead th.th-titulo {
+                background-color: #126887;
+            }
+
+            table.table-parametrizar-presupuesto thead th:first-child {
+                border-radius: 10px 0 0 10px;
+                border-left: none;
+            }
+
+            table.table-parametrizar-presupuesto thead th:last-child {
+                border-radius: 0 10px 10px 0;
+                border-right: none;
+            }
+
+            table.table-parametrizar-presupuesto tfoot th:first-child {
+                border-radius: 10px 0 0 10px;
+                border-left: none;
+            }
+
+    table.table-parametrizar-presupuesto tbody tr {
+        background-color: #F9F9F9;
+    }
+
+        table.table-parametrizar-presupuesto tbody tr.tr-grupo {
+            background-color: #75cdef;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        table.table-parametrizar-presupuesto.stripe tbody tr.odd,
+        table.table-parametrizar-presupuesto.display tbody tr.odd,
+        table.table-parametrizar-presupuesto tbody tr.odd {
+            background-color: #e2e2e2;
+        }
+
+        table.table-parametrizar-presupuesto tbody tr td {
+            border: 2px solid #fff;
+        }
+
+        table.table-parametrizar-presupuesto tbody tr:first-child td:first-child {
+            border-radius: 10px 0 0 0;
+        }
+
+        table.table-parametrizar-presupuesto tbody tr:first-child td:last-child {
+            border-radius: 0 10px 0 0;
+        }
+
+        table.table-parametrizar-presupuesto tbody tr:last-child td:first-child {
+            border-radius: 0 0 0 10px;
+        }
+
+        table.table-parametrizar-presupuesto tbody tr:last-child td:last-child {
+            border-radius: 0 0 10px 0;
+        }
+
+    table.table-parametrizar-presupuesto tfoot tr th {
+        background-color: #126887;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .table-parametrizar-presupuesto input[type=number] {
+        width: 80px;
+    }
+
+    .no-100-porciento {
+        border: 2px solid red !important;
+    }
+
+    .table-parametrizar-presupuesto input.input-total {
+        width: 150px;
+    }
+    /*****FIN TABLA PARAMETRIZAR PRESUPUESTO GENERAL*****/
+</style>
+
+@using (Ajax.BeginForm("ActualizarItem", "PresupuestoGeneral", new { Area = "Gestion" },
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+
+        OnBegin = "OnBeginParametrizarItemPresupuestoGeneral",
+        OnComplete = "OnCompleteParametrizarPresupuestoGeneral"
+    },
+    new { @class = "", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="clearfix"></div>
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+    <div class="clearfix"></div>
+
+    @Html.HiddenFor(m => m.PresupuestoGeneralId)
+
+    <div class="form-group col-md-12 text-right">
+        <a href="@Url.Action("AdicionarItem", "PresupuestoGeneral", new { Area = "Gestion" })" class="btn btn-secondary" data-toggle="modal" data-target="#" data-execute-onload="OnLoadAdicionarItem">Adicionar Item</a>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 overflow-auto">
+        <table id="tabla-parametrizar" class="table table-striped table-bordered compact text-center table-parametrizar-presupuesto" cellpadding="0" width="100%">
+            <thead>
+                <tr class="tr-empresas">
+                    <th class="text-center th-titulo" colspan="5">Gastos Administrativos</th>
+                </tr>
+                <tr class="tr-unidades-negocio">
+                    <th class="text-center th-titulo"></th>
+                    <th class="text-center th-titulo th-costos-fijos">Costos Fijos</th>
+                    <th class="text-center th-titulo th-presupuesto-mensual">Presupuesto Mensual</th>
+                    <th class="text-center th-titulo th-presupuesto-anual">Presupuesto Anual</th>
+                    <th class="text-center th-titulo">% Acumulado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="2" class="text-center th-total">Total</th>
+                    <th class="text-center th-total">
+                        <input type="text" id="input-total-item-mes" readonly="readonly" class="form-control text-right input-total" data-format-price />
+                    </th>
+                    <th class="text-center th-total">
+                        <input type="text" id="input-total-item-anio" readonly="readonly" class="form-control text-right input-total" data-format-price />
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <br />
+
+    <div class="col-md-12 text-right">
+        <input type="submit" class="btn btn-success" value="Guardar" />
+        <a href="@Url.Action("Listar", "PresupuestoGeneral", new { Area = "Gestion" } )" class="btn btn-warning">Cancelar</a>
+    </div>
+}
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        var URL_LISTAR_ITEMS = "@Url.Action("ListarItems", "PresupuestoGeneral", new { Area = "Gestion", id = Model.PresupuestoGeneralId })";
+        var URL_LISTAR_EMPRESAS = "@Url.Action("ListarEmpresas", "PresupuestoGeneral", new { Area = "Gestion" })";
+        var URL_ELIMINAR_ITEM = "@Url.Action("EliminarItem", "PresupuestoGeneral", new { Area = "Gestion" })";
+
+        var URL_LISTAR_PRESUPUESTO_GENERAL_ITEMS = "@Url.Action("ListarItem", "PresupuestoGeneralTarifario", new { Area = "Gestion" })";
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/PresupuestoGeneral/Parametrizar.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/PresupuestoGeneral/AdicionarItem.js")
+}

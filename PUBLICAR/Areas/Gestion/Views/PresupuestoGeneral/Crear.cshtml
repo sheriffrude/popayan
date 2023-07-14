@@ -1,0 +1,86 @@
+﻿@model CrearPresupuestoGeneralViewModel
+@{
+    ViewBag.Title = "Crear Presupuesto";
+}
+@using (Ajax.BeginForm("Crear", "PresupuestoGeneral", new { Area = "Gestion" },
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnBegin = "OnBeginCrearPresupuestoGeneral",
+        OnComplete = "OnCompleteCrearPresupuestoGeneral"
+    },
+    new { @class = "", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="clearfix"></div>
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+    <div class="clearfix"></div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.Anio, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.Anio, Model.ListaAnios, "Seleccione",
+                      new
+                      {
+                          @class = "form-control",
+                          onchange = "OnChangeAnio(this, '" + @Url.Action("ExistePresupuestoPorAnio", "PresupuestoGeneral", new { Area = "Gestion" }) + "')"
+                      })
+        @Html.ValidationMessageFor(m => m.Anio, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EmpresaId, new { @class = "control-label", id = "EmpresaId" })
+        @Html.DropDownListFor(m => m.EmpresaId, Model.ListarEmpresasPresupuestoGeneral, "Seleccione", new
+        {
+            @class = "form-control selectpicker",
+            onchange = "OnchangeEmpresa(this)",
+            data_live_search = "true"
+        })
+        @Html.ValidationMessageFor(m => m.EmpresaId, "", new { @class = "text-danger" })
+    </div>
+
+
+
+
+    <div class="clearfix"></div>
+
+    <div class="col-md-12">
+        <div class="pull-left">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                    <input type="button" class="btn btn-secondary" value="BUSCAR" onclick="RecargarTablaItems()" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table id="tabla-items" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center"></th>
+                    <th class="text-center">Grupo</th>
+                    <th class="text-center">Item</th>
+                    <th class="text-center">Tipo</th>
+
+                    <th class="text-center">Costo Mensual</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="text-right">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a href="@Url.Action("Listar", "PresupuestoGeneral" , new { Area="Gestion" } )" class="btn btn-warning">Cancelar</a>
+        </div>
+    
+}
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        var URL_LISTAR_PRESUPUESTO_GENERAL_ITEMS = "@Url.Action("ListarItem", "PresupuestoGeneralTarifario", new { Area = "Gestion" })";
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/PresupuestoGeneral/Crear.js")
+}

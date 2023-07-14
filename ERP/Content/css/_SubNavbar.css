@@ -1,0 +1,144 @@
+﻿body {
+    padding-top: 110px;
+}
+
+/**CUSTOM BOTTON**/
+.btn-menu {
+    color: #FFFFFF;
+    background-color: #000000;
+    border-color: #000000;
+}
+
+    .btn-menu:hover,
+    .btn-menu:focus,
+    .btn-menu:active,
+    .btn-menu.active,
+    .open .dropdown-toggle.btn-menu {
+        color: #000;
+        background-color: #BDBDBD;
+        border-color: #000000;
+    }
+
+    .btn-menu:active,
+    .btn-menu.active,
+    .open .dropdown-toggle.btn-menu {
+        background-image: none;
+    }
+
+    .btn-menu.disabled,
+    .btn-menu[disabled],
+    fieldset[disabled] .btn-menu,
+    .btn-menu.disabled:hover,
+    .btn-menu[disabled]:hover,
+    fieldset[disabled] .btn-menu:hover,
+    .btn-menu.disabled:focus,
+    .btn-menu[disabled]:focus,
+    fieldset[disabled] .btn-menu:focus,
+    .btn-menu.disabled:active,
+    .btn-menu[disabled]:active,
+    fieldset[disabled] .btn-menu:active,
+    .btn-menu.disabled.active,
+    .btn-menu[disabled].active,
+    fieldset[disabled] .btn-menu.active {
+        background-color: #000000;
+        border-color: #000000;
+    }
+
+    .btn-menu .badge {
+        color: #000000;
+        background-color: #FFFFFF;
+    }
+
+    .btn-menu.parametrizacion:hover,
+    .btn-menu.parametrizacion:focus,
+    .btn-menu.parametrizacion:active,
+    .btn-menu.parametrizacion.active,
+    .open .dropdown-toggle.btn-menu.parametrizacion {
+        color: #fff;
+        background-color: #808080 !important;
+        border-color: #808080;
+    }
+
+    .btn-menu.gestion:hover,
+    .btn-menu.gestion:focus,
+    .btn-menu.gestion:active,
+    .btn-menu.gestion.active,
+    .open .dropdown-toggle.btn-menu.gestion {
+        color: #fff;
+        background-color: #27AAE1 !important;
+        border-color: #27AAE1;
+    }
+
+    .btn-menu.trafico:hover,
+    .btn-menu.trafico:focus,
+    .btn-menu.trafico:active,
+    .btn-menu.trafico.active,
+    .open .dropdown-toggle.btn-menu.trafico {
+        color: #fff;
+        background-color: #6DCA23 !important;
+        border-color: #6DCA23;
+    }
+
+    .btn-menu.produccion:hover,
+    .btn-menu.produccion:focus,
+    .btn-menu.produccion:active,
+    .btn-menu.produccion.active,
+    .open .dropdown-toggle.btn-menu.produccion {
+        color: #fff;
+        background-color: #EF8C14 !important;
+        border-color: #EF8C14;
+    }
+
+    .btn-menu.gerencia:hover,
+    .btn-menu.gerencia:focus,
+    .btn-menu.gerencia:active,
+    .btn-menu.gerencia.active,
+    .open .dropdown-toggle.btn-menu.gerencia {
+        color: #fff;
+        background-color: #EC008C !important;
+        border-color: #EC008C;
+    }
+
+    .btn-menu.horas-hombre:hover,
+    .btn-menu.horas-hombre:focus,
+    .btn-menu.horas-hombre:active,
+    .btn-menu.horas-hombre.active,
+    .open .dropdown-toggle.btn-menu.horas-hombre {
+        color: #fff;
+        background-color: #00A69C !important;
+        border-color: #00A69C;
+    }
+/**FIN CUSTOOM BOTTON**/
+
+
+/**CUSTOM MEDIA-QUERIES xs (moviles)**/
+@media (max-width: 768px) {
+    body {
+        padding-top: 53px;
+    }
+}
+/**CUSTOM MEDIA-QUERIES xs**/
+
+/**CUSTOM MEDIA-QUERIES sm (tablets)**/
+@media (min-width: 768px) and (max-width: 992px) {
+    body {
+        padding-top: 110px;
+    }
+}
+/**CUSTOM MEDIA-QUERIES sm**/
+
+/**CUSTOM MEDIA-QUERIES md (escritorio mediano)**/
+@media (min-width: 992px) and (max-width: 1200px) {
+    body {
+        padding-top: 110px;
+    }
+}
+/**CUSTOM MEDIA-QUERIES md**/
+
+/**CUSTOM MEDIA-QUERIES lg (escritorio grande)**/
+@media (min-width: 1200px) {
+    body {
+        padding-top: 110px;
+    }
+}
+/**CUSTOM MEDIA-QUERIES lg**/

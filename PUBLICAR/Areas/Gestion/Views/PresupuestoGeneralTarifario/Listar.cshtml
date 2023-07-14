@@ -1,0 +1,36 @@
+﻿@model ListarPresupuestoGeneralViewModel
+@{
+    ViewBag.Title = "Presupuesto General";
+}
+
+<form class="">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(m => m.EmpresaId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.EmpresaId, Model.ListaEmpresas, "Seleccione",
+        new {
+            @class = "form-control",
+            onchange = "OnchangeEmpresa(this, '" + Url.Action("ListarOpcionesPorEmpresa", "UnidadDeNegocio", new { Area = "Gestion" }) + "')"
+        })
+        @Html.ValidationMessageFor(m => m.EmpresaId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(m => m.UnidadNegocioId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.UnidadNegocioId, new List<SelectListItem>(), "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+        @Html.ValidationMessageFor(m => m.UnidadNegocioId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(m => m.Anio, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.Anio, new List<SelectListItem>(), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Anio, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-12 text-right">
+        <button type="button" class="btn btn-secondary" >ABRIR</button>
+    </div>
+</form>
+
+@section Scripts{
+    @Scripts.Render("~/Areas/Gestion/scripts/PresupuestoGeneral/Listar.js")
+}

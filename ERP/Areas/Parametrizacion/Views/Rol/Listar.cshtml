@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Listar Roles";
+}
+
+<!--Filtro de la tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-left">
+            <form id="form-filtro-tabla" class="form-inline">
+                <div class="form-group">
+                    <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                    <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+                    <input type="button" class="btn btn-secondary" value="VER TODO" onclick="ResetearTablaRoles()" />
+                </div>
+            </form>
+        </div>
+        @if (Sesion.HasPermission("PAR-ROL_CREAR"))
+        {
+            <div class="pull-right">
+                <a href="@Url.Action("Crear", "Rol", new {Area = "Parametrizacion"})" class="btn btn-primary" >Adicionar</a>
+            </div>
+        }
+    </div>
+</div>
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <table id="tabla-roles" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Rol</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <script type="text/javascript">
+        var URL_LISTAR_ROLES = "@Url.Action("Listar", "Rol", new { Area = "Parametrizacion" })";
+        var URL_EDITAR_ROL = "@Url.Action("Editar", "Rol", new { Area = "Parametrizacion" })";
+        var URL_CAMBIAR_ESTADO_ROL = "@Url.Action("CambiarEstado", "Rol", new { Area = "Parametrizacion" })";
+        var PERMISO_EDITAR_ROL = ("@Sesion.HasPermission("PAR-ROL_EDITAR")" === "True");
+    </script>
+    @Scripts.Render("~/Areas/Parametrizacion/scripts/Rol/Listar.js")
+}
+    

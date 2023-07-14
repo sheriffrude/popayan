@@ -1,0 +1,64 @@
+﻿
+@model CamapanaViewModel
+
+<div class="form-group col-md-2">
+    @Html.LabelFor(m => m.EmpresaId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.EmpresaId, Model.ListaEmpresas, "Seleccione", new
+{
+    @class = "form-control"
+   ,
+    onchange = "OnchangePaisAsociacionCampana(this)"
+})
+    @Html.ValidationMessageFor(m => m.EmpresaId, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-2">
+    <div class="select-style">
+        <label for="AsociacionClienteIdCampana">Seleccione un Cliente:</label>
+        <select id="AsociacionClienteIdCampana" class="form-control"></select>
+    </div>
+</div>
+<div class="form-group col-md-2">
+
+    <label for="estado">Estado de la Campaña:</label>
+    <select class="form-control" id="estado" onchange="OnChangeEstadoCampana(this)">
+        <option value="1">Todas</option>
+        <option value="2">Activas</option>
+        <option value="3">Inactivas</option>
+    </select>
+
+</div>
+
+<div class="form-group col-md-2">
+    <div class="select-style">
+        <label for="AsociacionCampanaId">Seleccione Campaña:</label>
+        <select id="AsociacionCampanaId" class="form-control"></select>
+    </div>
+</div>
+<div class="form-group col-md-2">
+<div class="select-style">
+    <label for="Buscar"></label>
+    <input type="button" class="btn-trafico" value="Buscar" id="Buscar" onclick="ListarAsociaciones()">
+</div>
+</div>
+
+<!--Tabla-->
+<div class="clearfix"></div>
+<div class="hidden" id="Table-Asociacion">
+    <div class="col-md-6 " id="Listar_Asociacion">
+        <table id="tabla-Asociacion" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Eliminar</th>
+                    <th class="text-center">Ejecutivo</th>
+                    <th class="text-center">Ot</th>
+                    <th class="text-center">REFERENCIA</th>
+                    <th class="text-center">FECHA</th>
+                    <th class="text-center">HORA</th>
+                    
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>

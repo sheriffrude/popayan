@@ -1,0 +1,22 @@
+﻿@model CrearProspectoDeduccionViewModel
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorSubtotal, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorSubtotal, new { @class = "form-control deduccion" })
+    @Html.ValidationMessageFor(m => m.ValorSubtotal, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorIndemnizacion, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorIndemnizacion, new { @class = "form-control deduccion" })
+    @Html.ValidationMessageFor(m => m.ValorIndemnizacion, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorTotalCosto, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorTotalCosto, new { @class = "form-control deduccion" })
+    @Html.ValidationMessageFor(m => m.ValorTotalCosto, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorTotalRecibido, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorTotalRecibido, new { @class = "form-control deduccion" })
+    @Html.ValidationMessageFor(m => m.ValorTotalRecibido, "", new { @class = "text-danger" })
+</div>

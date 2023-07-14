@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Histórico de rentabilidad de presupuesto";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+
+    <div class="col-md-12">
+        <div class="pull-left">
+            <form id="form_filtro_tabla_rentabilidad_presupuesto" class="form-inline">
+                <div class="form-group">
+                    <input type="search" name="input-filtro" id="input_filtro_listar_rentabilidad" class="form-control" placeholder="Filtro" />
+                    <input type="submit" class="btn btn-default" value="BUSCAR" />
+                    <input type="button" class="btn btn-default" value="VER TODO" onclick="PresupuestoRentabilidadListar.ResetearTabla()" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <table id="tabla_rentabilidad_presupuesto" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Version Interna</th>
+                    <th class="text-center">Version Externa</th>
+                    <th class="text-center">Estado del presupuesto</th>
+                    <th class="text-center">Costo total interno</th>
+                    <th class="text-center">Costo total externo</th>
+                    <th class="text-center">Rentabilidad Bruta</th>
+                    <th class="text-center">Rentabilidad Neta</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="col-md-12">
+    <div id="reportViewer1" class="report"></div>
+</div>
+

@@ -1,0 +1,27 @@
+﻿@model TraficoPendienteHistoricoObservacionViewModel
+@{
+    ViewBag.Title = "Histórico de la observación #";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title @ViewBag.IdSolicitud</h4>
+</div>
+
+<div class="modal-body">
+    @Html.HiddenFor(m => m.SolicitudId)
+    <div class="col-md-12">
+        <table id="tabla_historico_Observacion" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">EMPLEADO</th>
+                    <th class="text-center">Fecha</th>
+                    <th class="text-center">OBSERVACIÓN</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+</div>

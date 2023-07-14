@@ -1,0 +1,49 @@
+﻿@using ProcessPlusERP.Models
+@using System.Collections.Generic
+@{
+    ViewBag.Title = "Feliz Cumpleaños";
+}
+
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <title>:: PROCESS + ::</title>
+    <meta charset='utf-8' />
+</head>
+<body>
+    @if (Model.ListaPersonas != null)
+    {
+        foreach (PersonaCumpleanioViewModel item in Model.ListaPersonas)
+        {
+            <table width="700px" cellspacing="0" cellpadding="0" border="0" bgcolor="#fff">
+                <tbody>
+                    <tr>
+                        <td style="text-align:center; background-image: url(@Model.UrlBase/Content/images/Notificacion/Cumpleanios/1.jpg); background-size: 100% auto; background-repeat: no-repeat; width: 278px; height: 141px;"></td>
+                        <td style="text-align:center;background-image:url(@item.Foto);width:147px;height:141px;background-size:120% auto; background-repeat: no-repeat; background-position:center center;">
+                            <img src="@Model.UrlBase/Content/images/Notificacion/Cumpleanios/2.png" width="147px" height="141px">
+                        </td>
+                        <td style="text-align:center; background-image: url(@Model.UrlBase/Content/images/Notificacion/Cumpleanios/3.jpg); background-size: 100% auto; background-repeat: no-repeat; width: 282px; height: 141px;"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="background-image: url(@Model.UrlBase/Content/images/Notificacion/Cumpleanios/4.jpg); background-size: 100% auto; background-repeat: no-repeat; width: 170px; height: 87px"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="background-image: url(@Model.UrlBase/Content/images/Notificacion/Cumpleanios/5.jpg); background-size: 100% auto; background-repeat: no-repeat; width: 170px; height: 52px">
+                            <p style="text-transform: uppercase; font-weight: bold; font-size: 12px;width: 100%;text-align: center;color: gray;font-family: Arial;font-weight: bold;">
+                                <span>@item.Nombre</span>
+                                <br>
+                                <span>@item.Cargo</span>
+                                <br>
+                                <span>@item.Empresa</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="background-image: url(@Model.UrlBase/Content/images/Notificacion/Cumpleanios/6.jpg); background-size: 100% auto; background-repeat: no-repeat; width: 170px; height: 258px"></td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+    }
+</body>
+</html>

@@ -1,0 +1,54 @@
+﻿@model CrearEmpresaProveedorDocumentoLegalViewModel
+
+@{
+    ViewBag.Title = "Crear documento proveedor";
+    //Clase body personalizado
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<!--Formulario-->
+@using (Html.BeginForm("Crear", "EmpresaProveedorDocumentoLegal", new { Area = "Gestion" },
+                                                    FormMethod.Post,
+                                                    //new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginFormCrearEmpresaDocumentoLegal", OnSuccess = "OnSucessFormCrearEmpresaDocumentoLegal" },
+                                                    new
+                                                    {
+                                                        enctype = "multipart/form-data",
+                                                        @class = "",
+                                                        role = "form"
+
+                                                    })
+                                                )
+{
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.EmpresaId)
+
+    @*@Html.HiddenFor(m => m.ProveedorId)*@
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NombreDocumentoLegal, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.NombreDocumentoLegal, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NombreDocumentoLegal, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+        <input id="Documento" name="Documento" type="file" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="text-right">
+        <input type="submit" alt="Submit" class="btn btn-success" value="Guardar" onclick="OnBeginFormCrearEmpresaDocumentoLegal()" />
+        <a href="@Url.Action("Listar", "Empresa", new { Area = "Gestion" } )" class="btn btn-warning">
+            Cancelar
+        </a>
+    </div>
+}
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+}

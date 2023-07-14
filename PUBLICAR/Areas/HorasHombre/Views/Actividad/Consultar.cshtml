@@ -1,0 +1,79 @@
+﻿@model  ActividadViewModel
+@{
+    ViewBag.Title = "DETALLE ACTIVIDAD";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+
+    @Html.HiddenFor(m => Model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CategoriaActividad, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.CategoriaActividad, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+    </div>
+    <div class="form-group col-md-6 padding-left-0">
+        @Html.LabelFor(m => m.Empresa, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Empresa, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+    </div>
+    @if (Model.Cliente != null)
+    {
+        <div class="form-group col-md-6 padding-right-0">
+            @Html.LabelFor(m => m.Cliente, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Cliente, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+        </div>
+    }
+    @if (Model.OrdenTrabajo != null)
+    {
+        <div class="form-group col-md-6 padding-left-0">
+            @Html.LabelFor(m => m.OrdenTrabajo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.OrdenTrabajo, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+        </div>
+    }
+    @if (Model.Presupuesto != null)
+    {
+        <div class="form-group col-md-6 padding-right-0">
+            @Html.LabelFor(m => m.Presupuesto, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Presupuesto, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+        </div>
+    }
+    <div class="clearfix"></div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.TipoActividad, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.TipoActividad, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+    </div>
+    <div class="form-group col-md-4 padding-left-0">
+        @Html.LabelFor(m => m.Fecha, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(m => m.HoraInicial, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.HoraInicial, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+    </div>
+    <div class="form-group col-md-4 padding-right-0">
+        @Html.LabelFor(m => m.HoraFinal, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.HoraFinal, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+        @Html.ValidationMessageFor(m => m.HoraFinal, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Observaciones, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+    </div>
+
+    <div class="form-group text-right">
+        @if (Model.Editable)
+        {
+            if (Sesion.HasPermission("HOH-ACTIVIDAD_EDITAR"))
+            {
+                <a href="@Url.Action("Editar", "Actividad", new { Area = "HorasHombre", Id = Model.Id })" class="btn btn-secondary" data-execute-onload="OnLoadEditar" data-size="lg" data-toggle="modal" data-target="#">EDITAR</a>
+            }
+            if (Sesion.HasPermission("HOH-ACTIVIDAD_ELIMINAR"))
+            {
+                <input type="button" onclick="confirmarEliminar()" class="btn btn-danger" value="ELIMINAR" />
+            }
+        }
+        <button type="button" class="btn btn-warning" data-dismiss="modal">CERRAR</button>
+    </div>
+</div>

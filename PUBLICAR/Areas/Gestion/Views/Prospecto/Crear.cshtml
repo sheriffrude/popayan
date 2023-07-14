@@ -1,0 +1,164 @@
+﻿@model CrearProspectoViewModel
+@{
+    ViewBag.Title = "Crear Prospecto";
+}
+
+<div class="col-md-12 text-center">
+    <h3>@Model.NombreComercial</h3>
+    <br />
+    @if (Model.LogoPath != null)
+    {
+        <img src="@Url.Content(Model.LogoPath)" class="img-responsive img-center" />
+    }
+</div>
+
+<div class="clearfix"></div>
+<div class="ln_solid"></div>
+
+<!--Formulario-->
+<div class="col-md-12">
+    @using (Ajax.BeginForm("Crear", "Prospecto", new { Area = "Gestion" }, new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnBegin = "OnBeginCrearProspecto",
+        OnComplete = "OnCompleteCrearProspecto"
+    }, new { id = "registro-prospecto-form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="clearfix"></div>
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-6" })
+        <div class="clearfix"></div>
+
+
+        <div id="root-wizard" class="wizard-gestion">
+            @Html.HiddenFor(p => p.EmpresaId)
+
+            <ul class="nav nav-tabs">
+                <li role="presentation">
+                    <a href="#tab-info-basica" data-toggle="tab">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Información básica
+                    </a>
+                </li>
+
+                <li role="presentation">
+                    <a href="#tab-informacion-laboral" data-toggle="tab">
+                        <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Información laboral
+                    </a>
+                </li>
+
+                <li role="presentation">
+                    <a href="#tab-informacion-salarial" data-toggle="tab">
+                        <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Información salarial
+                    </a>
+                </li>
+
+                <li role="presentation">
+                    <a href="#tab-seguridad" data-toggle="tab">
+                        <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Prestaciones sociales, Seguridad Social y Parafiscales
+                    </a>
+                </li>
+
+                <li role="presentation">
+                    <a href="#tab-deduccion" data-toggle="tab">
+                        <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Deducciones trabajador
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <!--Datos básicos-->
+                <div class="tab-pane" id="tab-info-basica">
+                    <div class="help-block"></div>
+                    <div class="clearfix"></div>
+                    <div id="partial-datos">
+                        @Html.Partial("~/Areas/Gestion/Views/Prospecto/_DatosBasicos.cshtml", Model.DatosBasicos)
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <!--Información laboral-->
+                <div class="tab-pane" id="tab-informacion-laboral">
+                    <div class="help-block"></div>
+                    <div class="clearfix"></div>
+                    <form id="info-laboral-form">
+                        @Html.Partial("~/Areas/Gestion/Views/Prospecto/_InformacionLaboral.cshtml", Model.InformacionLaboral)
+                    </form>
+                    <div class="clearfix"></div>
+                </div>
+
+
+                <!--Seguridad social, Prestaciones sociales y parafiscales-->
+                <div class="tab-pane" id="tab-seguridad">
+                    <div class="help-block"></div>
+                    <div class="clearfix"></div>
+                    <form id="seguridad-social-form">
+                        @Html.Partial("~/Areas/Gestion/Views/Prospecto/_SeguridadSocial.cshtml", Model.SeguridadSocial)
+                    </form>
+                    <div class="clearfix"></div>
+                </div>
+
+
+                <!--Información salarial-->
+                <div class="tab-pane" id="tab-informacion-salarial">
+                    <div class="help-block"></div>
+                    <div class="clearfix"></div>
+                    <form id="info-salarial-form">
+                        @Html.Partial("~/Areas/Gestion/Views/Prospecto/_InformacionSalarial.cshtml", Model.InformacionSalarial)
+                    </form>
+                    <div class="clearfix"></div>
+
+                </div>
+
+                <!--Deducción-->
+                <div class="tab-pane" id="tab-deduccion">
+                    <div class="help-block"></div>
+                    <div class="clearfix"></div>
+                    <form id="deduccion-form">
+                        @Html.Partial("~/Areas/Gestion/Views/Prospecto/_DeduccionesTrabajador.cshtml", Model.ProspectoDeduccion)
+                    </form>
+                    <div class="clearfix"></div>
+                    <div class="text-right">
+                        <input type="button" class="btn btn-secondary" value="Guardar" onclick="registrarProspecto()" value="Guardar">
+                        <a href="@Url.Action("Listar", "Empleado", new { Area = "Gestion", id = Model.EmpresaId })" class="btn btn-warning">Cerrar</a>
+                    </div>
+                </div>
+
+            </div>
+            <ul class="pager wizard">
+                <li class="previous first" style="display:none;"><a class="btn btn-secondary" href="#"><span class="glyphicon glyphicon-fast-backward"></span></a></li>
+                <li class="previous"><a href="#"><span class="glyphicon glyphicon-backward"></span></a></li>
+                <li class="next last"><a href="#"><span class="glyphicon glyphicon-fast-forward"></span></a></li>
+                <li class="next"><a href="#"><span class="glyphicon glyphicon-forward"></span></a></li>
+            </ul>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery.bootstrap.wizard")
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Prospecto/_DatosBasicos.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Prospecto/_SeguridadSocial.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Prospecto/_InformacionLaboral.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Prospecto/_InformacionSalarial.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Prospecto/_Deduccion.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Prospecto/Crear.js")
+
+    <script type="text/javascript">
+        initDatosBasicos();
+        initSeguridadSocial();
+        initInformacionLaboral();
+        initInformacionSalarial();
+
+        var URL_CAMBIO_UNIDAD_NEGOCIO = '@Url.Action("ListarOpcionesAreas", "Empleado", new { Area = "Gestion"})';
+        var URL_CONSULTAR_DOCUMENTOS_PERSONAS = "@Url.Action("ConsultarDocumentos", "Persona", new { Area =  "Gestion" })";
+        var URL_CONSULTAR_PERSONA = "@Url.Action("Consultar", "Persona", new { Area = "Gestion" })";
+        var URL_UPLOAD = "@Url.Action("UploadFotoCrear", "Persona", new { Area = "Gestion" })";
+        var URL_LISTAR_PROSPECTOS = "@Url.Action("Listar", "Empleado", new { Area = "Gestion", id = Model.EmpresaId })";
+
+    </script>
+
+}

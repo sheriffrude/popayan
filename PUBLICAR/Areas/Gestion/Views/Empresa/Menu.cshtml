@@ -1,0 +1,147 @@
+﻿@model MenuEmpresaViewModel
+@{
+    ViewBag.Title = "Empresa";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+
+<div class="col-md-12 text-center">
+    <h3>@Model.NombreComercial</h3>
+    <br />
+    @if (Model.LogoPath != null)
+    {
+        <img src="@Url.Content(Model.LogoPath)" class="img-responsive img-center" />
+    }
+</div>
+
+<div class="clearfix"></div>
+<div class="ln_solid"></div>
+
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("GES-EMPRESA_VER"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Ver", "Empresa", new {Area = "Gestion", id = Model.Id})" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Agencias.svg")" class="img-response" alt="Empresas" />
+                <h4 class="text-center">Información Agencia</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-UNIDAD_NEGOCIO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "UnidadDeNegocio", new {Area = "Gestion", id = Model.Id})" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Deptos.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Unidades de Negocio</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-EMPRESA_CENTRO_COSTO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "EmpresaCentroCosto", new {Area = "Gestion", id = Model.Id})" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Deptos.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Centros de Costo</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-EMPLEADO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Empleado", new { Area = "Gestion", Id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Personas.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Empleados</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-EMPRESA_CLIENTE_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "EmpresaCliente", new { Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Clientes.svg")" class="img-response" alt="Clientes" />
+                <h4 class="text-center">Clientes</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-EMPRESA_PROVEEDOR_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "EmpresaProveedor", new { Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Proveedor.svg")" class="img-response" alt="Proveedores" />
+                <h4 class="text-center">Proveedores</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-EMPRESA_MEMORANDO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "EmpleadoMemorando", new { Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Deptos.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Memorandos</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-EMPRESA_IMPUESTO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "EmpresaImpuesto", new {Area = "Gestion", id = Model.Id})" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Deptos.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Impuestos</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-TARIFARIO_MENU"))
+    {
+        @*<div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "Tarifario", new { Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Deptos.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Tarifarios</h4>
+            </a>
+        </div>*@
+    }
+    @if (Sesion.HasPermission("GES-NOMINA_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "Nomina", new { Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Nómina</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-EMPRESA_PRESUPUESTO_TIPO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "EmpresaPresupuestoTipo", new { Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Tipos de Presupuesto</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-EMPRESA_PRESUPUESTO_CLASIFICACION_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "EmpresaPresupuestoClasificacion", new { Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Clasificaciones de presupuesto</h4>
+            </a>
+        </div>
+    }
+
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "PlanNegocio", new { Area = "Gestion", empresaId = Model.Id })" class="content-icono-menu">
+            <img src="@Url.Content("~/Content/images/Gestion/PPTOS_Generales.svg")" class="img-response" alt="Personas" />
+            <h4 class="text-center">Plan de Negocio</h4>
+        </a>
+    </div>
+</div>

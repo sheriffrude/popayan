@@ -1,0 +1,113 @@
+﻿@model TrasladarOrdenTrabajoViewModel
+@{
+    ViewBag.Title = $"Trasladar orden de trabajo {Model.Codigo}";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("Trasladar", "OrdenTrabajo", new { Area = "Trafico" },
+        new AjaxOptions {
+            HttpMethod = "POST",
+            OnComplete = "ORDEN_TRABAJO_TRALADO.OnComplete"
+        },
+        new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="clearfix"></div>
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+        <div class="clearfix"></div>
+
+        @Html.HiddenFor(m => m.OrdenTrabajoId)
+        @Html.HiddenFor(m => m.EmpresaId)
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Codigo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Codigo, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Empresa, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Empresa, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Cliente, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Cliente, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Producto, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Producto, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.NombreDirector, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NombreDirector, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.NombreEjecutivo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NombreEjecutivo, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.NombreProductorEjecutivo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NombreProductorEjecutivo, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.Referencia, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Referencia, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.Descripcion, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="clearfix"></div>
+        <div class="ln_solid"></div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.ClienteId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.ClienteId, Model.ListaClientes, "Seleccione",
+            new
+            {
+                @class = "form-control selectpicker",
+                data_live_search = true,
+                onchange = "ORDEN_TRABAJO_TRALADO.OnchangeCliente(this)"
+            })
+            @Html.ValidationMessageFor(m => m.ClienteId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.ProductoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.ProductoId, new List<SelectListItem>(), "Seleccione",
+            new
+            {
+                @class = "form-control selectpicker",
+                data_live_search = true,
+            })
+            @Html.ValidationMessageFor(m => m.ProductoId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.ProfesionalClienteId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.ProfesionalClienteId, new List<SelectListItem>(), "Seleccione",
+            new
+            {
+                @class = "form-control selectpicker",
+                data_live_search = true,
+            })
+            @Html.ValidationMessageFor(m => m.ProfesionalClienteId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.Observaciones, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Observaciones, "", new { @class = "text-danger" })
+        </div>
+        <div class="clearfix"></div>
+        <div class="text-right">
+            <a href="@Url.Action("Consultar", "OrdenTrabajo", new { Area = "Trafico", id = Model.OrdenTrabajoId })" class="btn btn-secondary" data-toggle="modal" data-target="#" data-size="lg">
+                Volver
+            </a>
+            <button type="submit" class="btn btn-success">Trasladar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    }
+</div>

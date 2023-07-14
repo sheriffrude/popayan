@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "layout";
+    ViewBag.Title = "Desembolso de anticipo";
+}
+
+<p><strong>Número del Anticipo: </strong>@Model.Id</p>
+<p><strong>Version del anticipo: </strong>@Model.VersionPresupuestoId</p>
+<p><strong>Total desembolsado ($) : </strong>@Model.Desembolsado</p>
+<p><strong>Observaciones: </strong>@Model.Observaciones</p>
+<p><strong>Presupuesto: </strong>@Model.PresupuestoId</p>

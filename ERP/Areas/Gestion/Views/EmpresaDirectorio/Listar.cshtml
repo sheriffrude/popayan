@@ -1,0 +1,87 @@
+﻿@model ListarEmpresaDirectorioViewModel
+@{
+    ViewBag.Title = "Directorio empresarial";
+}
+
+<!--Filtro de la tabla-->
+<div class="row">
+    <div class="form-group col-md-6 padding-right-0">
+        @Html.LabelFor(m => m.EmpresaId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.EmpresaId, Model.Empresas, "Seleccione", new { @class = "form-control", onchange = "ListarDirectorio.OnchangeEmpresa(this)" })
+        @Html.ValidationMessageFor(m => m.EmpresaId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6 padding-right-0">
+        @Html.LabelFor(m => m.UnidadNegocioId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.UnidadNegocioId, Model.UnidadesNegocio, "Seleccione", new { @class = "form-control ", onchange = "ListarDirectorio.OnchangeUnidadNegocio(this)" })
+        @Html.ValidationMessageFor(m => m.UnidadNegocioId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6 padding-right-0">
+        @Html.LabelFor(m => m.AreaId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.AreaId, Model.Areas, "Seleccione", new { @class = "form-control", onchange = "ListarDirectorio.OnChangeArea(this)" })
+        @Html.ValidationMessageFor(m => m.AreaId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6 padding-right-0">
+        @Html.LabelFor(m => m.CargoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.CargoId, Model.Cargos, "Seleccione", new { @class = "form-control", onchange = "ListarDirectorio.OnChangeCargo(this)" })
+        @Html.ValidationMessageFor(m => m.CargoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6 padding-right-0">
+        @Html.LabelFor(m => m.EstadoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.EstadoId, Model.Estados, "Seleccione", new { @class = "form-control", onchange = "ListarDirectorio.OnChangeEstado(this)" })
+        @Html.ValidationMessageFor(m => m.EstadoId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6 padding-right-0">
+        <div id="form-filtro-tabla-documento-legal" action="#">
+            <div class="form-group">
+                <label class="control-label">Búsqueda</label>
+                <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+            </div>
+            <div class="form-group text-right">
+                <input type="button" class="btn btn-secondary" value="BUSCAR" onclick="ListarDirectorio.reconstruirTabla()" />
+                <input type="button" class="btn btn-secondary" value="VER TODO" onclick="ListarDirectorio.ResetearTablaPais()" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <table id="tabla-directorio" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Empleado</th>
+                    <th class="text-center">Empresa</th>
+                    <th class="text-center">Cargo</th>
+                    <th class="text-center">Correo empresarial</th>
+                    <th class="text-center">Celular</th>
+                    <th class="text-center">Extensión</th>
+                    <th class="text-center">Unidad de negocio</th>
+                    <th class="text-center">Area</th>
+                    <th class="text-center">Estado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <script type="text/javascript">
+        var urlListar = "@Url.Action("Listar", "EmpresaDirectorio", new { area = "Gestion" })";
+        var URL_CAMBIO_EMPRESA = "@Url.Action("ListarOpcionesUnidadesNegocio", "EmpresaDirectorio", new { area = "Gestion" })";
+        var URL_CAMBIO_UNIDAD_NEGOCIO = "@Url.Action("ListarOpcionesAreas", "EmpresaDirectorio", new { area = "Gestion" })";
+    </script>
+
+    @Scripts.Render("~/Areas/Gestion/Scripts/EmpresaDirectorio/Listar.js")
+}
+

@@ -1,0 +1,58 @@
+﻿@model RegistroMonetizacionSalarialViewModel
+
+@{
+    ViewBag.Title = "Crear monetización salarial";
+}
+
+<script type="text/javascript" src="~/Areas/Parametrizacion/Scripts/MonetizacionSalarial/Crear.js"></script>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+@using (Ajax.BeginForm("Crear", "MonetizacionSalarial", new AjaxOptions { HttpMethod = "POST", OnComplete = "CrearMonetizacionSalarial.onComplete", OnBegin = "CrearMonetizacionSalarial.onBegin" }, new { id = "crearMonetizacionForm" }))
+{
+    <div class="modal-body">    
+            @Html.AntiForgeryToken()
+
+            <div class="clearfix"></div>
+            @Html.ValidationMessage("Error", new { @class = "text-danger" })
+            @Html.ValidationMessage("Success", new { @class = "text-success" })
+            @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+            <div class="clearfix"></div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FechaInicial, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.FechaInicial, new { @class = "form-control algo",  placeholder = "DD/MM/YYYY" })
+                @Html.ValidationMessageFor(m => m.FechaInicial, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FechaFinal, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.FechaFinal, new { @class = "form-control algo", placeholder = "DD/MM/YYYY" })
+                @Html.ValidationMessageFor(m => m.FechaFinal, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Resolucion, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Resolucion, new { @class = "form-control algo", placeholder = "Resolución de la monetización" })
+                @Html.ValidationMessageFor(m => m.Valor, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Valor, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Valor, new { @class = "form-control algo", placeholder = "Valor del salario" })
+                @Html.ValidationMessageFor(m => m.Valor, "", new { @class = "text-danger" })
+            </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success" id="guardar" name="guardar">GUARDAR</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">CERRAR</button>
+    </div>
+}
+<script type="text/javascript">
+    CrearMonetizacionSalarial.init();
+</script>
+

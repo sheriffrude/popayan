@@ -1,0 +1,74 @@
+﻿@model ListarPresupuestoItemAsociadoViewModel
+@{
+    ViewBag.Title = "Lista de asociados";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @Html.HiddenFor(m => m.ItemId)
+    <div id="content_btns_edicion_items_asociados" class="display-none">
+        <div class="pull-left">
+            <button type="button" onclick="PresupuestoItemAsociadoCrear.Crear()" class="btn btn-secondary">
+                <i class="fa fa-plus" aria-hidden="true"></i> Adicionar Asociado
+            </button>            
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-secondary" onclick="PresupuestoItemAsociadoEditar.GuardarCambios()">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar
+            </button>
+        </div>
+        <div class="clearfix"></div>
+        <div class="ln_solid"></div>
+    </div>
+    <div class="col-md-12">
+        <!--// Botones funciones de los items-->
+        <table id="tabla_presupuesto_items_asociados" class="table table-striped table-bordered compact text-center tabla-presupuesto" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center azul">#</th>
+                    <th class="text-center azul">Elim</th>
+                    <th class="text-center azul">Sel.</th>
+                    <th class="text-center azul">ANT</th>
+                    <th class="text-center azul">OP</th>
+                    <th class="text-center azul">OC</th>
+                    <th class="text-center azul">Nombre</th>
+                    <th class="text-center azul">Descripción</th>
+                    <th class="text-center azul">Proveedor</th>
+                    <th class="text-center azul">Dias</th>
+                    <th class="text-center azul">Cant.</th>
+                    <th class="text-center azul">Valor Unitario</th>
+                    <th class="text-center gris-oscuro">SubTotal</th>
+                    <th class="text-center azul">Anticipo</th>
+                    <th class="text-center azul">Manual</th>
+                    <th class="text-center azul">Impuesto(s)</th>
+                    <th class="text-center azul">Volumen</th>
+                    <th class="text-center gris">Costo Interno</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="11"></th>
+                    <th class="gris">
+                        <div class="input-group">
+                            <label class="input-group-addon">$</label>
+                            <input type="text" id="TotalSubtotalInterno" class="form-control" data-format-price="" value="0" readonly="readonly" />
+                        </div>
+                    </th>
+                    <th colspan="3"></th>
+                    <th class="gris">
+                        <div class="input-group">
+                            <label class="input-group-addon">$</label>
+                            <input type="text" id="TotalCostoInterno" class="form-control" data-format-price="" value="0" readonly="readonly" />
+                        </div>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+</div>

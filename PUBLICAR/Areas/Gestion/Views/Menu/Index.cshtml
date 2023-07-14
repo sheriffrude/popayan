@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "Gestión";
+}
+
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("GES-EMPRESA_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Empresa", new {Area = "Gestion"})">
+                <img src="@Url.Content("~/Content/images/Gestion/Agencias.svg")" class="img-response" alt="Empresas" />
+                <h4 class="text-center">Empresas</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-CLIENTE_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Cliente", new { Area = "Gestion" })">
+                <img src="@Url.Content("~/Content/images/Gestion/Clientes.svg")" class="img-response" alt="Clientes" />
+                <h4 class="text-center">Clientes</h4>
+            </a>
+        </div>
+    }
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Menu", "Proveedor", new {Area = "Gestion"})">
+            <img src="@Url.Content("~/Content/images/Gestion/Proveedor.svg")" class="img-response" alt="Proveedores" />
+            <h4 class="text-center">Proveedores</h4>
+        </a>
+    </div>
+    @if (Sesion.HasPermission("GES-BANCO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Banco", new {Area = "Gestion"})">
+                <img src="@Url.Content("~/Content/images/Gestion/Bancos.svg")" class="img-response" alt="Bancos" />
+                <h4 class="text-center">Bancos</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-PERSONA_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Persona", new {Area = "Gestion"})">
+                <img src="@Url.Content("~/Content/images/Gestion/Personas.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Personas</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-USUARIO_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "Usuario", new {Area = "Gestion"})">
+                <img src="@Url.Content("~/Content/images/Gestion/Personas.svg")" class="img-response" alt="Usuarios" />
+                <h4 class="text-center">Usuarios</h4>
+            </a>
+        </div>
+    }
+
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "EmpresaDirectorio", new {Area = "Gestion"})" class="content-img-response">
+            <img src="@Url.Content("~/Content/images/Gestion/Proveedor.svg")" class="img-response" alt="Directorio de agencias" />
+            <h4 class="text-center">Directorio de agencias</h4>
+        </a>
+    </div>
+
+    @if (Sesion.HasPermission("GES-CARGO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Cargo", new {Area = "Gestion"})" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Cargos.svg")" class="img-response" alt="Cargos" />
+                <h4 class="text-center">Cargos</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-DEPARTAMENTO_TRAFICO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "DepartamentoTrafico", new { Area = "Gestion" })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Deptos.svg")" class="img-response" alt="Departamentos de Tráfico" />
+                <h4 class="text-center">Departamentos de Tráfico</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-PRESUPUESTO_GENERAL_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "PresupuestoGeneral", new { Area = "Gestion" })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/PPTOS_Generales.svg")" class="img-response" alt="Presupuesto General" />
+                <h4 class="text-center">Presupuesto General</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-CONTACTO_PERSONAL_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "ContactoPersonal", new { Area = "Gestion" })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Contactos_Personales.svg")" class="img-response" alt="Contactos personales" />
+                <h4 class="text-center">Contactos personales</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-JERARQUIAS_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "JerarquiaAprobacion", new { Area = "Gestion" })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Jerarquia_aprobaciones.svg")" class="img-response" alt="Jerarquia de aprobaciones" />
+                <h4 class="text-center">Jerarquia de aprobaciones</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-TIPOS_ACTIVIDAD_HORAS_HOMBRE_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TiposActividadHoraHombre", new { Area = "Gestion" })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="img-response" alt="Tipos de actividades - hora hombre" />
+                <h4 class="text-center">Tipos de actividades por departamento de tráfico - (Hora Hombre)</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-TIPO_TAREA_TRAFICO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoTareaTrafico", new { Area = "Gestion" })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="img-response" alt="Tipos de tareas - Tráfico" />
+                <h4 class="text-center">Tipos de tareas por departamento de tráfico - (Tráfico)</h4>
+            </a>
+        </div>
+    }
+</div>

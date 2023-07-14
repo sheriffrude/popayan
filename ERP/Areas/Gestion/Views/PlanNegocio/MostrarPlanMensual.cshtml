@@ -1,0 +1,46 @@
+﻿@model ProcessPlusERP.Areas.Gestion.Models.PlanNegocio.PlanNegocioMensualViewModel
+
+<div class="panel panel-primary planMensual" id="planMensual-@Model.IdMes">
+    <div class="panel-heading text-center">
+        @Model.NombreMes
+    </div>
+    <input type="hidden" id="nombre-mes-@Model.IdMes" value="@Model.NombreMes"/>
+    <div class="panel-body row">
+
+        <div>            
+            <div class="form-group col-lg-4">
+                <label class="control-label">Meta promedio</label>
+                <input type="number" name="metaPromedio" class="metaPromedioClass form-control" id="metaPromedio-@Model.IdMes"  disabled/>
+            </div>
+            <div class="form-group col-lg-4">
+                <label class="control-label">Meta estimada</label>
+                <input type="number" name="metaEstimada" class="metaEstimadaClass form-control" id="metaEstimada-@Model.IdMes" onchange="generarPlan.actualizarAcumuladoMensual(event)"/>
+            </div>
+            <div class="form-group col-lg-4">
+                <label class="control-label">Utilidad</label>
+                <input type="number" name="utilidad" class="utilidadClass form-control" id="utilidad-@Model.IdMes"  onchange="generarPlan.actualizarUtilidadMensual(event)" disabled/>
+            </div>            
+        </div>
+
+        <div >
+            <div class="form-group col-lg-5 text-center">
+                <label class="control-label">Meta promedio / <br /> #Recursos</label>
+                <input type="number" name="metaPromedio" class="metaPromedioRecursosClass form-control" id="metaPromedio-@Model.IdMes-recurso" disabled />
+            </div>
+            <div class="form-group col-lg-5 text-center">
+                <label class="control-label">Meta estimada  / <br /> #Recursos</label>
+                <input type="number" name="metaEstimada" class="metaEstimadaRecursosClass form-control" id="metaEstimada-@Model.IdMes-recurso" disabled/>
+            </div>
+
+            @*<div class="form-group col-lg-6 text-center">
+                <label class="control-label">Meta estimada  / <br /> #Recursos</label>
+                <input type="number" name="metaEstimada" class="metaEstimadaRecursosClass form-control" id="metaEstimada-@Model.IdMes-recurso" disabled />
+            </div>*@
+
+            @*<div class="form-group col-lg-2 text-center">
+                <label class="control-label">Utilidad / #Recursos</label>
+                <input type="text" name="utilidad" class="utilidadRecursosClass form-control" id="utilidad-@Model.IdMes-recurso" disabled/>
+            </div>*@
+        </div>
+    </div>
+</div>

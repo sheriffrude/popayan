@@ -1,0 +1,91 @@
+﻿@model UnoAUnoViewModel
+@{
+    ViewBag.Title = "Generar informe cuentas por pagar";
+}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<div class="col-md-12">
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.EmpresaId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.EmpresaId, Model.ListaEmpresas, "Seleccione",
+        new
+        {
+            @class = "form-control selectpicker",
+            data_live_search = "true",
+            onchange = "CuentasPorPagar.OnChangeEmpresa(this)"
+        })
+        @Html.ValidationMessageFor(m => m.EmpresaId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.ClienteId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.ClienteId, new List<SelectListItem>(), "Seleccione",
+        new
+        {
+            @class = "form-control selectpicker",
+            data_live_search = "true",
+            onchange = "CuentasPorPagar.OnChangeCliente(this)"
+        })
+        @Html.ValidationMessageFor(m => m.ClienteId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-3">
+        @Html.LabelFor(m => m.ProductoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.ProductoId, new List<SelectListItem>(), "Seleccione", new
+   {
+       @class = "form-control selectpicker",
+       data_live_search = "true",
+       onchange = "CuentasPorPagar.OnchangeProducto(this)"
+   })
+        @Html.ValidationMessageFor(m => m.ProductoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.OrdenTrabajoEstadoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.OrdenTrabajoEstadoId, Model.ListaEstadoOrdenTrabajo, "Seleccione", new
+   {
+       @class = "form-control selectpicker",
+       onchange = "CuentasPorPagar.OnChangeOrdenTrabajoEstado(this)"
+   })
+        @Html.ValidationMessageFor(m => m.OrdenTrabajoEstadoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.OrdenTrabajoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.OrdenTrabajoId, new List<SelectListItem>(), "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true" })
+        @Html.ValidationMessageFor(m => m.OrdenTrabajoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.AnioId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.AnioId, Model.ListaAnios, "Todos los años", new { @class = "form-control selectpicker" })
+        @Html.ValidationMessageFor(m => m.AnioId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        <label class="control-label"></label>
+        <div class="clearfix"></div>
+        <a href="#" class="btn btn-secondary" onclick="CuentasPorPagar.VisualizarReporte()">Generar</a>
+    </div>
+
+    <hr />
+    <div class="col-md-12">
+        <div id="reportCuentasPorPagar" class="report"></div>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/Reports.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/Reports.js")
+
+    <script type="text/javascript">
+        var URL_CLIENTE_LISTAR_POR_EMPRESA = "@Url.Action("ListarOpcionesPorEmpresa", "UsuarioCliente", new { Area = "Gestion" })";
+        var URL_LISTAR_PRODUCTOS_POR_CLIENTE = "@Url.Action("ListaOpcionesPorCliente", "ClienteProducto", new { Area = "Gestion" })";
+        var URL_ORDEN_TRABAJO_LISTAR = "@Url.Action("ListarOpcionesPorEmpresaClienteEstado", "OrdenTrabajo", new { Area = "Trafico" })";
+    </script>
+
+    @Scripts.Render("~/Areas/Reportes/scripts/Financieros/CuentasPorPagar.js")
+}

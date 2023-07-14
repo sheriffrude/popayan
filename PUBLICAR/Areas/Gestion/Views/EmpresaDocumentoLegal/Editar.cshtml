@@ -1,0 +1,105 @@
+﻿@model EditarEmpresaDocumentoLegalViewModel
+@{
+    ViewBag.Title = "Editar documento legal empresa";
+
+    //Clase body personalizado
+    ViewBag.BodyClass = "body-background-gray";
+
+    var ListaTipoDocumentoLegal = ViewBag.ListaTipoDocumentoLegal as IEnumerable<SelectListItem>;
+}
+<!--Espacio vertical-->
+<div class="help-block"></div>
+<!--Formulario-->
+@using (Html.BeginForm("Editar", "EmpresaDocumentoLegal", new { area = "Gestion" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+{@Html.ValidationSummary(true)
+@Html.ValidationMessage("Error", new { @class = "text-danger" })
+@Html.ValidationMessage("Success", new { @class = "text-success" })
+@Html.AntiForgeryToken()
+
+
+@Html.HiddenFor(m => m.EmpresaId)
+@Html.HiddenFor(m => m.Id)
+@Html.HiddenFor(m => m.DocumentoId)
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Nombre, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.DocLegalEmpresaId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.DocLegalEmpresaId, ListaTipoDocumentoLegal, "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true" })
+    @Html.ValidationMessageFor(m => m.DocLegalEmpresaId, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    <input type="hidden" id="FechaVencimientoAux" value="@Model.FechaVencimiento" />
+    @Html.LabelFor(m => m.FechaVencimiento, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaVencimiento, new { @class = "form-control datepicker" })
+    @Html.ValidationMessageFor(m => m.FechaVencimiento, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+    <div class="radio">
+        <label>
+            @Html.RadioButtonFor(m => m.Estado, false)
+            Inactivar
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            @Html.RadioButtonFor(m => m.Estado, true)
+            Activar
+        </label>
+    </div>
+    @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6 padding-left-10">
+    <div class="form-group">
+        @Html.LabelFor(m => m.NotificarCorreos, new { @class = "control-label col-md-12 padding-left-0 padding-right-0" })
+        <div class="col-md-10 padding-left-0">
+            <input type="email" id="NotificarCorreos" class="form-control" />
+        </div>
+        @Html.ValidationMessageFor(m => m.NotificarCorreos, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group text-right">
+        <button type="button" onclick="AdicionarEmail()" class="btn btn-info">Adicionar</button>
+    </div>
+</div>
+<!--Contenedor de emails-->
+<input type="hidden" id="items-email" value="@Model.NotificarEmail" />
+<div name="contenedor-form-email" id="contenedor-form-email">
+    <div class="form-group col-md-6 padding-right-10">
+        <table id="tabla-Email" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%"></table>
+    </div>
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Documento, new { type = "file" })
+    @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    <label class="control-label">Documento actual</label><br />
+    <a class="btn btn-success" href="@Url.Action("DownloadFile", "EmpresaDocumentoLegal", new { Area = "Gestion", id = Model.DocumentoId })">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Descargar
+    </a>
+</div>
+
+<div class="form-group col-md-12 text-right">
+    <button type="submit" class="btn btn-secondary">Guardar</button>
+    <a class="btn btn-warning" href="@Url.Action("Listar", "EmpresaDocumentoLegal", new { Area = "Gestion", id = Model.EmpresaId })">Cancelar</a>
+</div>
+}
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaDocumentoLegal/Editar.js")
+}
+<script>
+    var URL_LISTADO_DOC_LEGALES = '@Url.Action("Listar", "EmpresaDocumentoLegal", new { Area = "Gestion", id = Model.EmpresaId })';
+
+</script>

@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Producción";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("PRO-PRESUPUESTO_CREAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Crear", "Presupuesto", new {Area = "Produccion"})">
+                <img src="@Url.Content("~/Content/images/Produccion/Nuevo_presupuesto.svg")" class="img-responsive" alt="Nuevo Presupuesto" />
+                <h4 class="text-center">Nuevo Presupuesto</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PRO-PRESUPUESTO_LISTAR"))
+            {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "BuscarPresupuesto", new {Area = "Produccion" })">
+                <img src="@Url.Content("~/Content/images/Produccion/Buscar_presupuesto.svg")" class="img-responsive" alt="Buscar PPTO" />
+                <h4 class="text-center">Buscar Presupuesto</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PRO-INGRESO_COSTO_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "IngresoCosto", new {Area = "Produccion"})">
+                <img src="@Url.Content("~/Content/images/Produccion/Ingresos_costos.svg")" class="img-responsive" alt="Facturación" />
+                <h4 class="text-center">Ingresos y Costos</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PRO-APROBACION_MENU"))
+    {
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Menu", "Aprobacion", new {Area = "Produccion"})">
+            <img src="@Url.Content("~/Content/images/Produccion/Aprobaciones.svg")" class="img-responsive" alt="Facturación" />
+            <h4 class="text-center">Aprobaciones</h4>
+        </a>
+    </div>
+    }
+</div>

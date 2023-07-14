@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Reporte";
+}
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<div class="col-md-12">
+    <div id="reportViewer1" class="report"></div>
+</div>
+
+<a href="#" onclick="OnClickDownload()">Descargar</a>
+
+@Styles.Render("~/bundles/Reports.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/Reports.js")
+
+    <script type="text/javascript">
+        function OnClickDownload() {
+            var parameters = {
+                BriefId: 5
+            };
+            ReportsP._OpenTab("PDF", "Trafico/Brief/Brief.trdp", parameters);
+            //ReportsP._Download("PDF", "Trafico/Brief/Brief.trdp", parameters);
+        }
+
+        $(function () {
+            var USUARIO_ID = "@Sesion.GetId()";
+            console.log(USUARIO_ID);
+            var parameters = {
+                IdUsuario: 1
+            };
+            ReportsP._Draw($("#reportViewer1"), "Reportes/Trafico/ConsolidadoOrdenTrabajoPorPersona.trdp", parameters);
+            //ReportsP._Download("PDF", "LISTADO OTS.trdp", parameters);
+
+            /*
+            $reportViewer = $("#reportViewer1")
+                .telerik_ReportViewer({
+                    serviceUrl: "http://localhost:9091/api/reports/",
+
+                    reportSource: {
+                        report: "Produccion/PresupuestoAnticipo/Anticipo.trdp",
+                        parameters: {
+                            AnticipoId: 1,
+                            EmpresaImagenUrl: "http://alacarta.mx/admin/restaurante/2012-10-18/45_p.jpg"
+                        }
+                    }
+                });
+            */
+        });
+    </script>
+}

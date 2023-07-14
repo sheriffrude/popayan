@@ -1,0 +1,53 @@
+﻿@model IniciarSesionViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutControlAcceso.cshtml";
+}
+
+<div class="row">
+    <img src="@Url.Content("~/Content/images/ControlAcceso/logo-process-plus.png")" alt="logo-process" class="img-responsive" />
+</div>
+
+<div class="row">
+
+    @using (Html.BeginForm("IniciarSesion", "ControlAcceso",
+                        new { ReturnUrl = ViewBag.ReturnUrl },
+                        FormMethod.Post,
+                        new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(m => m.ReturnUrl)
+
+        <h1>Iniciar sesión</h1>
+
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control", @placeholder = "Usuario" })
+            @Html.ValidationMessageFor(m => m.Usuario, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Contraseña" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+
+        @*
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                </div>
+            </div>
+        *@
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Entrar</button>
+        </div>
+        <div class="form-group">
+            <a href="@Url.Action("RestablecerPassword", "ControlAcceso")">Restablecer mi contraseña</a>
+        </div>
+    }
+</div>

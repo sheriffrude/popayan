@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Consultar anticipos";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+
+    <div class="col-md-12">
+        <div class="pull-left">
+            <form id="form_filtro_tabla_anticipos" class="form-inline">
+                <div class="form-group">
+                    <input type="search" name="input-filtro" id="input_filtro_listar_anticipos" class="form-control" placeholder="Filtro" />
+                    <input type="submit" class="btn btn-default" value="BUSCAR" />
+                    <input type="button" class="btn btn-default" value="VER TODO" onclick="PresupuestoItemAnticipoListar.ResetearTabla()" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <table id="tabla_anticipo" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Número de anticipo</th>
+                    <th class="text-center">Usuario que solicitó el anticipo</th>
+                    <th class="text-center">Razón de la solicitud</th>
+                    <th class="text-center">Fecha de solicitud</th>
+                    <th class="text-center">Fecha en la que es requerido</th>
+                    <th class="text-center">Fecha máxima de legalización</th>
+                    <th class="text-center">Forma de pago</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Total del anticipo</th>
+                    <th class="text-center">Total desembolsado</th>
+                    <th class="text-center">Total legalización</th>
+                    <th>Solicitar aprobación</th>
+                    <th>Desembolsar</th>
+                    <th class="text-center">Activar/<br />Cancelar</th>
+                    <th class="text-center">Detalle</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="col-md-12">
+    <div id="reportViewer1" class="report"></div>
+</div>

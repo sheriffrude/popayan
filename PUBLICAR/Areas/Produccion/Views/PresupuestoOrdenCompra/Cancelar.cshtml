@@ -1,0 +1,137 @@
+﻿@model CancelarPresupuestoOrdenCompraViewModel
+@{
+    ViewBag.Title = "Cancelar Orden de compra # " + Model.OrdenCompraId;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("Cancelar", "PresupuestoOrdenCompra", new { Area = "Produccion" },
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnComplete = "PresupuestoOrdenCompraCancelar.OnComplete"
+        },
+        new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="clearfix"></div>
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+        <div class="clearfix"></div>
+
+        @Html.HiddenFor(m => m.OrdenCompraId)
+        <div class="form-group col-md-3">
+            @Html.LabelFor(m => m.FechaEntrega, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaEntrega, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-3">
+            @Html.LabelFor(m => m.FechaRadicacion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaRadicacion, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-3">
+            @Html.LabelFor(m => m.FechaVigenciaInicial, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaVigenciaInicial, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-3">
+            @Html.LabelFor(m => m.FechaVigenciaFinal, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaVigenciaFinal, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.FormaPago, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FormaPago, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.LugarEntrega, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.LugarEntrega, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Observacion, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Observacion, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.NotaLegal, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.NotaLegal, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.Usuario, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.FechaHoraCreacion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaHoraCreacion, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Estado, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="ln_solid"></div>
+
+        <!--Tabla Items-->
+        <div class="col-md-12">
+            <label class="control-label">Items</label>
+            <table id="tabla_orden_compra_items" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center"></th>
+                        <th class="text-center">Grupo</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Días</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Valor Unitario</th>
+                        <th class="text-center">SubTotal</th>
+                        <th class="text-center">Volumen</th>
+                        <th class="text-center">Costo</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="ln_solid"></div>
+
+        <!--Tabla Asociados-->
+        <div class="col-md-12">
+            <label class="control-label">Asociados</label>
+            <table id="tabla_orden_compra_items_asociados" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Item</th>
+                        <th class="text-center"></th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Días</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Valor Unitario</th>
+                        <th class="text-center">SubTotal</th>
+                        <th class="text-center">Volumen</th>
+                        <th class="text-center">Costo</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.ObservacionesCancelacion, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.ObservacionesCancelacion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ObservacionesCancelacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-12 text-right">
+            <a href="@Url.Action("Consultar", "PresupuestoOrdenCompra", new { Area = "Produccion", id = Model.OrdenCompraId })" class="btn btn-secondary" data-size="all" data-toggle="modal" data-target="#" data-execute-onload="PresupuestoOrdenCompraConsultar.OnLoad">
+                Volver
+            </a>
+            <button type="submit" class="btn btn-success">Cancelar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    }
+</div>
+<div class="clearfix"></div>

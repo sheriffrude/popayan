@@ -1,0 +1,45 @@
+﻿@model MenuNominaViewModel
+@{
+    ViewBag.BodyClass = "body-background-gray";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+<div class="row content-menu">
+    <div class="col-sm-12 text-right">
+        <a href="@Url.Action("Menu", "Empresa", new { Area = "Gestion", id = Model.EmpresaId } )">
+            <img src="@Url.Content("~/Content/images/boton-regresar-menu.png")" alt="" />
+        </a>
+    </div>
+    <div class="col-md-12 height-2"></div>
+    <div class="col-md-12">
+        @if (Sesion.HasPermission("GES-NOMINA_CREAR"))
+        {
+            <div class="col-md-3 col-sm-4 text-center">
+                <a href="@Url.Action("Crear", "Nomina", new { Area = "Gestion", id = Model.EmpresaId })" class="content-icono-menu">
+                    <img src="@Url.Content("~/Content/images/Gestion/Clientes.svg")" alt="Información Usuarios" class="img-responsive" />
+                    <h4>Cargar Nomina</h4>
+                </a>
+            </div>
+        }
+        @if (Sesion.HasPermission("GES-NOMINA_LISTAR"))
+        {
+            <div class="col-md-3 col-sm-4 text-center">
+                <a href="@Url.Action("Listar", "Nomina", new { Area = "Gestion", id = Model.EmpresaId })" class="content-icono-menu">
+                    <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" alt="Información Usuarios" class="img-responsive" />
+                    Listar Nominas
+                </a>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,123 @@
+﻿@model  EditarPersonaViewModel
+@{
+    ViewBag.Title = "Consultar Persona";
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+    @if (Model.FotoPath != null)
+    {
+        <div class="form-group col-md-6">
+            @Html.HiddenFor(m => m.FotoPath)
+            @Html.LabelFor(m => m.Foto, new { @class = "control-label" })
+            <div id="content-foto" class="col-md-12">
+                <img id="img-foto" src="@Url.Content(Model.FotoPath)" alt="" class="img-responsive img-center" />
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Foto, new { @class = "control-label" })
+            <div id="content-foto" class="col-md-12" hide>
+                <img src="#" alt="Foto" class="img-responsive img-center" />
+            </div>
+        </div>
+    }
+
+    <div class="clearfix"></div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.PrimerNombre, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PrimerNombre, new { @class = "form-control", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.PrimerNombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.SegundoNombre, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.SegundoNombre, new { @class = "form-control", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.SegundoNombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.PrimerApellido, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PrimerApellido, new { @class = "form-control", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.PrimerApellido, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.SegundoApellido, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.SegundoApellido, new { @class = "form-control", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.SegundoApellido, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.TipoDocumentoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.TipoDocumentoId, Model.ListaTiposDocumento, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true", @disabled = "disabled" })
+        @Html.ValidationMessageFor(m => m.TipoDocumentoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Documento, new { @class = "form-control", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Correo, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.SexoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.SexoId, Model.ListaSexos, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.SexoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.FechaNacimiento, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaNacimiento, new { @class = "form-control", placeholder = "dd/mm/aaaa", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.FechaNacimiento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.EstadoCivilId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.EstadoCivilId, Model.ListaEstadosCiviles, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.EstadoCivilId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(m => m.RHId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.RHId, Model.ListaRH, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.RHId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-6 form-group">
+        @Html.LabelFor(m => m.Direcciones, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Direcciones, new { @class = "form-control", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.Direcciones, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-6 form-group">
+        @Html.LabelFor(m => m.Telefonos, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Telefonos, new { @class = "form-control", @type = "number", @max = "999999999999", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.Telefonos, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-6 form-group">
+        @Html.LabelFor(m => m.Celulares, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Celulares, new { @class = "form-control", @type = "number", @max = "999999999999", @disabled = "disabled"  })
+        @Html.ValidationMessageFor(m => m.Celulares, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-12 text-right">
+        <a type="button" href="@Url.Action("Listar", "Persona", new { Area = "Gestion" } )" class="btn btn-warning">Cerrar</a>
+    </div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var URL_UPLOAD_FOTO = "@Url.Action("UploadFotoEditar", "Persona", new { area = "Gestion" })";
+        var URL_LISTAR_PERSONAS = "@Url.Action("Listar", "Persona", new { area = "Gestion" })";
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/Persona/Detalle.js")
+}

@@ -1,0 +1,12 @@
+﻿<h2>Upload file</h2>
+
+@using (Html.BeginForm("UploadFile2", "Prueba", new { area = "" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <label for="upload">Upload file (Repositorio de archivos):</label>
+    <input type="file" name="upload" id="upload"/>
+    <br />
+    <input type="submit" value="Upload"/>
+    <br />
+    @ViewBag.Message
+}

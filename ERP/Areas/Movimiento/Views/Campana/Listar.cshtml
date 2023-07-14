@@ -1,0 +1,78 @@
+﻿@model CamapanaViewModel
+
+@{
+    ViewBag.Title = "CAMPAÑAS";
+}
+
+<!-- Titulo y boton volver -->
+<div class="pull-right">
+    <div id="asociar" class="hidden">
+        @if (Sesion.HasPermission("TRA-ASOCIAR_CAMPANA"))
+            {
+            <a href="@Url.Action("AsociarCampaña", "Campana", new { Area = "Trafico" })" data-toggle="modal" data-target="#" data-size="lg">
+                <img src="@Url.Content("~/Content/images/Trafico/campana/asociar.png")" alt="" />
+            </a>
+        }
+    </div>
+    <div id="adicionar">
+        @if (Sesion.HasPermission("TRA-CREAR_CAMPANA"))
+            {
+            <a href="@Url.Action("CrearCampana", "Campana", new { Area = "Trafico" } )" data-toggle="modal" data-target="#" data-size="lg">
+                <img src="@Url.Content("~/Content/images/Trafico/campana/adicionar.png")" alt="" />
+            </a>
+        }
+    </div>
+</div>
+
+<div class="help-block"></div>
+
+
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#Administracion" aria-controls="Administracion" role="tab" data-toggle="tab" onclick="CambiarTag('1')">Administración</a></li>
+    @if (Sesion.HasPermission("TRA-ASOCIAR"))
+    {
+        <li role="presentation"><a href="#Asociacion" aria-controls="Asociacion" role="tab" data-toggle="tab" onclick="CambiarTag('0')">Asociación</a></li>
+    }
+</ul>
+
+<!--Content Tabs-->
+<div class="tab-content">
+
+    <!--TAB PRESUPUESTO-->
+    <div class="help-block"></div>
+    <div role="tabpanel" class="tab-pane active" id="Administracion">
+        @Html.Partial("_ListaAdministracion", Model)
+        <!--FIN tipo TODOS-->
+    </div>
+    <!--TAB PENDIENTES-->
+    <div role="tabpanel" class="tab-pane" id="Asociacion">
+        @Html.Partial("_ListaAsociacion", Model)
+    </div>
+</div>
+
+
+
+@Styles.Render("~/bundles/dataTables.css")
+@Styles.Render("~/bundles/wickedpicker.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <script type="text/javascript">
+
+        var URL_CLIENTES = "@Url.Action("ListarClientes", "Campana", new { Area = "Trafico"})";
+        var URL_LISTAR_CAMPANA = "@Url.Action("ListarCampana", "Campana", new { Area = "Trafico"})";
+        var URL_CAMBIAR_ESTADO_CAMPANA = "@Url.Action("CambiarEstado", "Campana", new { Area = "Trafico" })";
+        var URL_EDITAR_CAMPANA = "@Url.Action("EditarCampana", "Campana", new { Area = "Trafico" })";
+        var URL_CAMPANAS = "@Url.Action("SelectCampana", "Campana", new { Area = "Trafico" })";
+        var URL_LISTAR_OTS = "@Url.Action("ListarOt", "Campana", new { Area = "Trafico" })";
+        var URL_CAMPANAS_ESTADO = "@Url.Action("SelectCampanaEstado", "Campana", new { Area = "Trafico" })";
+        var URL_LISTAR_ASOCIACION = "@Url.Action("ListarAsociacion", "Campana", new { Area = "Trafico"})";
+        var URL_ELIMINAR_CAMPANA = "@Url.Action("EliminarAsociacion", "Campana", new { Area = "Trafico"})";
+        var PERMISO_EDITAR_CAMPANA = ("@Sesion.HasPermission("TRA-EDITAR_CAMPANA")" === "True");
+    </script>
+    @Scripts.Render("~/Areas/Trafico/scripts/Campana/Listar.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Campana/Asociacion.js")
+
+
+}

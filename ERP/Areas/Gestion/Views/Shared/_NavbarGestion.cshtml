@@ -1,0 +1,78 @@
+﻿<div class="row">
+    <div class="col-md-6 padding-0">
+        <ul class="nav nav-pills nav-justified subnavbar-gestion">
+            @if (Sesion.HasPermission("GES-EMPRESA_LISTAR"))
+            {
+                <li class="li-menu">
+                    <a href="@Url.Action("Listar", "Empresa", new { Area = "Gestion" })" class="btn btn-menu btn-xs @(ViewBag.SubNavbarGestionItemActive == "AGENCIA" ? "active" : "")">
+                        <strong>Agencias</strong>
+                    </a>
+                </li>
+            }
+            @*@if (Sesion.HasPermission("PAR-CLIENTE_MENU"))
+            {*@
+                <li class="li-menu">
+                    <a href="@Url.Action("Menu", "Clientes", new {Area = "Gestion"})" class="btn btn-menu btn-xs @(ViewBag.SubNavbarGestionItemActive == "CLIENTE" ? "active" : "")">
+                        <strong>Clientes</strong>
+                    </a>
+                </li>
+            @*}*@
+            @if (Sesion.HasPermission("GES-PROVEEDOR_LISTAR"))
+            {
+                <li class="li-menu">
+                    <a href="@Url.Action("Listar", "Proveedor", new {Area = "Gestion"})" class="btn btn-menu btn-xs @(ViewBag.SubNavbarGestionItemActive == "PROVEEDOR" ? "active" : "")">
+                        <strong>Proveedores</strong>
+                    </a>
+                </li>
+            }
+            @if (Sesion.HasPermission("GES-BANCO_LISTAR"))
+            {
+                <li class="li-menu">
+                    <a href="@Url.Action("Listar", "Banco", new { Area = "Gestion" })" class="btn btn-menu btn-xs @(ViewBag.SubNavbarGestionItemActive == "BANCO" ? "active" : "")">
+                        <strong>Bancos</strong>
+                    </a>
+                </li>
+            }
+            @if (Sesion.HasPermission("GES-PERSONA_LISTAR"))
+            {
+                <li class="li-menu">
+                    <a href="@Url.Action("Listar", "Persona", new { Area = "Gestion" })" class="btn btn-menu btn-xs @(ViewBag.SubNavbarGestionItemActive == "PERSONA" ? "active" : "")">
+                        <strong>Personas</strong>
+                    </a>
+                </li>
+            }
+            @if (Sesion.HasPermission("GES-USUARIO_MENU"))
+            {
+                <li class="li-menu">
+                    <a href="@Url.Action("Menu", "Usuario", new { Area = "Gestion" })" class="btn btn-menu btn-xs @(ViewBag.SubNavbarGestionItemActive == "USUARIO" ? "active" : "")">
+                        <strong>Usuarios</strong>
+                    </a>
+                </li>
+            }
+            @if (Sesion.HasPermission("GES-CARGO_LISTAR"))
+            {
+                <li class="li-menu">
+                    <a href="@Url.Action("Listar", "Cargo", new { Area = "Gestion" })" class="btn btn-menu btn-xs @(ViewBag.SubNavbarGestionItemActive == "CARGO" ? "active" : "")">
+                        <strong>Cargos</strong>
+                    </a>
+                </li>
+            }
+            @if (Sesion.HasPermission("GES-DEPARTAMENTO_TRAFICO_LISTAR"))
+            {
+                <li class="li-menu">
+                    <a href="@Url.Action("Listar", "DepartamentoTrafico", new { Area = "Gestion" })" class="btn btn-menu btn-xs @(ViewBag.SubNavbarGestionItemActive == "DEPARTAMENTO_TRAFICO" ? "active" : "")">
+                        <strong>Departamentos Tráfico</strong>
+                    </a>
+                </li>
+            }
+            @if (Sesion.HasPermission("GES-PRESUPUESTO_GENERAL_MENU"))
+            {
+                <li class="li-menu">
+                    <a href="@Url.Action("Listar", "PresupuestoGeneral", new { Area = "Gestion" })" class="btn btn-menu btn-xs @(ViewBag.SubNavbarGestionItemActive == "PRESUPUESTO_GENERAL" ? "active" : "")">
+                        <strong>Presupuesto General</strong>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

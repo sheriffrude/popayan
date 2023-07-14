@@ -1,0 +1,83 @@
+﻿@model JerarquiaAprobacionListarViewModel
+@{
+    var nombreTipoJerarquia = "";
+    if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.Cotizacion.GetHashCode())
+    {
+        nombreTipoJerarquia = "Cotizaciones";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.PresupuestoInterno.GetHashCode())
+    {
+        nombreTipoJerarquia = "Presupuesto Interno";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.CancelacionPresupuesto.GetHashCode())
+    {
+        nombreTipoJerarquia = "Cancelación Presupuesto";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.CierrePresupuesto.GetHashCode())
+    {
+        nombreTipoJerarquia = "Cierre Presupuesto";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.FacturaProveedor.GetHashCode())
+    {
+        nombreTipoJerarquia = "Factura proveedor";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.Anticipos.GetHashCode())
+    {
+        nombreTipoJerarquia = "Anticipo";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.Legalizacion.GetHashCode())
+    {
+        nombreTipoJerarquia = "Legalización";
+    }
+
+    ViewBag.Title = "Jerarquías de aprobación " + nombreTipoJerarquia;
+}
+
+@Html.HiddenFor(m => m.JerarquiaAprobacionTipoId)
+
+<!--Filtro de la tabla-->
+<div class="pull-left">
+    <div id="form-filtro-tabla" class="form-inline">
+        <div class="form-group">
+            <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+            <input type="button" class="btn btn-secondary" value="BUSCAR" onclick="ListarJerarquiasPresupuesto.reconstruirTabla()" />
+            <input type="button" class="btn btn-secondary" value="VER TODO" onclick="ListarJerarquiasPresupuesto.ResetearTablaPais()" />
+        </div>
+    </div>
+</div>
+<div class="pull-right">
+    <a href="@Url.Action("Crear", "JerarquiaAprobacion", new { Area = "Gestion", Id = Model.JerarquiaAprobacionTipoId })" class="btn btn-secondary">Adicionar</a>
+</div>
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <table id="tabla_jerarquias" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Empresa</th>
+                    <th class="text-center">Centro de costos</th>
+                    <th class="text-center">Cliente</th>
+                    <th class="text-center">% Rentabilidad</th>
+                    <th class="text-center">Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <script type="text/javascript">
+        var URL_JERARQUIA_APROBACION_LISTAR = "@Url.Action("Listar", "JerarquiaAprobacion", new { area = "Gestion", jerarquiaAprobacionTipoId = Model.JerarquiaAprobacionTipoId })";
+        var URL_JERARQUIA_APROBACION_EDITAR = "@Url.Action("Editar", "JerarquiaAprobacion", new { area = "Gestion" })";
+        var URL_JERARQUIA_APROBACION_CAMBIAR_ESTADO = "@Url.Action("CambiarEstado", "JerarquiaAprobacion", new { area = "Gestion"})";
+    </script>
+
+    @Scripts.Render("~/Areas/Gestion/Scripts/JerarquiaAprobacion/Listar.js")
+}

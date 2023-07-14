@@ -1,0 +1,25 @@
+﻿/**CUSTOM MEDIA-QUERIES xs (moviles)**/
+@media (max-width: 768px) {
+    .content-messages {
+        width: 100%;
+    }
+}
+/**CUSTOM MEDIA-QUERIES xs**/
+
+/**CUSTOM MEDIA-QUERIES sm (tablets)**/
+@media (min-width: 768px) and (max-width: 992px) {
+    .content-messages {
+        width: 100%;
+    }
+}
+/**CUSTOM MEDIA-QUERIES sm**/
+
+/**CUSTOM MEDIA-QUERIES md (escritorio mediano)**/
+@media (min-width: 992px) and (max-width: 1200px) {
+}
+/**CUSTOM MEDIA-QUERIES md**/
+
+/**CUSTOM MEDIA-QUERIES lg (escritorio grande)**/
+@media (min-width: 1200px) {
+}
+/**CUSTOM MEDIA-QUERIES lg**/

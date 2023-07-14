@@ -1,0 +1,32 @@
+﻿@model TimeTableViewModel
+@{
+    ViewBag.Title = "Listar";
+}
+
+@Html.HiddenFor(m => m.FechaHoy)
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="help-block"></div>
+        <div class="col-md-12">
+            <div id='calendarioTareas'></div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+@Styles.Render("~/bundles/fullcalendar.css")
+@section Scripts{
+    <script type="text/javascript">
+        var URL_LISTAR_TIMETABLE = "@Url.Action("Listar", "TimeTable", new { Area = "Trafico" })";
+        var URL_TAREA_RESPONDER = "@Url.Action("Responder", "Tarea", new { Area = "Trafico" })";
+        var URL_IMAGEN = "@Url.Content("~/Content/images/Trafico/TimeTable/torta.png")";
+    </script>
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/fullcalendar.js")
+    @Scripts.Render("~/bundles/dataTables.js")
+    @*@Scripts.Render("~/bundles/wickedpicker.js")*@
+    @Scripts.Render("~/Areas/Trafico/scripts/Tarea/Responder.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/TimeTable/Listar.js")
+}

@@ -1,0 +1,211 @@
+﻿@model SolicitudPendienteViewModel
+@{
+    ViewBag.Title = "MIS SOLICITUDES PENDIENTES";
+}
+
+<div class="col-md-10">
+    <div class="pull-left">
+        <h3>@ViewBag.Title</h3>
+        <img src="@Url.Content(Model.Logo)" class="icono-menu hidden" alt="Logo" id="Logo" />
+    </div>
+</div>
+
+<div class="col-md-1">
+    <div class="pull-right">
+        @if (Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_REPORTE"))
+        {
+            <a href="#"><img src="@Url.Content("~/Content/images/Trafico/Trafico/imprimir.png")" alt="" Onclick="OnClickDownload()" /></a>
+        }
+    </div>
+</div>
+
+<div class="col-md-1">
+    <div class="pull-right">
+        <a href="@Url.Action("Menu", "TraficoAdministrativo", new { Area = "Trafico" } )">
+            <img src="@Url.Content("~/Content/images/boton-regresar-menu.png")" alt="" />
+        </a>
+    </div>
+</div>
+
+@Html.HiddenFor(m => m.UsuarioId)
+@Html.HiddenFor(m => m.NombreUsuario)
+
+<div class="clearfix"></div>
+<div class="help-block"></div>
+
+<div class="container-fluid">
+    <div class="panel panel-success">
+        <div class="panel-heading">Filtros de búsqueda</div>
+        <div class="panel-body">
+            <div class="container-fluid">
+
+                <div class="col-md-12">
+                    <form class="form-inline">
+
+                        <div class="form-group">
+                            <label for="texto">Seleccione un Estado:</label>
+                            <select id="TipoCierreId" class="form-control">
+                                <option value="1" selected>En Proceso </option>
+                                <option value="2">Finalizadas</option>
+                                <option value="3">Canceladas</option>
+                                <option value="4">Todas</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="texto">Seleccione Marca:</label>
+                            <select id="MarcaIdBusqueda" class="form-control">
+                                <option value="2">Sin revisar</option>
+                                <option value="3">Administrativo</option>
+                                <option value="4">Servicios</option>
+                                <option value="1" selected>Todas</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="texto">Ingrese el texto:</label>
+                            <input type="text" class="form-control" id="texto">
+                        </div>
+
+                        <div class="form-group">
+                            <div class="select-style">
+                                <label for="texto"></label>
+                                <input type="button" class="btn btn-trafico" value="Buscar" onclick="TablaSolicitudesPendientes()" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="panel panel-success">
+        <div class="panel-heading">Marcar solicitudes</div>
+        <div class="panel-body">
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.MarcaId, new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.MarcaId, Model.ListaMarcas, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+                            @Html.ValidationMessageFor(m => m.MarcaId, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="select-style">
+                                <label for="texto"> </label>
+                                @if (Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_VER_STATUS"))
+                                {
+                                    <input type="button" class="btn btn-trafico" value="Marcar" onclick="MarcarSolicitud()" />
+                                }
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+<div class="help-block"></div>
+
+<div class="container-fluid">
+    <div class="panel panel-success">
+        <div class="panel-heading">LISTADO DE SOLICITADES ASIGANDAS</div>
+        <div class="panel-body">
+            <div class="container-fluid">
+
+                <div class="col-md-12">
+                    <div>
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td width="10%" align="right">
+                                        <div style="height:18px;width:18px;background-color:#9bd39b;border:3px solid #9bd39b;border-radius:0.5em;-moz-border-radius:0.5em;-webkit-border-radius:0.5em;"></div>
+                                    </td>
+                                    <td width="15%" align="left">&nbsp;&nbsp;<b> EN PROGRESO</b></td>
+                                    <td width="10%" align="right">
+                                        <div style="height:18px;width:18px;background-color:#8fcacb;border:3px solid #8fcacb;border-radius:0.5em;-moz-border-radius:0.5em;-webkit-border-radius:0.5em;"></div>
+                                    </td>
+                                    <td width="15%" align="left">&nbsp;&nbsp;<b>SIN REVISAR</b></td>
+                                    <td width="10%" align="right">
+                                        <div style="height:18px;width:18px;background-color:#bfbfbf;border:3px solid #bfbfbf;border-radius:0.5em;-moz-border-radius:0.5em;-webkit-border-radius:0.5em;"></div>
+                                    </td>
+                                    <td width="15%" align="left">&nbsp;&nbsp;<b>FINALIZADAS</b></td>
+                                    <td width="10%" align="right">
+                                        <div style="height:18px;width:18px;background-color:#e07370;border:3px solid #e07370;border-radius:0.3em;-moz-border-radius:0.3em;-webkit-border-radius:0.3em;"></div>
+                                    </td>
+                                    <td width="15%" align="left">&nbsp;&nbsp;<b> CANCELADAS</b></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="help-block"></div>
+                <div class="col-md-12">
+                    <table id="tabla_Solicitudes_pendientes" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center"></th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Empresa</th>
+                                <th class="text-center">Tipo de solicitud</th>
+                                <th class="text-center"># Solicitud</th>
+                                <th class="text-center">Título</th>
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Usuario solicitó</th>
+                                <th class="text-center">Departamento</th>
+                                <th class="text-center">Fecha y hora creación</th>
+                                <th class="text-center">Fecha propuesta respuesta</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Path</th>
+                                <th class="text-center">Archivo</th>
+                                <th class="text-center">Marca</th>
+                                <th class="text-center">Status Usuario</th>                              
+                                <th class="text-center">Status Director</th>
+                                <th class="text-center">Historial Status</th>
+                                <th class="text-center">Contactos</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Styles.Render("~/bundles/dataTables.css")
+@Styles.Render("~/bundles/Reports.css")
+@section Scripts{
+@Scripts.Render("~/bundles/dataTables.js")
+@Scripts.Render("~/bundles/Reports.js")
+
+<script type="text/javascript">
+        var URL_LISTAR_SOLICITUD_PENDIENTE = "@Url.Action("Listar", "SolicitudPendiente", new { Area = "Trafico" })";
+        var URL_HISTORIAL_STATUS = "@Url.Action("HistoricoStatus", "SolicitudPendiente", new { Area = "Trafico" })";
+        var URL_LISTAR_HISTORICO = "@Url.Action("HistoricoStatus", "SolicitudPendiente", new { Area = "Trafico" })";
+        var URL_AGREGAR_STATUS = "@Url.Action("CrearStatus", "SolicitudPendiente", new { Area = "Trafico" })";
+        var URL_AGREGAR_CONTACTO = "@Url.Action("CrearContacto", "SolicitudPendiente", new { Area = "Trafico" })";
+        var URL_LISTAR_CONTACTOS = "@Url.Action("ListarContactos", "SolicitudPendiente", new { Area = "Trafico" })";
+        var URL_TABLA_CONTACTOS = "@Url.Action("ListarContactos", "SolicitudPendiente", new { Area = "Trafico" })";
+        var URL_EDITAR_CONTACTO = "@Url.Action("EditarContacto", "SolicitudPendiente", new { Area = "Trafico" })";
+        var URL_ELIMINAR_CONTACTO = "@Url.Action("EliminarContacto", "SolicitudPendiente", new { Area = "Trafico" })";
+        var URL_MARCAR_SOLICITUD = "@Url.Action("MarcarSolicitud", "SolicitudPendiente", new { Area = "Trafico" })";
+        var TRA_TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_MARCAR = ("@Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_MARCAR")" === "True");
+        var TRA_TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_VER_STATUS = ("@Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_VER_STATUS")" === "True");
+        var TRA_TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_CREAR_STATUS = ("@Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_CREAR_STATUS")" === "True");
+        var TRA_TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_LISTAS_CONTACTOS = ("@Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_LISTAS_CONTACTOS")" === "True");
+        var TRA_TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_EDITAR_CONTACTOS = ("@Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_EDITAR_CONTACTOS")" === "True");
+        var TRA_TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_ELIMINAR_CONTACTOS = ("@Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_PENDIENTE_ELIMINAR_CONTACTOS")" === "True");
+</script>
+@Scripts.Render("~/Areas/Trafico/scripts/SolicitudPendiente/Listar.js")
+
+}

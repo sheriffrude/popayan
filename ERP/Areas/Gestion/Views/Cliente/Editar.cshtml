@@ -1,0 +1,150 @@
+﻿@model EditarClienteViewModel
+@{
+    ViewBag.Title = "Editar Cliente";
+    ViewBag.BodyClass = "body-background-gray";
+}
+@using (Ajax.BeginForm("Editar", "Cliente", new { Area = "Gestion" },
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnComplete = "OnCompleteEditarCliente",
+        OnBegin = "OnBeginEditarCliente"
+    },
+    new { @class = "", role = "form" })
+    )
+{
+    @Html.AntiForgeryToken()
+
+    <div class="clearfix"></div>
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+    <div class="clearfix"></div>
+
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NombreComercial, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.NombreComercial, new { @class = "form-control", maxlength = "100" })
+        @Html.ValidationMessageFor(m => m.NombreComercial, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NombreLegal, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.NombreLegal, new { @class = "form-control", maxlength = "100" })
+        @Html.ValidationMessageFor(m => m.NombreLegal, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Nit, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Nit, new { @class = "form-control", maxlength = "20" })
+        @Html.ValidationMessageFor(m => m.Nit, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.FechaAniversario, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaAniversario, new { @class = "form-control", placeholder = "dd/mm/aaaa" })
+        @Html.ValidationMessageFor(m => m.FechaAniversario, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(m => m.PaisId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.PaisId, Model.ListaPaises, "Seleccione", new
+   {
+       @class = "form-control",
+       onchange = "OnchangePais(this, " +
+                "'" + Url.Action("ListaOpcionesPorPais", "Departamento", new { Area = "Parametrizacion" }) + "');"
+   })
+        @Html.ValidationMessageFor(m => m.PaisId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(m => m.DepartamentoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.DepartamentoId, Model.ListaDepartamentos, "Seleccione", new
+   {
+       @class = "form-control",
+       onchange = "OnchangeDepartamento(this, '" + Url.Action("ListaOpcionesCiudadesPorDepartamento", "Ciudad", new { Area = "Parametrizacion" }) + "');"
+   })
+        @Html.ValidationMessageFor(m => m.DepartamentoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(m => m.CiudadId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.CiudadId, Model.ListaCiudades, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+        @Html.ValidationMessageFor(m => m.CiudadId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Telefonos, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Telefonos, new { @class = "form-control", @type = "number", @max = "999999999999" })
+        @Html.ValidationMessageFor(m => m.Telefonos, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Direccion, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control", maxlength = 100 })
+        @Html.ValidationMessageFor(m => m.Direccion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.CorreoContacto, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.CorreoContacto, new { @class = "form-control", maxlength = 100 })
+        @Html.ValidationMessageFor(m => m.CorreoContacto, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.CorreoGerente, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.CorreoGerente, new { @class = "form-control", maxlength = 100 })
+        @Html.ValidationMessageFor(m => m.CorreoGerente, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="clearfix"></div>
+    <hr />
+
+    <!--Filtro-->
+    <div class="col-md-12">
+        <div class="pull-left">
+            <div id="form-filtro-tabla" class="form-inline">
+                <div class="form-group">
+                    <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                    <input type="button" class="btn btn-secondary" value="BUSCAR" onclick="AplicarFiltroTabla()"/>
+                    <input type="button" id="btn-ver-todo" class="btn btn-secondary" value="VER TODO" onclick="limpiarFiltro()"/>
+                </div>
+            </div>
+        </div>
+        <div class="pull-right">
+            <a href="@Url.Action("Asociar", "Cliente", new { Area = "Gestion", nombreContenedor = "$EMPRESAS", metodoRegistro="agregarEmpresa"  })" class="btn btn-secondary" data-toggle="modal" data-target="#">ASOCIAR EMPRESAS</a>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <table id="tabla-empresas" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Identificador</th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="col-md-12 text-right">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a type="button" href="@Url.Action("Listar", "Cliente", new { Area = "Gestion" } )" class="btn btn-warning">Cerrar</a>
+    </div>
+}
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <script type="text/javascript">
+        var URL_LISTAR_ASOCIACION_CLIENTE_EMPRESAS = "@Url.Action("ListarAsociacionClienteEmpresas", "Cliente", new { Area = "Gestion", Id = Model.Id } )";
+        var URL_CAMBIAR_ESTADO_ASOCIACION_CLIENTE_EMPRESA = "@Url.Action("CambiarEstadoAsociaionClienteEmpresa", "Cliente", new { Area = "Gestion" })";
+        var URL_VER_CLIENTE = "@Url.Action("Ver", "Cliente", new { area = "Gestion", Id = Model.Id })";
+
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/Cliente/Editar.js")
+}

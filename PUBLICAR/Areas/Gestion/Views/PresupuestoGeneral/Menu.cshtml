@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<div class="content-menu">
+    <div class="col-md-12">
+        @*@if (Sesion.HasPermission("GES-PRESUPUESTO_GENERAL_LISTAR"))
+            {*@
+        <div class="col-md-3 col-sm-3 text-center">
+            <a href="@Url.Action("Listar", "PresupuestoGeneral", new {Area = "Gestion" })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Presupuestos_Generales.svg")" alt="Ver empresa" class="icono-menu" />
+                <h4 class="text-center">Presupuesto Generales</h4>            
+            </a>
+        </div>
+        @*}*@
+        @if (Sesion.HasPermission("GES-PRESUPUESTO_GENERAL_MENU_TARIFARIO"))
+        {
+            <div class="col-md-3 col-sm-3 text-center">
+                <a href="@Url.Action("Menu", "PresupuestoGeneralTarifario", new {Area = "Gestion" })" class="content-icono-menu">
+                    
+                    <img src="@Url.Content("~/Content/images/Gestion/Presupuestos_Generales.svg")" alt="Ver empresa" class="icono-menu" />
+                    <h4 class="text-center">Tarifario (Grupos e Items)</h4>
+                </a>
+            </div>
+        }
+    </div>
+</div>

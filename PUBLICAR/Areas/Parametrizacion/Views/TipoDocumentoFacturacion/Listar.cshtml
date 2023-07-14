@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Listar tipos de documentos de facturación";
+}
+
+<!-- Titulo y boton volver -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-left">
+            <h3>@ViewBag.Title</h3>
+        </div>
+        <div class="pull-right">
+            <a href="@Url.Action("Index", "Menu", new { Area = "Parametrizacion" } )">
+                <img src="@Url.Content("~/Content/images/boton-regresar-menu.png")" alt="" />
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="listarSalarioIntegralContainer">
+    <div class="help-block"></div>
+    <!--Filtro de la tabla-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div id="form-filtro-tabla" class="form-inline">
+                    <div class="form-group">
+                        <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                        <input type="button" class="btn btn-parametrizacion" value="BUSCAR" onclick="tipoDocumentosFacturacion.reconstruirTabla()" />
+                        <input type="button" class="btn btn-parametrizacion" value="VER TODO" onclick="tipoDocumentosFacturacion.ResetearTablaPais()" />
+                    </div>
+                </div>
+            </div>
+            @*@if (Sesion.HasPermission("PAR-SALARIO-INTEGRAL-CREAR))
+                {*@
+            <div class="col-md-1 col-md-offset-5">
+                <a href="@Url.Action("Crear", "TipoDocumentoFacturacion", new {Area = "Parametrizacion"})" class="btn btn-parametrizacion" data-toggle="modal" data-target="#">Adicionar</a>
+            </div>
+            @*}*@
+        </div>
+    </div>
+    <hr />
+
+    <!--Tabla-->
+    <div class="row">
+        <div class="col-md-12">
+            <table id="tabla-tipos-documentos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Sigla</th>                        
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Acción</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Parametrizacion/Scripts/TipoDocumentoFacturacion/Listar.js")
+
+    <script type="text/javascript">
+        var urlListar = "@Url.Action("Listar", "TipoDocumentoFacturacion", new { area = "Parametrizacion" })";
+        var urlEditar = "@Url.Action("Editar", "TipoDocumentoFacturacion", new { area = "Parametrizacion" })";
+    </script>
+}
+

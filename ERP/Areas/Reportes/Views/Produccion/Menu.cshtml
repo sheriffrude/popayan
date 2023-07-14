@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Reportes Producción";
+}
+
+<div class="col-md-12 content-menu">
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("EstadosPresupuestos", "Produccion", new {Area = "Reportes"})">
+            <img src="@Url.Content("~/Content/images/Menu/Produccion.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Reporte Estados de presupuestos</h4>
+        </a>
+    </div>
+    
+
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("ReporteAnticipoLegalizacion", "Produccion", new {Area = "Reportes"})">
+            <img src="@Url.Content("~/Content/images/Menu/Produccion.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Reporte Anticipo Legalizacion</h4>
+        </a>
+    </div>
+   
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("ReporteFacturasProveedorPagadas", "Produccion", new {Area = "Reportes"})">
+            <img src="@Url.Content("~/Content/images/Menu/Produccion.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Reporte Cuentas <br> Pagadas</h4>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("ReporteFacturasProveedorPendientesxAprobar", "Produccion", new {Area = "Reportes"})">
+            <img src="@Url.Content("~/Content/images/Menu/Produccion.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Reporte Facturas  Pendientes por Aprobar</h4>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("ReporteFacturasProveedorPendientesxLlegar", "Produccion", new {Area = "Reportes"})">
+            <img src="@Url.Content("~/Content/images/Menu/Produccion.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Reporte Facturas  Pendientes por Llegar</h4>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("ReporteFacturasProveedorPendientesxPagar", "Produccion", new {Area = "Reportes"})">
+            <img src="@Url.Content("~/Content/images/Menu/Produccion.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Reporte Facturas  Pendientes por Pagar</h4>
+        </a>
+    </div>
+     <div class="col-md-3 col-sm-4 text-center">
+        <a href="/informes_process/GraficoEstadosPresupuestos.html" target = "_blanck">
+            <img src="@Url.Content("~/Content/images/Menu/Produccion.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Grafico de Estados de Presupuestos</h4>
+        </a>
+    </div>
+   
+        <div class="col-md-3 col-sm-4 text-center">
+        <a href="/informes_process/ReporteHistoricoOC.html" target = "_blanck">
+            <img src="@Url.Content("~/Content/images/Menu/Produccion.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Reporte <br>Historico OC</h4>
+        </a>
+    </div>
+      
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="/informes_process/ReportePendientesOrdenacion.html" target = "_blanck">
+            <img src="@Url.Content("~/Content/images/Menu/Produccion.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Reporte Pendientes de Ordenación</h4>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="/informes_process/ReporteSemaforoFacturacion.html" target = "_blanck">
+            <img src="@Url.Content("~/Content/images/Menu/Produccion.svg")" class="img-response" alt="Empresas" />
+            <h4 class="text-center">Reporte Semaforo "Facturacion"</h4>
+        </a>
+    </div>
+</div>

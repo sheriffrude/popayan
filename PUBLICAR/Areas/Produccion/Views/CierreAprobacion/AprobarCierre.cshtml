@@ -1,0 +1,44 @@
+﻿@model PresupuestoAprobacionViewModel
+@{
+    ViewBag.Title = "Aprobar Cierre Presupuesto";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("AprobarCierre", "CierreAprobacion", new { Area = "Produccion" },
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            OnBegin = "OnbeginAprobarCierre",
+                            OnSuccess = "OnSuccessAprobarCierre",
+                        },
+                        new { @class = "", role = "form", id = "FormAprobacionesCierre" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.Aprobado)
+        <div class="clearfix"></div>
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+        <div class="clearfix"></div>
+
+        @Html.HiddenFor(m => m.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Observacion, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Observacion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="text-right">
+            <button type="button" class="btn btn-success" onclick="GuardarCierre(true)">Aprobar</button>
+            <button type="button" class="btn btn-success" onclick="GuardarCierre(false)">Rechazar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    }
+</div>

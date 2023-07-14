@@ -1,0 +1,41 @@
+﻿@model  AsociarEmpresaProveedorViewModel
+@{
+    ViewBag.Title = "Asociar Empresas";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Asociar Empresas</h4>
+</div>
+<div class="modal-body">
+    @using (Ajax.BeginForm("CrearAsociacionEmpresaProveedor", "Proveedor", new { Area = "Gestion" },
+        new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginFormAsociarEmpresaProveedor", OnSuccess = "OnSuccessFormAsociarEmpresaProveedor" },
+        new { @class = "", role = "form" })
+        )
+    {
+       
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmpresaId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.EmpresaId, Model.ListaEmpresas, "Seleccione", new { @class = "form-control", required = "required"})
+            @Html.ValidationMessageFor(m => m.EmpresaId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <label>SELECCIONE DÍA DE PAGO(*)</label>
+            <div class="btn-group text-center" data-toggle="buttons">
+                @for (var i = 1; i < 31; i++)
+                {<label class="btn btn-info">
+                    <input type="radio"  Value="@i" id="myoptio1">@i 
+                </label>}
+                
+            </div>
+        </div>
+        <hr/>
+
+        <div class="text-right">
+            <button type="submit" class="btn btn-success" id="guardar" name="guardar">GUARDAR</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">CERRAR</button>
+        </div>
+   }
+
+</div>
+

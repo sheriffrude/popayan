@@ -1,0 +1,81 @@
+﻿@model ListarLiquidacionViewModel
+@{
+    ViewBag.Title = "Liquidaciones";
+}
+
+@Html.HiddenFor(m => m.EmpresaId)
+<div class="col-md-12 text-center">
+    <h3>@Model.NombreComercial</h3>
+    <br />
+    @if (Model.LogoPath != null)
+    {
+        <img src="@Url.Content(Model.LogoPath)" class="img-responsive img-center" />
+    }
+</div>
+
+<div class="clearfix"></div>
+<div class="ln_solid"></div>
+
+<div class="col-md-12">
+    <div class="pull-left">
+        <div class="form-inline">
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.UnidadNegocioId, Model.UnidadesNegocio, "Seleccione", new { @class = "form-control selectpicker", onchange = "OnchangeUnidadNegocioLiquidacion(this)" })
+            </div>
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.TipoDocumentoId, Model.ListaTiposDocumento, "Seleccione", new { @class = "form-control selectpicker", onchange = "OnchangeTipoDocumentoLiquidacion(this)" })
+            </div>
+            <div class="form-group">
+                <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Número de documento o nombre del empleado" />
+                <input type="button" class="btn btn-secondary " value="BUSCAR" onclick="RecargarTablaLiquidacion()" />
+            </div>
+        </div>
+    </div>
+    <div class="pull-right">
+        @if (Sesion.HasPermission("GES-LIQUIDACION_GENERAR"))
+            {
+            <div class="text-left">
+                <a href="@Url.Action("Generar", "Liquidacion", new { Area = "Gestion", id = Model.EmpresaId })" class="btn btn-primary" data-toggle="modal" data-target="#" data-execute-onload="initGenerar">Generar</a>
+            </div>
+        }
+    </div>
+</div>
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <table id="tabla-liquidacion" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Unidad de negocio</th>
+                    <th class="text-center">Tipo de documento</th>
+                    <th class="text-center">Documento</th>
+                    <th class="text-center">Nombres</th>
+                    <th class="text-center">Cargo</th>
+                    <th class="text-center">Fecha Ingreso</th>
+                    <th class="text-center">Fecha Retiro</th>
+                    <th class="text-center">Tipo de contrato</th>
+                    <th class="text-center">Sueldo base</th>
+                    <th class="text-center">Beneficio no prestacional</th>
+                    <th class="text-center">Otros</th>
+                    <th class="text-center">Valor liquidación</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Liquidacion/Listar.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Liquidacion/Generar.js")
+    <script type="text/javascript">
+        var URL_LISTAR_INDEMNIZACION = "@Url.Action("Listar", "Liquidacion", new { Area = "Gestion", id = Model.EmpresaId})";
+        var URL_CONSULTAR_DOCUMENTOS_PERSONAS = "@Url.Action("ConsultarDocumentos", "Persona", new { Area =  "Gestion" })";
+        var URL_CONSULTAR_PERSONA = "@Url.Action("Consultar", "Persona", new { Area = "Gestion" })";
+    </script>
+
+}

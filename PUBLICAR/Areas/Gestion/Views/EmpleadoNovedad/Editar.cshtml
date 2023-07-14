@@ -1,0 +1,82 @@
+﻿@model EditarEmpleadoNovedadViewModel
+@{
+    ViewBag.Title = "Editar Novedad";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("Editar", "EmpleadoNovedad", new { Area = "Gestion" },
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnBegin = "OnBeginEditarEmpleadoNovedad",
+            OnComplete = "OnCompleteEditarEmpleadoNovedad"
+        },
+        new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="clearfix"></div>
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+        <div class="clearfix"></div>
+
+        @Html.HiddenFor(m => m.EmpleadoId)
+        @Html.HiddenFor(m => m.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.NovedadId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.NovedadId, Model.ListaTiposNovedad, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+            @Html.ValidationMessageFor(m => m.NovedadId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="form-group col-md-6 padding-left-0">
+            @Html.LabelFor(m => m.FechaInicial, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaInicial, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FechaInicial, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6 padding-right-0">
+            @Html.LabelFor(m => m.FechaFinal, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaFinal, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FechaFinal, "", new { @class = "text-danger" })
+        </div>
+        
+        <div class="clearfix"></div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Observaciones, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Observaciones, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+            <div class="radio">
+                <label>
+                    @Html.RadioButtonFor(m => m.Estado, false)
+                    Inactivar
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    @Html.RadioButtonFor(m => m.Estado, true)
+                    Activar
+                </label>
+            </div>
+            @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+        </div>
+        <div class="clearfix"></div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    }
+</div>

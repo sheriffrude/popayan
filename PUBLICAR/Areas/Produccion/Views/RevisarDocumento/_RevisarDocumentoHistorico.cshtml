@@ -1,0 +1,67 @@
+﻿<div class="clearfix"></div>
+<div class="help-block"></div>
+<div class="clearfix"></div>
+<div class="help-block"></div>
+<div class="clearfix"></div>
+
+<div class="col-md-12">
+    <div class="form-group col-md-12">
+        <div class="form-inline">
+            <div class="form-group col-md-3">
+                <label class="control-label">Tipo de documento</label>
+                <select class="form-control" id="select-tipo-documento-revisar-historico" onchange="OnChangeMostrarEstadoDocumentoRevisado(this)"></select>
+            </div>
+            <div class="form-group col-md-3 hidden" id="estado-documento-revisado">
+                <label class="control-label">seleccione un estado</label>
+                <select class="form-control" id="select-estado-documento-revisado-historico">
+                    <option value="0">TODOS</option>
+                    <option value="1">APROBADO</option>
+                    <option value="2">RECHAZADO</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label class="control-label" id="label-numero-documento">Fecha desde</label>
+                <input type="text" id="fecha-desde-revisar-documento-historico" class="form-control" />
+            </div>
+            <div class="form-group col-md-3 ">
+                <label class="control-label" id="label-numero-documento">Fecha hasta</label>
+                <input type="text" id="fecha-hasta-revisar-documento-historico" class="form-control" />
+            </div>
+            <div class="form-group col-md-3 ">
+                <a class="btn btn-warning" onclick="BuscarHistoricoDocumentosRevisados()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+            </div>
+            <div class="clearfix"></div>
+            <hr />
+            <div class="clearfix"></div>
+            <div class="form-group col-md-12 hidden" id="caja-mostrar-historico-documento-revisar">
+                <table id="tabla-historico-revisar-documentos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>NÚMERO</th>
+                            <th>OC</th>
+                            <th>OT</th>
+                            <th>EMPRESA</th>
+                            <th>CLIENTE</th>
+                            <th># RADICADO</th>
+                            <th>FECHA</th>
+                            <th>HORA</th>
+                            <th>TIPO</th>
+                            <th>ESTADO</th>
+                            <th>OBSERVACION</th>
+                            <th>FECHA REVISION</th>
+                            <th>HORA REVISION</th>
+                            <th>DESCARGAR</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+<hr />
+<div class="clearfix"></div>
+

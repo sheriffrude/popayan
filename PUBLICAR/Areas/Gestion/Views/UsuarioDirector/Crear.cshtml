@@ -1,0 +1,73 @@
+﻿@model CrearUsuarioDirectorViewModel
+@{
+    ViewBag.Title = "Asignar director a usuario";
+}
+<!--Formulario-->
+@using (Html.BeginForm("Crear", "UsuarioDirector", new { Area = "Gestion" },
+    FormMethod.Post,
+    new { @class = "", role = "form" })
+    )
+{
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    @Html.HiddenFor(m => m.UsuarioId)
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.UsuarioId, new { @class = "control-label col-md-12 padding-left-0" })
+        <div class="col-md-12 padding-left-0 form-inline">
+            <input type="search" id="input-filtro-usuarios" class="form-control" placeholder="Buscar Usuario" />
+            <input type="button" value="Buscar" id="input-buscar-usuarios" class="btn btn-secondary" />
+        </div>
+        <table id="tabla-usuarios" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Nombre Usuario</td>
+                    <td>Nombre Persona</td>
+                    <td>Documento</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        @Html.ValidationMessageFor(m => m.UsuarioId, "", new { @class = "text-danger" })
+    </div>
+    
+    @Html.HiddenFor(m => m.UsuarioDirectorId)
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.UsuarioDirectorId, new { @class = "control-label col-md-12 padding-left-0" })
+        <div class="col-md-12 padding-left-0 form-inline">
+            <input type="search" id="input-filtro-usuarios-directores" class="form-control" placeholder="Buscar Usuario Director" />
+            <input type="button" value="Buscar" id="input-filtro-usuarios-directores" class="btn btn-secondary" onclick="RecargarTablaUsuariosDirectores()" />
+        </div>
+        <table id="tabla-usuarios-directores" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Nombre Usuario</td>
+                    <td>Nombre Persona</td>
+                    <td>Documento</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        @Html.ValidationMessageFor(m => m.UsuarioDirectorId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-12 text-right">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a type="button" href="@Url.Action("Listar", "UsuarioDirector", new { Area = "Gestion" })" class="btn btn-warning">Cerrar</a>
+    </div>
+}
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        var URL_LISTAR_USUARIOS_NO_DIRECTORES = "@Url.Action("ListarActivos", "Usuario", new { Area = "Gestion" })";
+        var URL_LISTAR_USUARIOS_NO_ASIGNADOS_COMO_DIRECTOR = "@Url.Action("ListarNoAsignadosComoDirector", "Usuario", new { Area = "Gestion" })";
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/UsuarioDirector/Crear.js")
+}

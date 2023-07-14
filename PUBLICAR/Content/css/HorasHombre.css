@@ -1,0 +1,160 @@
+﻿/***FullCalendar***/
+.fc.fc-unthemed {
+    text-transform: uppercase;
+}
+
+    .fc.fc-unthemed .fc-toolbar {
+        border-top: 2px solid #E7E7E7;
+        border-bottom: 2px solid #E7E7E7;
+        padding: 11px 0;
+    }
+
+        .fc.fc-unthemed .fc-toolbar .fc-button-group button, .fc-today-button.fc-button {
+            border: 1px solid #00A79D;
+            background-color: #00A79D;
+            color: #fff;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .fc.fc-unthemed .fc-toolbar button.fc-state-active {
+            background-color: #fff;
+            color: #00A79D;
+        }
+
+.fc-state-default {
+    background: none;
+}
+
+.fc.fc-unthemed .fc-center h2 {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.fc.fc-unthemed th.fc-day-header {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 0;
+}
+
+.fc.fc-unthemed .fc-day-header.fc-widget-header {
+    border-width: 2px;
+}
+
+.fc.fc-unthemed td.fc-head-container {
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-width: 2px !important;
+}
+
+.fc.fc-unthemed .fc-body td.fc-widget-content {
+    border: 0;
+}
+
+.fc.fc-unthemed .fc-day.fc-widget-content {
+    border: 2px solid #E7E7E7 !important;
+}
+
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-content, .fc-unthemed .fc-popover, .fc-unthemed .fc-list-view, .fc-unthemed .fc-list-heading td {
+    border-color: #E7E7E7;
+}
+
+.fc.fc-unthemed .fc-day-number {
+    border-radius: 50%;
+    background-color: #00A79D;
+    color: #fff;
+    width: 24px;
+    text-align: center;
+    height: 21px;
+    padding-top: 5px;
+    margin: 5px 5px 0;
+    font-weight: bold;
+}
+
+    .fc.fc-unthemed .fc-day-number:hover {
+        background-color: #fff;
+        color: #00A79D;
+    }
+
+.fc.fc-unthemed .fc-day.fc-widget-content.fc-fri.fc-today {
+    background-color: #EDEDED;
+}
+
+.fc-event table tbody tr td {
+    color: #fff;
+    font-weight: bold !important;
+    border: 0;
+}
+
+.fc.fc-unthemed .fc-day-grid-event.fc-h-event.fc-event .fc-content table tbody tr td:first-child, .fc-scroller.fc-time-grid-container .fc-content table tbody tr td:first-child {
+    width: 0;
+}
+
+.fullcalendar-dia-fondo-amarillo {
+    background-color: #ffe55e;
+}
+
+.fc-time-grid-event .fc-content {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: right;
+}
+
+.fc-event, .fc-event-dot {
+    background-color: #7BD1D0;
+    border: 1px solid #EDEDED;
+    padding: 2px;
+    color: #fff;
+    cursor: pointer;
+}
+/****Fin FullCalendar****/
+
+/***timepicker***/
+.ui-widget-content {
+    background-color: #00A69C;
+    border: 2px solid #F8F8F8;
+    border-radius: 10px;
+}
+
+.ui-timepicker-table .ui-timepicker-title {
+    background-color: #F8F8F8;
+    border-radius: 5px;
+    margin: 2px;
+    text-transform: uppercase;
+}
+
+.ui-timepicker-table td {
+    border: 2px solid #fff;
+}
+
+    .ui-timepicker-table td a:not([href]):not([tabindex]) {
+        width: 100%;
+        color: #00A69C;
+    }
+
+.ui-timepicker-table th.periods {
+    color: #fff;
+}
+
+.ui-timepicker-table .ui-state-default.ui-state-active {
+    background-color: #FFFFFF;
+}
+
+.ui-timepicker-table td a.ui-state-default.ui-state-active {
+    color: #00A69C;
+}
+
+.ui-timepicker-table td {
+    padding: 0;
+}
+
+.ui-timepicker-table table {
+    margin: 0.15em 2px 5px 2px;
+}
+
+.ui-timepicker-table .ui-timepicker-title {
+    padding: 0 15px;
+}
+/***FIN timepicker***/

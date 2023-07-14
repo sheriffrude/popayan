@@ -1,0 +1,141 @@
+﻿table.tabla-presupuesto {
+    border: 0;
+}
+
+    table.tabla-presupuesto thead {
+        color: #000;
+        font-size: 12px;
+    }
+
+        table.tabla-presupuesto thead tr th.titulo-interno,
+        table.tabla-presupuesto thead tr th.titulo-rentabilidad-parcial {
+            background-color: #88b4f5;
+            border-radius: 10px 10px 0 0;
+        }
+
+        table.tabla-presupuesto thead tr th.titulo-externo {
+            background-color: #ef8b8b;
+            border-radius: 10px 10px 0 0;
+        }
+
+        table.tabla-presupuesto thead tr th.azul {
+            background-color: #d0def4;
+        }
+
+        table.tabla-presupuesto thead tr th.gris {
+            background-color: #ededed;
+        }
+
+        table.tabla-presupuesto thead tr th.gris-oscuro {
+            background-color: #dbdbdb;
+        }
+
+        table.tabla-presupuesto thead tr th.rosa {
+            background-color: #ef8b8b;
+        }
+
+    table.tabla-presupuesto tbody input,
+    table.tabla-presupuesto tbody select,
+    table.tabla-presupuesto tbody textarea {
+        font-size: 12px !important;
+    }
+
+    table.tabla-presupuesto tbody textarea {
+        min-width: 400px; 
+    }
+
+    /**Item Interno**/
+    table.tabla-presupuesto tbody input.input_valor_unitario_interno_item,
+    table.tabla-presupuesto tbody input.input_sub_total_interno_item,
+    table.tabla-presupuesto tbody input.input_total_impuestos_internos_item,
+    table.tabla-presupuesto tbody input.input_costo_interno_item,
+    /**Item Externo**/
+    table.tabla-presupuesto tbody input.input_valor_unitario_externo_item,
+    table.tabla-presupuesto tbody input.input_sub_total_externo_item,
+    table.tabla-presupuesto tbody input.input_total_impuestos_externos_item,
+    table.tabla-presupuesto tbody input.input_total_externo_item,
+    /**Rentabilidad**/
+    table.tabla-presupuesto tbody input.input_rentabilidad_parcial_item,
+    /**Footer**/
+    table.tabla-presupuesto tbody input#TotalSubtotalExterno {
+        min-width: 150px;
+    }
+
+    table.tabla-presupuesto tbody input.input_dias_item,
+    table.tabla-presupuesto tbody input.input_cantidad_item {
+        width: 80px;
+    }
+
+    /**Asociados**/
+    table.tabla-presupuesto tbody input.input_sub_total_asociados_item,
+    table.tabla-presupuesto tbody input.input_valor_unitario_item_asociado,
+    table.tabla-presupuesto tbody input.input_sub_total_item_asociado,
+    table.tabla-presupuesto tbody input.input_total_impuestos_item_asociado,
+    table.tabla-presupuesto tbody input.input_costo_item_asociado,
+    /**Footer**/
+    table.tabla-presupuesto tbody input#TotalSubtotal {
+        min-width: 150px;
+    }
+
+    table.tabla-presupuesto tbody input.input_volumen_item {
+        min-width: 80px;
+    }
+
+    table.tabla-presupuesto tbody input.input_volumen_item_asociado {
+        min-width: 80px;
+    }
+
+    table.tabla-presupuesto tbody input.input_porcentaje_rentabilidad_parcial_item {
+        min-width: 50px;
+        text-align: right;
+    }
+
+    table.tabla-presupuesto tbody .has-success {
+        background-color: #5cb85c;
+        color: #fff;
+    }
+
+    table.tabla-presupuesto tbody .has-error {
+        background-color: #d9534f;
+        color: #fff;
+    }
+
+    table.tabla-presupuesto tfoot tr th.gris-oscuro {
+        background-color: #dbdbdb;
+    }
+
+    table.tabla-presupuesto tfoot tr th.gris {
+        background-color: #ededed;
+    }
+
+    table.tabla-presupuesto tfoot tr th.rosa {
+        background-color: #ef8b8b;
+    }
+
+.container_tabla_presupuesto_items_active {
+    overflow: auto;
+    background-color: #fff;
+}
+
+.tabla_presupuesto_items_active {
+    overflow: auto;
+}
+
+/*
+    table.tabla-presupuesto > tbody > tr.odd {
+        background-color: #f2f0f0;
+    }
+    table.tabla-presupuesto > tbody > tr.even {
+        background-color: #f9f9f9;
+    }
+*/
+
+table.tabla_resumen_actividad tbody input.input_valor_total,
+table.tabla_resumen_impuestos tbody input.input_valor_total {
+    min-width: 80px;
+}
+
+input#PorcentajeRentabilidadbruta,
+input#PorcentajeRentabilidadNeta {
+    width: 80px;
+}

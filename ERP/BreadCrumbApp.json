@@ -1,0 +1,1084 @@
+﻿{
+  "Controller": "General",
+  "Action": "Menu",
+  "Title": "",
+  "Icon": "fa-home",
+  "Permiso": "",
+  "Areas": [
+    {
+      "Area": "Parametrizacion",
+      "Controller": "Menu",
+      "Action": "Index",
+      "Title": "Custom",
+      "Permiso": "PAR-MENU",
+      "Icon": "fa fa-cog",
+      "Nodes": [
+        {
+          "Controller": "Menu",
+          "Action": "Index",
+          "Title": "Menu",
+          "Permiso": "PAR-MENU",
+          "Icon": ""
+        },
+        {
+          "Controller": "ConfigSoftware",
+          "Action": "Editar",
+          "Title": "Configuración software",
+          "Permiso": "PAR-CONFIG_SOFTWARE_EDITAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "HorarioLaboral",
+          "Action": "Editar",
+          "Title": "Horario laboral",
+          "Permiso": "PAR-HORARIO_LABORAL_EDITAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "Rol",
+          "Action": "Listar",
+          "Title": "Roles",
+          "Permiso": "PAR-ROL_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "Pais",
+          "Action": "Listar",
+          "Title": "Países",
+          "Permiso": "PAR-PAIS_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "Departamento",
+          "Action": "Listar",
+          "Title": "Departamentos",
+          "Permiso": "PAR-DEPARTAMENTO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "Ciudad",
+          "Action": "Listar",
+          "Title": "Ciudades",
+          "Permiso": "PAR-PAIS_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "EntidadSalud",
+          "Action": "Listar",
+          "Title": "Entidades de salud",
+          "Permiso": "PAR-ENTIDAD_SALUD_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "ARL",
+          "Action": "Listar",
+          "Title": "Entidades de atención a riesgos laborales",
+          "Permiso": "PAR-ARL_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "EntidadPension",
+          "Action": "Listar",
+          "Title": "Entidades de fondos de pensión",
+          "Permiso": "PAR-ENTIDAD_PENSION_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "CajaCompensacion",
+          "Action": "Listar",
+          "Title": "Entidades de cajas de compensación",
+          "Permiso": "PAR-CAJA_COMPENSACION_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "EntidadCesantia",
+          "Action": "Listar",
+          "Title": "Entidades de cesantías",
+          "Permiso": "PAR-ENTIDAD_CESANTIA_LISTAR",
+          "Icon": ""
+        },
+
+        {
+          "Controller": "Impuesto",
+          "Action": "Listar",
+          "Title": "Impuestos y tarifas",
+          "Permiso": "PAR-IMPUESTO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoSalarioMinimo",
+          "Action": "Listar",
+          "Title": "Salario mínimo",
+          "Permiso": "PAR-TIPO_SALARIO_MINIMO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoDocumentoLegal",
+          "Action": "Listar",
+          "Title": "Tipo identificaciones legales de personas",
+          "Permiso": "PAR-TIPO_DOCUMENTO_LEGAL_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoDocumentoLegalEmpleado",
+          "Action": "Listar",
+          "Title": "Tipo de documentos legales de empleados",
+          "Permiso": "PAR-TIPO_DOCUMENTO_LEGAL_EMP_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoDocumentoLegalEmpresa",
+          "Action": "Listar",
+          "Title": "Tipo de documentos legales de empresas",
+          "Permiso": "PAR-TIPO_DOCUMENTO_LEGAL_EMPRESA_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoDocumentoLegalCliente",
+          "Action": "Listar",
+          "Title": "Tipo de documentos legales de clientes",
+          "Permiso": "PAR-TIPO_DOCUMENTO_LEGAL_CLIENTE_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoDocumentoLegalProveedor",
+          "Action": "Listar",
+          "Title": "Tipos de documentos legales de proveedores",
+          "Permiso": "PAR-TIPO_DOCUMENTO_LEGAL_PRVD_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoAnticipo",
+          "Action": "Listar",
+          "Title": "Tipos de anticipo",
+          "Permiso": "PAR-TIPO_ANTICIPO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoPago",
+          "Action": "Listar",
+          "Title": "Tipos de pagos (Anticipos/Desembolsos)",
+          "Permiso": "PAR-TIPO_PAGO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoContrato",
+          "Action": "Listar",
+          "Title": "Tipos contratos laborales",
+          "Permiso": "PAR-TIPO_CONTRATO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoNovedadEmpleado",
+          "Action": "Listar",
+          "Title": "Tipos de novedades de empleados",
+          "Permiso": "PAR-TIPO_NOVEDAD_EMPLEADO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoRegimen",
+          "Action": "Listar",
+          "Title": "Tipos de regímenes",
+          "Permiso": "PAR-TIPO_REGIMEN_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoCredito",
+          "Action": "Listar",
+          "Title": "Tipos de créditos bancarios",
+          "Permiso": "PAR-TIPO_CREDITO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoReserva",
+          "Action": "Listar",
+          "Title": "Tipos de reservas",
+          "Permiso": "PAR-TIPO_RESERVA_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoActividad",
+          "Action": "Listar",
+          "Title": "Tipos de actividades (Horas Hombre)",
+          "Permiso": "PAR-TIPO_ACTIVIDAD_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "ProveedorServicio",
+          "Action": "Listar",
+          "Title": "Servicios de proveedores",
+          "Permiso": "PAR-PROVEEDOR_SERVICIO_LISTAR",
+          "Icon": ""
+        }
+      ]
+    },
+    {
+      "Area": "Gestion",
+      "Controller": "Menu",
+      "Action": "Index",
+      "Title": "Gestión",
+      "Icon": "fa fa-building",
+      "Permiso": "GES-MENU",
+      "Nodes": [
+
+        {
+          "Controller": "Menu",
+          "Action": "Index",
+          "Title": "Menu",
+          "Permiso": "GES-MENU",
+          "Icon": ""
+        },
+        {
+          "Controller": "Empresa",
+          "Action": "Listar",
+          "Title": "Empresas",
+          "Permiso": "GES-EMPRESA_LISTAR",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "Empresa",
+              "Action": "Crear",
+              "Title": "Crear empresa",
+              "Permiso": "GES-EMPRESA_CREAR",
+              "Icon": ""
+            },
+            {
+              "Controller": "Empresa",
+              "Action": "Menu",
+              "Id": true,
+              "Title": "Menú empresa",
+              "Permiso": "GES-EMPRESA_MENU",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "Empresa",
+                  "Action": "Ver",
+                  "Id": true,
+                  "Title": "Información empresa",
+                  "Permiso": "GES-EMPRESA_MENU",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "Empresa",
+                  "Action": "Editar",
+                  "Title": "Editar empresa",
+                  "Permiso": "GES-EMPRESA_EDITAR",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "EmpresaDocumentoLegal",
+                  "Action": "Listar",
+                  "Id": true,
+                  "Title": "Documentos Legales",
+                  "Permiso": "GES-EMPRESA_DOCUMENTO_LEGAL_LISTAR",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "EmpresaDocumentoLegal",
+                  "Action": "Crear",
+                  "Id": true,
+                  "Title": "Crear documentos legal empresa",
+                  "Permiso": "GES-EMPRESA_DOCUMENTO_LEGAL_CREAR",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "EmpresaDocumentoLegal",
+                  "Action": "EnviarDocumentos",
+                  "Id": true,
+                  "Title": "Enviar documentos legales",
+                  "Permiso": "GES-EMPRESA_DOCUMENTO_LEGAL_ENVIAR",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "EmpresaCentroCosto",
+                  "Action": "Listar",
+                  "Title": "Centros de Costos",
+                  "Permiso": "",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "UnidadDeNegocio",
+                  "Action": "Listar",
+                  "Title": "Unidades De Negocio",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "Empleado",
+                  "Action": "Listar",
+                  "Title": "Empleados",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "EmpresaCliente",
+                  "Action": "Menu",
+                  "Title": "Clientes",
+                  "Icon": "",
+                  "Nodes": [
+                    {
+                      "Controller": "EmpresaCliente",
+                      "Action": "Listar",
+                      "Title": "Informacion Cliente",
+                      "Icon": ""
+                    },
+                    {
+                      "Controller": "EmpresaClienteContacto",
+                      "Action": "Listar",
+                      "Title": "Clientes Por Empresa",
+                      "Icon": ""
+                    },
+                    {
+                      "Controller": "EmpresaClienteNegociacion",
+                      "Action": "Listar",
+                      "Title": "Negociaciones",
+                      "Icon": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Controller": "Proveedor",
+          "Action": "Menu",
+          "Title": "Proveedores",
+          "Permiso": "GES-PROVEEDOR_MENU",
+          "Icon": "",
+          "Parent": "Proveedor",
+          "Nodes": [
+            {
+              "Controller": "ProveedorContacto",
+              "Action": "ListarProveedores",
+              "Title": "Contactos Proveedores",
+              "Icon": "",
+              "Parent": "Proveedor"
+            },
+            {
+              "Controller": "ProveedorGrupoTarifario",
+              "Action": "Listar",
+              "Title": "Lista Grupos Tarifarios de Proveedores",
+              "Icon": "",
+              "Parent": "Proveedor"
+            }
+          ]
+        },
+        {
+          "Controller": "Banco",
+          "Action": "Listar",
+          "Title": "Bancos",
+          "Permiso": "GES-BANCO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "Cliente",
+          "Action": "Listar",
+          "Title": "Clientes",
+          "Permiso": "GES-CLIENTE_LISTAR",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "Cliente",
+              "Action": "Crear",
+              "Title": "Crear Clientes",
+              "Icon": ""
+            },
+            {
+              "Controller": "Cliente",
+              "Action": "Ver",
+              "Title": "Información Cliente",
+              "Icon": ""
+            },
+            {
+              "Controller": "Cliente",
+              "Action": "Editar",
+              "Title": "Editar Cliente",
+              "Icon": ""
+            },
+            {
+              "Controller": "Cliente",
+              "Action": "Menu",
+              "Title": "Cliente",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "ClienteDocumentosLegales",
+                  "Action": "Listar",
+                  "Title": "Listar Documentos Legales",
+                  "Icon": "",
+                  "Nodes": [
+                    {
+                      "Controller": "ClienteDocumentosLegales",
+                      "Action": "Crear",
+                      "Title": "Cargar Documentos Legales de Cliente",
+                      "Icon": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Controller": "ClienteContacto",
+              "Action": "Listar",
+              "Title": "Listar Clientes",
+              "Icon": ""
+            },
+            {
+              "Controller": "ClienteGrupoTarifario",
+              "Action": "Listar",
+              "Title": "Listar Grupos Tarifario de Clientes",
+              "Icon": ""
+            },
+            {
+              "Controller": "ClienteTarifario",
+              "Action": "Listar",
+              "Title": "Tarifario",
+              "Icon": ""
+            },
+            {
+              "Controller": "ClienteContrato",
+              "Action": "Listar",
+              "Title": "Listar Contratos",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "ClienteContrato",
+                  "Action": "Crear",
+                  "Title": "Crear Contrato de Cliente",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "ClienteContrato",
+                  "Action": "Editar",
+                  "Title": "Editar Contrato de CLiente",
+                  "Icon": ""
+                }
+              ]
+            },
+            {
+              "Controller": "ClienteProducto",
+              "Action": "Listar",
+              "Title": "Productos de Clientes",
+              "Icon": ""
+            }
+          ]
+        },
+        {
+          "Controller": "Persona",
+          "Action": "Listar",
+          "Title": "Personas",
+          "Permiso": "GES-PERSONA_LISTAR",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "Persona",
+              "Action": "Editar",
+              "Title": "Editar Persona",
+              "Icon": ""
+            },
+            {
+              "Controller": "Persona",
+              "Action": "Crear",
+              "Title": "Crear Persona",
+              "Icon": ""
+            }
+          ]
+        },
+        {
+          "Controller": "Usuario",
+          "Action": "Menu",
+          "Title": "Usuarios",
+          "Permiso": "GES-USUARIO_MENU",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "Usuario",
+              "Action": "Listar",
+              "Title": "Usuarios",
+              "Permiso": "GES-USUARIO_LISTAR",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "UsuarioPermiso",
+                  "Action": "Listar",
+                  "Title": "Permiso especificos del usuario",
+                  "Icon": ""
+                }
+              ]
+            },
+            {
+              "Controller": "UsuarioDepartamento",
+              "Action": "Listar",
+              "Title": "Consultar información departamento tráfico asignado a un usuario",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "UsuarioDepartamento",
+                  "Action": "Crear",
+                  "Title": "Asignar departamento tráfico a usuario",
+                  "Icon": ""
+                }
+              ]
+            },
+            {
+              "Controller": "UsuarioDirector",
+              "Action": "Listar",
+              "Title": "Consultar información director asignado a un usuario",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "UsuarioDirector",
+                  "Action": "Crear",
+                  "Title": "Asignar director a usuario",
+                  "Icon": ""
+                }
+              ]
+            },
+            {
+              "Controller": "UsuarioResponsable",
+              "Action": "Listar",
+              "Title": "Consultar información responsables asignados al departamento",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "UsuarioResponsable",
+                  "Action": "Crear",
+                  "Title": "Crear",
+                  "Icon": ""
+                }
+              ]
+            },
+            {
+              "Controller": "UsuarioAsignado",
+              "Action": "Listar",
+              "Title": "Consultar información de usuarios asignados",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "UsuarioAsignado",
+                  "Action": "Crear",
+                  "Title": "Registrar asignados a un usuario",
+                  "Icon": ""
+                }
+              ]
+            },
+            {
+              "Controller": "UsuarioEmpresa",
+              "Action": "Listar",
+              "Title": "Consultar información de las empresas asignados a un usuario",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "UsuarioEmpresa",
+                  "Action": "Crear",
+                  "Title": "Asignar empresa a usuario",
+                  "Icon": ""
+                }
+              ]
+            },
+            {
+              "Controller": "UsuarioUnidad",
+              "Action": "Listar",
+              "Title": "Consultar información de las unidades de negocio asignadas a un usuario",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "UsuarioUnidad",
+                  "Action": "Crear",
+                  "Title": "Asignar unidades de negocio a un usuario",
+                  "Icon": ""
+                }
+              ]
+            },
+            {
+              "Controller": "UsuarioCliente",
+              "Action": "Listar",
+              "Title": "Consultar información clientes y productos asignados a un usuario",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "UsuarioCliente",
+                  "Action": "Crear",
+                  "Title": "Asignar clientes y productos a un usuario",
+                  "Icon": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Controller": "EmpresaDirectorio",
+          "Action": "Listar",
+          "Title": "Directorio empresarial",
+          "Permiso": "GES-EMPRESA_DIRECTORIO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "Cargo",
+          "Action": "Listar",
+          "Title": "Cargos",
+          "Permiso": "GES-CARGO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "DepartamentoTrafico",
+          "Action": "Listar",
+          "Title": "Departamentos de Tráfico",
+          "Permiso": "GES-DEPARTAMENTO_TRAFICO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "PresupuestoGeneral",
+          "Action": "Menu",
+          "Title": "Presupuesto General",
+          "Permiso": "GES-PRESUPUESTO_GENERAL_MENU",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "PresupuestoGeneral",
+              "Action": "Listar",
+              "Title": "Presupuestos",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "PresupuestoGeneral",
+                  "Action": "Crear",
+                  "Title": "Crear Presupuesto",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "PresupuestoGeneral",
+                  "Action": "Parametrizar",
+                  "Title": "Parametrizacion Presupuesto",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "PresupuestoGeneral",
+                  "Action": "Alimentar",
+                  "Title": "Alimentar Presupuesto",
+                  "Icon": ""
+                }
+              ]
+            },
+            {
+              "Controller": "PresupuestoGeneralTarifario",
+              "Action": "Menu",
+              "Title": "Presupuestos",
+              "Icon": ""
+            }
+          ]
+        },
+        {
+          "Controller": "ContactoPersonal",
+          "Action": "Listar",
+          "Title": "Contactos Personales",
+          "Permiso": "GES-CONTACTO_PERSONAL_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "JerarquiaAprobacion",
+          "Action": "Menu",
+          "Title": "Jerarquías de Aprobación",
+          "Permiso": "GES-JERARQUIAS_MENU",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "JerarquiaAprobacion",
+              "Action": "Listar",
+              "Title": "Listar Jerarquías",
+              "Icon": "",
+              "Nodes": [
+                {
+                  "Controller": "JerarquiaAprobacion",
+                  "Action": "Crear",
+                  "Title": "Crear Jerarquías",
+                  "Icon": ""
+                },
+                {
+                  "Controller": "JerarquiaAprobacion",
+                  "Action": "Editar",
+                  "Title": "Editar Jerarquías",
+                  "Icon": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Controller": "TiposActividadHoraHombre",
+          "Action": "Listar",
+          "Title": "Tipos de actividad por departamento de tráfico (Horas Hombre)",
+          "Permiso": "GES-TIPOS_ACTIVIDAD_HORAS_HOMBRE_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TipoTareaTrafico",
+          "Action": "Listar",
+          "Title": "Tipos de tarea por departamento de tráfico (Tráfico)",
+          "Permiso": "GES-TIPO_TAREA_TRAFICO_LISTAR",
+          "Icon": ""
+        }
+      ]
+    },
+    {
+      "Area": "Trafico",
+      "Controller": "Menu",
+      "Action": "Index",
+      "Title": "Tráfico",
+      "Permiso": "TRA-MENU",
+      "Icon": "fa fa-tasks",
+      "Nodes": [
+        {
+          "Controller": "Menu",
+          "Action": "Index",
+          "Title": "Menu",
+          "Permiso": "TRA-MENU",
+          "Icon": ""
+        },
+        {
+          "Controller": "OrdenTrabajo",
+          "Action": "Listar",
+          "Title": "Órdenes de trabajo",
+          "Permiso": "TRA-ORDEN_TRABAJO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "Reportes",
+          "Action": "Menu",
+          "Title": "Reportes",
+          "Permiso": "TRA-REPORTES_MENU",
+          "Icon": ""
+        },
+        {
+          "Controller": "TraficoAdministrativo",
+          "Action": "Menu",
+          "Title": "Tráfico Administrativo",
+          "Permiso": "TRA-TRAFICO_ADMINISTRATIVO_MENU",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "TraficoAdministrativo",
+              "Action": "Listar",
+              "Title": "Listar Tráfico Administrativo",
+              "Icon": ""
+            },
+            {
+              "Controller": "SolicitudPendiente",
+              "Action": "Listar",
+              "Title": "Mis Solicitudes Pendientes",
+              "Icon": ""
+            }
+          ]
+        },
+        {
+          "Controller": "TraficoCliente",
+          "Action": "Listar",
+          "Title": "Tráfico Cliente",
+          "Permiso": "TRA-TRAFICO_CLIENTE_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TraficoPendiente",
+          "Action": "Listar",
+          "Title": "Tráfico Pendiente",
+          "Permiso": "TRA-TRAFICO_CLIENTE_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "TimeTable",
+          "Action": "Listar",
+          "Title": "TimeTable",
+          "Permiso": "TRA-TIMETABLE_LISTAR",
+          "Icon": ""
+        }
+      ]
+    },
+    {
+      "Area": "Produccion",
+      "Controller": "Menu",
+      "Action": "Index",
+      "Title": "Producción",
+      "Permiso": "PRO-MENU",
+      "Icon": "fa fa-money",
+      "Nodes": [
+        {
+          "Controller": "Menu",
+          "Action": "Index",
+          "Title": "Menu",
+          "Permiso": "PRO-MENU",
+          "Icon": ""
+        },
+        {
+          "Controller": "Presupuesto",
+          "Action": "Crear",
+          "Title": "Crear Presupuesto",
+          "Permiso": "PRO-PRESUPUESTO_CREAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "BuscarPresupuesto",
+          "Action": "Listar",
+          "Title": "Buscar Presupuesto",
+          "Permiso": "PRO-PRESUPUESTO_LISTAR",
+          "Icon": ""
+        },
+        {
+          "Controller": "Presupuesto",
+          "Action": "Consultar",
+          "Title": "Presupuesto",
+          "Icon": ""
+        },
+        {
+          "Controller": "IngresoCosto",
+          "Action": "Menu",
+          "Title": "Ingresos y Costos",
+          "Permiso": "PRO-INGRESO_COSTO_MENU",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "Anticipo",
+              "Action": "Listar",
+              "Title": "Anticipos",
+              "Icon": ""
+            },
+            {
+              "Controller": "Legalizacion",
+              "Action": "Listar",
+              "Title": "Listado De Legalizaciones",
+              "Icon": ""
+            }
+          ]
+        },
+        {
+          "Controller": "FacturaProveedor",
+          "Action": "Menu",
+          "Title": "Facturas de Proveedores",
+          "Permiso": "PRO-FACTURA_PROVEEDOR_MENU",
+          "Icon": ""
+        },
+        {
+          "Controller": "FacturaPagoProveedor",
+          "Action": "Menu",
+          "Title": "Pagos a Proveedores",
+          "Permiso": "PRO-FACTURA_PAGO_PROVEEDOR_MENU",
+          "Icon": ""
+        },
+        {
+          "Controller": "FacturaCliente",
+          "Action": "Menu",
+          "Title": "Facturas de Clientes",
+          "Permiso": "PRO-FACTURA_CLIENTE_MENU",
+          "Icon": ""
+        },
+        {
+          "Controller": "FacturaPagoCliente",
+          "Action": "Menu",
+          "Title": "Pagos de Clientes",
+          "Permiso": "PRO-FACTURA_PAGO_CLIENTE_MENU",
+          "Icon": ""
+        },
+        {
+          "Controller": "Aprobacion",
+          "Action": "Menu",
+          "Title": "Aprobaciones",
+          "Permiso": "PRO-APROBACION_MENU",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "AprobacionCotizacion",
+              "Action": "Listar",
+              "Title": "Aprobaciones Cotizaciones",
+              "Icon": ""
+            },
+            {
+              "Controller": "AprobacionPresupuesto",
+              "Action": "Listar",
+              "Title": "Aprobaciones Presupuestos",
+              "Icon": ""
+            },
+            {
+              "Controller": "AprobacionCancelacionPresupuesto",
+              "Action": "Listar",
+              "Title": "Aprobaciones para Cancelación de Presupuestos",
+              "Icon": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Area": "HorasHombre",
+      "Controller": "Menu",
+      "Action": "Index",
+      "Title": "Horas Hombre",
+      "Permiso": "HOH-MENU",
+      "Icon": "fa fa-user-circle",
+      "Nodes": [
+        {
+          "Controller": "Menu",
+          "Action": "Index",
+          "Title": "Menu",
+          "Permiso": "HOH-MENU",
+          "Icon": ""
+        },
+        {
+          "Controller": "Actividad",
+          "Action": "Listar",
+          "Title": "Actividades",
+          "Permiso": "HOH-ACTIVIDAD_LISTAR",
+          "Icon": ""
+        }
+      ]
+    },
+    {
+      "Area": "Reportes",
+      "Controller": "Menu",
+      "Action": "Index",
+      "Title": "Reportes",
+      "Permiso": "REP-MENU",
+      "Icon": "fa fa-file",
+      "Nodes": [
+        {
+          "Controller": "Menu",
+          "Action": "Index",
+          "Title": "Menu",
+          "Permiso": "REP-MENU",
+          "Icon": ""
+        },
+        {
+          "Controller": "Trafico",
+          "Action": "Menu",
+          "Title": "Tráfico",
+          "Permiso": "REP-TRAFICO_MENU",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "Trafico",
+              "Action": "ConsolidadoMisOrdenesTrabajo",
+              "Title": "Consolidado mis órdenes de trabajo",
+              "Permiso": "REP-TRAFICO_MENU",
+              "Icon": ""
+            },
+            {
+              "Controller": "Trafico",
+              "Action": "ConsolidadoOrdenTrabajoPorPersona",
+              "Title": "Consolidado órdenes de trabajo por persona",
+              "Permiso": "REP-TRAFICO_MENU",
+              "Icon": ""
+            },
+            {
+              "Controller": "Trafico",
+              "Action": "EstadosPresupuestos",
+              "Title": "Estados de presupuestos",
+              "Permiso": "REP-TRAFICO_MENU",
+              "Icon": ""
+            }
+          ]
+        },
+        {
+          "Controller": "Produccion",
+          "Action": "Menu",
+          "Title": "Produccion",
+          "Permiso": "REP-PRODUCCION_MENU",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "Produccion",
+              "Action": "EstadosPresupuestos",
+              "Title": "Estados de presupuestos",
+              "Permiso": "REP-PRODUCCION_MENU",
+              "Icon": ""
+            },
+            {
+              "Controller": "Produccion",
+              "Action": "RentabilidadPresupuestos",
+              "Title": "Rentabilidad de presupuestos",
+              "Permiso": "REP-PRODUCCION_MENU",
+              "Icon": ""
+            },
+            {
+              "Controller": "Produccion",
+              "Action": "ItemsPendientesOrdenacion",
+              "Title": "Pendientes de ordenación",
+              "Permiso": "REP-PRODUCCION_MENU",
+              "Icon": ""
+            },
+            {
+              "Controller": "Produccion",
+              "Action": "FacturasPendientesPorLlegar",
+              "Title": "Facturas pendientes por llegar",
+              "Permiso": "REP-PRODUCCION_MENU",
+              "Icon": ""
+            }
+          ]
+        },
+        {
+          "Controller": "HorasHombre",
+          "Action": "Menu",
+          "Title": "Horas Hombre",
+          "Permiso": "REP-HORAS_HOMBRE_MENU",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "HorasHombre",
+              "Action": "ConsolidadoMensual",
+              "Title": "Consolidado mensual",
+              "Permiso": "REP-HORAS_HOMBRE_MENU",
+              "Icon": ""
+            },
+            {
+              "Controller": "HorasHombre",
+              "Action": "ConsolidadoMensualHorasPorUsuario",
+              "Title": "Consolidado mensual de horas por usuario",
+              "Permiso": "REP-HORAS_HOMBRE_MENU",
+              "Icon": ""
+            }
+          ]
+        },
+        {
+          "Controller": "Financieros",
+          "Action": "Menu",
+          "Title": "Financieros",
+          "Permiso": "REP-FINANCIEROS_MENU",
+          "Icon": "",
+          "Nodes": [
+            {
+              "Controller": "Financieros",
+              "Action": "UnoAUno",
+              "Title": "Uno a uno",
+              "Permiso": "REP-FINANCIEROS_MENU",
+              "Icon": ""
+            },
+            {
+              "Controller": "Financieros",
+              "Action": "CuentasPorCobrar",
+              "Title": "Cuentas por cobrar",
+              "Permiso": "REP-FINANCIEROS_MENU",
+              "Icon": ""
+            },
+            {
+              "Controller": "Financieros",
+              "Action": "CuentasPorPagar",
+              "Title": "Cuentas por pagar",
+              "Permiso": "REP-FINANCIEROS_MENU",
+              "Icon": ""
+            },
+            {
+              "Controller": "Financieros",
+              "Action": "InformeFacturacion",
+              "Title": "Informe de facturación",
+              "Permiso": "REP-FINANCIEROS_MENU",
+              "Icon": ""
+            }
+          ]
+        },
+        {
+          "Controller": "Gestion",
+          "Action": "Menu",
+          "Title": "Gestion",
+          "Permiso": "REP-MENU",
+          "Icon": ""
+        }
+      ]
+    }
+  ]
+}

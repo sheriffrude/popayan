@@ -1,0 +1,61 @@
+﻿@model CierrePagoViewModel
+@{
+    ViewBag.Title = "Activar y/o Cancelar un pago a proveedor # ";
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<!-- Titulo y boton volver -->
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title @ViewBag.IdPagoProveedor</h4>
+</div>
+<div class="modal-body">
+
+    <!--Espacio vertical-->
+    <div class="help-block"></div>
+
+    <!--Formulario-->
+    @using (Ajax.BeginForm("Cancelar", "FacturaPagoProveedor", new { Area = "Produccion" },
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            OnBegin = "consultarFacturaPagoProveedor.OnBeginCancelar",
+                                            OnSuccess = "consultarFacturaPagoProveedor.OnCompleteCierreSolicitud"
+                                        },
+                                        new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.idPagoProveedor)
+        <div class="clearfix"></div>
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+        <div class="clearfix"></div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.idOrdenCompra, new { @class = "control-label hidden" })
+            @Html.TextBoxFor(m => m.idOrdenCompra, new { @class = "form-control hidden", @readonly = "readonly" })
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.idFactura, new { @class = "control-label hidden" })
+            @Html.TextBoxFor(m => m.idFactura, new { @class = "form-control hidden", @readonly = "readonly" })
+        </div>
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.Observacion, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Observacion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="text-right">
+            @if (Sesion.HasPermission("PRO-FACTURA_PAGO_PROVEEDOR_CANCELAR"))
+            {
+                <button type="submit" class="btn btn-success">Guardar</button>
+            }
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+        <div class="clearfix"></div>
+    }
+</div>

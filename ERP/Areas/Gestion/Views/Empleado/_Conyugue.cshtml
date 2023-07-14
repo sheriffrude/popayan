@@ -1,0 +1,57 @@
+﻿@model CrearEmpleadoConyugueViewModel
+<div class="form-group">
+    <label class="control-label">¿Registra conyugue?</label>
+    <input type="checkbox" id="ChkConyugue" onclick="clickConyugue()"> Si<br>
+</div>
+<div id="partial-conyugue">
+    <div id="detalle-conyuge-form">
+        <input type="hidden" id="estado-registro-conyugue" value="@Model.EstadoRegistroConyugue" />
+        <input type="hidden" id="IdConyugue" value="@Model.DetalleConyugue.IdConyugue"/>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DetalleConyugue.DocumentoConyugue, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DetalleConyugue.DocumentoConyugue, new { @class = "form-control conyugue" })
+            @Html.ValidationMessageFor(m => m.DetalleConyugue.DocumentoConyugue, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DetalleConyugue.TipoDocumentoConyugueId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.DetalleConyugue.TipoDocumentoConyugueId, Model.ListaTiposDocumento, "Seleccione", new { @class = "form-control conyugue" })
+            @Html.ValidationMessageFor(m => m.DetalleConyugue.TipoDocumentoConyugueId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DetalleConyugue.PrimerNombreConyugue, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DetalleConyugue.PrimerNombreConyugue, new { @class = "form-control conyugue" })
+            @Html.ValidationMessageFor(m => m.DetalleConyugue.PrimerNombreConyugue, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DetalleConyugue.SegundoNombreConyugue, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DetalleConyugue.SegundoNombreConyugue, new { @class = "form-control conyugue" })
+            @Html.ValidationMessageFor(m => m.DetalleConyugue.SegundoNombreConyugue, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DetalleConyugue.PrimerApellidoConyugue, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DetalleConyugue.PrimerApellidoConyugue, new { @class = "form-control conyugue" })
+            @Html.ValidationMessageFor(m => m.DetalleConyugue.PrimerApellidoConyugue, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DetalleConyugue.SegundoApellidoConyugue, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DetalleConyugue.SegundoApellidoConyugue, new { @class = "form-control conyugue" })
+            @Html.ValidationMessageFor(m => m.DetalleConyugue.SegundoApellidoConyugue, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DetalleConyugue.SexoConyugueId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.DetalleConyugue.SexoConyugueId, Model.ListaSexos, "Seleccione", new { @class = "form-control conyugue" })
+            @Html.ValidationMessageFor(m => m.DetalleConyugue.SexoConyugueId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DetalleConyugue.TelefonoConyugue, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DetalleConyugue.TelefonoConyugue, new { @class = "form-control conyugue" })
+            @Html.ValidationMessageFor(m => m.DetalleConyugue.TelefonoConyugue, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DetalleConyugue.CelularConyugue, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DetalleConyugue.CelularConyugue, new { @class = "form-control conyugue" })
+            @Html.ValidationMessageFor(m => m.DetalleConyugue.CelularConyugue, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>

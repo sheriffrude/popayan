@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Aprobaciones";
+    ViewBag.BodyClass = "body-background-gray";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+<div class="col-md-12 content-menu">
+
+    @if (Sesion.HasPermission("PRO-COTIZACION_APROBACION_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "AprobacionCotizacion", new {Area = "Produccion"})">
+                <img src="@Url.Content("~/Content/images/Produccion/Cotizaciones.svg")" class="img-responsive" alt="Cotizaciones" />
+                <h4 class="text-center">Cotizaciones</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("PRO-PRESUPUESTO_APROBACION_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "AprobacionPresupuesto", new {Area = "Produccion" })">
+                <img src="@Url.Content("~/Content/images/Produccion/Presupuestos.svg")" class="img-responsive" alt="Presupuestos" />
+                <h4 class="text-center">Presupuestos</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("PRO-PRESUPUESTO_CANCELACION_SOLICITUD_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "AprobacionCancelacionPresupuesto", new {Area = "Produccion"})">
+                <img src="@Url.Content("~/Content/images/Produccion/Cancelacion_Presupuesto.svg")" class="img-responsive" alt="Cancelacion presupuestos" />
+                <h4 class="text-center">Cancelación Presupuesto</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("PRO-PRESUPUESTO_CIERRE_SOLICITUD_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "AprobacionCierrePresupuesto", new {Area = "Produccion"})">
+                <img src="@Url.Content("~/Content/images/Produccion/Cierre_Presupuesto.svg")" class="img-responsive" alt="Cierre presupuestos" />
+                <h4 class="text-center">Cierre Presupuesto</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("PRO-ANTICIPO_APROBACION_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "AprobacionAnticipo", new { Area = "Produccion" })">
+                <img src="@Url.Content("~/Content/images/Produccion/Legalizaciones.svg")" class="img-responsive" alt="Anticipos" />
+                <h4 class="text-center">Anticipos</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("PRO-LEGALIZACION_APROBACION_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "AprobacionLegalizacion", new { Area = "Produccion" })">
+                <img src="@Url.Content("~/Content/images/Produccion/Legalizaciones.svg")" class="icono-menu" alt="Facturación" />
+                <h4 class="text-center">Legalización</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("PRO-FACTURA_PROVEEDOR_APROBACION_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "AprobacionFacturaProveedor", new { Area = "Produccion" })">
+                <img src="@Url.Content("~/Content/images/Produccion/Facturas Proveedor.svg")" class="img-responsive" alt="Facturas proveedor" />
+                <h4 class="text-center">Facturas Proveedores</h4>
+            </a>
+        </div>
+    }
+
+</div>

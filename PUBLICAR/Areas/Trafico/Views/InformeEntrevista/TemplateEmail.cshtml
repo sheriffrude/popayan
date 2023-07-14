@@ -1,0 +1,173 @@
+﻿@using System.Web.Mvc
+@{
+    Layout = "layout";
+    ViewBag.Title =  @Model.Titulo;
+}
+
+<div>
+    <div class="help-block"></div>
+    <div class="panel panel-default">
+        <table>
+            <tbody>
+                <tr>
+                    <td style="text-align:left;padding-left:5%;">
+                        <p>
+                            <strong>Cliente:</strong>
+                            <label> @Model.Cliente</label>
+                        </p>
+                    </td>
+                    <td style="text-align:left;padding-right:5%;">
+                        <p>
+                            <strong>Referencia:</strong>
+                            <label> @Model.Titulo</label>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-left:5%;">
+                        <p>
+                            <strong>Fecha de reunión y lugar:</strong>
+                            <label> @Model.FechaReunionYLugar</label>
+                        </p>
+                    </td>
+                    <td style="text-align:left;padding-right:5%;">
+                        <p>
+                            <strong>Tipo de reunión:</strong>
+                            <label> @Model.TipoReunion</label>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-left:5%;">
+                        <p>
+                            <strong>Hora de inicio:</strong>
+                            <label> @Model.HoraInicio</label>
+                        </p>
+                    </td>
+                    <td style="text-align:left;padding-right:5%;">
+                        <p>
+                            <strong>Hora de finalización:</strong>
+                            <label>@Model.HoraFin</label>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-left:5%;vertical-align:top;">
+                        <p>
+                            <strong>Asistentes agencia:</strong>
+                        </p>
+                        <ul>
+                            @if (Model.ListaAsistentes != null)
+                            {
+                                foreach (var i in Model.ListaAsistentes)
+                                {
+                                    {
+                                        <li>@i</li>
+                                    }
+                                }
+                            }
+                        </ul>
+                    </td>
+                    <td style="text-align:left;padding-right:5%;vertical-align:top;">
+                        <p><strong>Asistentes cliente:</strong></p>
+                        <ul>
+                            @if (Model.ListaClientes != null)
+                            {
+                                foreach (var i in Model.ListaClientes)
+                                {
+                                    {
+                                        <li>@i</li>
+                                    }
+                                }
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+   
+
+    <div class="panel panel-default">
+        <div class="panel panel-default">
+            <center>
+                <p>
+                    <strong>Información general:</strong>
+                </p>
+            </center>
+        </div>
+        <div>@Raw(Model.Descripcion)</div>
+    </div>
+
+   
+
+    <div>
+        <div>
+            <center>
+                <p>
+                    <strong>Compromisos agencia:</strong>
+                </p>
+            </center>
+        </div>
+        <table cellpadding="0" border="1" width="100%">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th>Compromiso</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ListaCompromisosAgencia != null)
+                {
+                    foreach (var i in Model.ListaCompromisosAgencia)
+                    {
+                        {
+                            <tr>
+                                <td>@i.Nombre</td>
+                                <td>@i.Fecha</td>
+                                <td>@i.Descripcion</td>
+                            </tr>
+                        }
+                    }
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <div>
+        <div>
+            <center>
+                <p>
+                    <strong>Compromisos cliente:</strong>
+                </p>
+            </center>
+        </div>
+        <table cellpadding="0" border="1" width="100%">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th>Compromiso</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ListaCompromisosCliente != null)
+                {
+                    foreach (var i in Model.ListaCompromisosCliente)
+                    {
+                        {
+                            <tr>
+                                <td>@i.Nombre</td>
+                                <td>@i.Fecha</td>
+                                <td>@i.Descripcion</td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,115 @@
+﻿@model EditarProspectoViewModel
+@{
+    ViewBag.Title = "Edición prospecto";
+}
+
+
+@using (Ajax.BeginForm("Editar", "Prospecto", new { Area = "Gestion" },
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnBegin = "OnBeginEditarProspecto",
+                    OnComplete = "OnCompleteEditarProspecto"
+                },
+                new { @class = "", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">@ViewBag.Title</h4>
+    </div>
+
+    <div class="modal-body">
+        @Html.HiddenFor(p => p.PersonaId)
+
+        @Html.HiddenFor(p => p.Id)
+
+        <h4 class="col-md-12"><strong>Datos básicos</strong></h4>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.PrimerNombre, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.PrimerNombre, new { @class = "form-control datos-basicos" })
+            @Html.ValidationMessageFor(m => m.PrimerNombre, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.SegundoNombre, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.SegundoNombre, new { @class = "form-control datos-basicos" })
+            @Html.ValidationMessageFor(m => m.SegundoNombre, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.PrimerApellido, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.PrimerApellido, new { @class = "form-control datos-basicos" })
+            @Html.ValidationMessageFor(m => m.PrimerApellido, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.SegundoApellido, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.SegundoApellido, new { @class = "form-control datos-basicos" })
+            @Html.ValidationMessageFor(m => m.SegundoApellido, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ModalidadPagoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.ModalidadPagoId, Model.ModalidadesPagos, "Seleccione", new { @class = "form-control info-laboral" })
+            @Html.ValidationMessageFor(m => m.ModalidadPagoId, "", new { @class = "text-danger" })
+        </div>
+
+        <h4 class="col-md-12"><strong>Información salarial</strong></h4>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ValorSalario, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.ValorSalario, new { @class = "form-control info-salarial" })
+            @Html.ValidationMessageFor(m => m.ValorSalario, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ValorBeneficioNoPrestacional, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.ValorBeneficioNoPrestacional, new { @class = "form-control info-salarial" })
+            @Html.ValidationMessageFor(m => m.ValorBeneficioNoPrestacional, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.BonosAlimentacion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.BonosAlimentacion, new { @class = "form-control info-salarial" })
+            @Html.ValidationMessageFor(m => m.BonosAlimentacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Otros, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Otros, new { @class = "form-control info-salarial" })
+            @Html.ValidationMessageFor(m => m.Otros, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.AuxilioTransporte, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.AuxilioTransporte, new { @class = "form-control info-salarial" })
+            @Html.ValidationMessageFor(m => m.AuxilioTransporte, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+            <div class="radio">
+                <label>
+                    @Html.RadioButtonFor(m => m.Estado, false)
+                    Inactivar
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    @Html.RadioButtonFor(m => m.Estado, true)
+                    Activar
+                </label>
+            </div>
+            @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/Areas/Gestion/scripts/Prospecto/Editar.js")
+}

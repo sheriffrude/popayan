@@ -1,0 +1,67 @@
+﻿@model ListarEmpresaImpuestosViewModel
+@{
+    ViewBag.Title = "Impuestos empresa";
+}
+
+<!--Filtro de la tabla-->
+<div class="row margin-top-1">
+    <div class="col-md-10 text-left">
+        <form id="form-filtro-tabla" class="form-inline">
+            <div class="form-group">
+                <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Tipo de impuesto o Estado" />
+                <input type="submit" class="btn btn-default" value="BUSCAR" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2 text-right">
+        @if (Sesion.HasPermission("GES-EMPRESA_IMPUESTO_CREAR"))
+        {
+            <a href="@Url.Action("Crear", "EmpresaImpuesto", new {Area = "Gestion", id = Model.EmpresaId })" class="btn btn-default" data-toggle="modal" data-target="#">Adicionar</a>
+        }
+    </div>
+</div>
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        @Html.HiddenFor(m => m.EmpresaId)
+        <table id="tabla-empresa-impuesto" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+            <tr>
+                <th class="text-center">Tipo de impuesto</th>
+                <th class="text-center">Fecha de vecimiento</th>
+                <th class="text-center">Valor</th>
+                <th class="text-center">Periocidad de pago</th>                
+                <th class="text-center">Estado</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <!--Script listar Empresa impuestos-->
+<script type="text/javascript">
+        var URL_LISTAR_EMPRESA_IMPUESTO = "@Url.Action("Listar", "EmpresaImpuesto", new { Area = "Gestion", id = Model.EmpresaId })";
+        var URL_EDITAR_EMPRESA_IMPUESTO = "@Url.Action("Editar", "EmpresaImpuesto", new { Area = "Gestion" })";
+        var URL_ELIMINAR_EMPRESA_IMPUESTO = "@Url.Action("Eliminar", "EmpresaImpuesto", new { Area = "Gestion" })";
+        var PERMISO_EDITAR_EMPRESA_IMPUESTO = ("@Sesion.HasPermission("GES-EMPRESA_IMPUESTO_EDITAR")" === "True");
+        var PERMISO_ELIMINAR_EMPRESA_IMPUESTO = ("@Sesion.HasPermission("GES-EMPRESA_IMPUESTO_ELIMINAR")" === "True");
+
+       
+</script>
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaImpuesto/Listar.js")
+
+    <!--Script modal Crear Empresa impuestos-->
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaImpuesto/Crear.js")
+
+    <!--Script modal Editar Empresa impuestos-->
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaImpuesto/Editar.js")
+
+}

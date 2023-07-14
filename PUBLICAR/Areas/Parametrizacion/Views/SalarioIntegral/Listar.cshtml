@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Salarios integrales";
+}
+
+<div id="listarSalarioIntegralContainer">
+    <div class="help-block"></div>
+    <!--Filtro de la tabla-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div id="form-filtro-tabla" class="form-inline">
+                    <div class="form-group">
+                        <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                        <input type="button" class="btn btn-secondary" value="BUSCAR" onclick="ListarSalarioIntegral.reconstruirTabla()" />
+                        <input type="button" class="btn btn-secondary" value="VER TODO" onclick="ListarSalarioIntegral.ResetearTablaPais()" />
+                    </div>
+                </div>
+            </div>
+            @if (Sesion.HasPermission("PAR-SALARIO_INTEGRAL_CREAR"))
+            {
+                <div class="col-md-1 col-md-offset-5">
+                    <a href="@Url.Action("Crear", "SalarioIntegral", new {Area = "Parametrizacion"})" class="btn btn-primary" data-toggle="modal" data-target="#">Adicionar</a>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!--Tabla-->
+    <div class="row">
+        <div class="col-md-12">
+            <table id="tabla-salario-integral" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Inicio de vigencia</th>
+                        <th class="text-center">Año de vigencia</th>
+                        <th class="text-center">Valor</th>
+                        <th class="text-center">Estado</th>  
+                        <th class="text-center">Acción</th>  
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Parametrizacion/Scripts/SalarioIntegral/Listar.js")
+
+    <script type="text/javascript">
+        var urlListar = "@Url.Action("Listar", "SalarioIntegral", new { area = "Parametrizacion" })";
+        var urlEditar = "@Url.Action("Editar", "SalarioIntegral", new { area = "Parametrizacion" })";
+    </script>
+}
+

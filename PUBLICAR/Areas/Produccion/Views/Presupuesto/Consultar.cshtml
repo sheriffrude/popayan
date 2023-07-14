@@ -1,0 +1,1071 @@
+﻿@model ConsultarPresupuestoViewModel
+@{
+    var tipoPresupuesto = "PRESUPUESTO";
+    if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionSinAprobar.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionPendientePorAprobar.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionAprobada.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionRechazada.GetHashCode()
+        )
+    {
+        tipoPresupuesto = "COTIZACIÓN";
+    }
+
+    ViewBag.Title = $"{tipoPresupuesto} # {Model.PresupuestoId} - {Model.Estado}";
+}
+
+@Html.HiddenFor(m => m.PresupuestoId)
+@Html.HiddenFor(m => m.PresupuestoVersionId)
+@Html.HiddenFor(m => m.EmpresaId)
+@Html.HiddenFor(m => m.VersionInterna)
+@Html.HiddenFor(m => m.VersionExterna)
+@Html.HiddenFor(m => m.PresupuestoEditable)
+@Html.HiddenFor(m => m.EstadoId)
+
+<!--Titulo Y Versiones-->
+<div class="text-center margin-bottom-1">
+    @if (Sesion.HasPermission("PRO-PRESUPUESTO_VERSION_INTERNA_CREAR") && (
+        Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionSinAprobar.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionAprobada.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionRechazada.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.InicialsinAprobar.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeAprobacionCliente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.RechazadoPorCliente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CancelacionRechazada.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Cancelado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Rechazado.GetHashCode()
+        ))
+    {
+        <button class="btn btn-secondary btn-lg" title="Versión Interna" onclick="PresupuestoConsultar.ConfirmarNuevaVersionInterna()">
+            Versión Interna - @Model.VersionInterna <i class="fa fa-code-fork" aria-hidden="true"></i>
+        </button>
+    }
+    else
+    {
+        <button class="btn btn-secondary btn-lg disabled" title="Versión Interna">
+            Versión Interna - @Model.VersionInterna <i class="fa fa-code-fork" aria-hidden="true"></i>
+        </button>
+    }
+    @if (Sesion.HasPermission("PRO-PRESUPUESTO_VERSION_EXTERNA_CREAR") && (
+        Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionSinAprobar.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionAprobada.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionRechazada.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.InicialsinAprobar.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.RechazadoPorCliente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CancelacionRechazada.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Cancelado.GetHashCode())
+        )
+    {
+        <button class="btn btn-secondary btn-lg" title="Versión Externa" onclick="PresupuestoConsultar.ConfirmarNuevaVersionExterna()">
+            <i class="fa fa-code-fork" aria-hidden="true"></i> Versión Externa - @Model.VersionExterna
+        </button>
+    }
+    else
+    {
+        <button class="btn btn-secondary btn-lg disabled" title="Versión Externa">
+            <i class="fa fa-code-fork" aria-hidden="true"></i> Versión Externa - @Model.VersionExterna
+        </button>
+    }
+</div>
+<!--// Titulo Y Versiones-->
+<div class="clearfix"></div>
+<!--Encabezado-->
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Información general</h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+            </li>
+            <li>
+                @if (Sesion.HasPermission("PRO-PRESUPUESTO_EDITAR")
+                    && Model.EstadoId != ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+                    && Model.EstadoId != ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+                    && Model.EstadoId != ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode()
+                    && Model.EstadoId != ProduccionCustom.EstadoPresupuesto.Cerrado.GetHashCode())
+                {
+                    <a href="@Url.Action("Editar", "Presupuesto", new { Area = "Produccion", id = Model.PresupuestoId })" class="" data-toggle="modal" data-target="#" data-size="all" data-execute-onload="OnLoadEditarPresupuesto">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                }
+            </li>
+            <li>
+                <a href="@Url.Action("Listar", "PresupuestoHistorico", new {Area = "Produccion"})" class="" data-toggle="modal" data-target="#" data-size="all" data-execute-onload="OnLoadPresupuestoHistorico">
+                    <i class="fa fa-level-up"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div id="collapse-encabezado">
+        <div class="x_content display-none">
+            <div class="small">
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.Empresa, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Empresa, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.Cliente, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Cliente, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.Producto, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Producto, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.OrdenTrabajo, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.OrdenTrabajo, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.CentroCosto, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.CentroCosto, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.Referencia, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Referencia, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.Tipo, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Tipo, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.Clasificacion, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Clasificacion, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Estado, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.VigenciaInicial, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.VigenciaInicial, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.VigenciaFinal, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.VigenciaFinal, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.FechaHoraUltimaModificacion, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.FechaHoraUltimaModificacion, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.NumeroAprobacion, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.NumeroAprobacion, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.LugarEjecucion, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.LugarEjecucion, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.DirigidoA, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.DirigidoA, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.IdentificadorCliente, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.IdentificadorCliente, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                    @Html.LabelFor(m => m.CentroCostoCliente, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.CentroCostoCliente, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--// Encabezado-->
+<div class="clearfix"></div>
+@* Btns Acciones *@
+<div class="pull-left">
+    @* COTIZACION *@
+    @if (Sesion.HasPermission("PRO-COTIZACION_APROBACION_CREAR")
+                && Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionSinAprobar.GetHashCode())
+    {
+        <a href="@Url.Action("Crear", "AprobacionCotizacion", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-toggle="modal" data-target="#">
+            <i class="fa fa-share-square-o" aria-hidden="true"></i> Solicitar aprobación
+        </a>
+    }
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionPendientePorAprobar.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionAprobada.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionRechazada.GetHashCode())
+    {
+        <a href="@Url.Action("ListarJerarquia", "AprobacionCotizacion", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-size="lg" data-toggle="modal" data-target="#" data-execute-onload="AprobacionCotizacionListarJerarquia.Onload">
+            <i class="fa fa-users" aria-hidden="true"></i> Ver jerarquía de aprobación
+        </a>
+    }
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionAprobada.GetHashCode())
+    {
+        <button class="btn btn-secondary" onclick="PresupuestoCotizacionConvertirEnPresupuesto.ConfirmarConvertir()">
+            <i class="fa fa-arrow-right" aria-hidden="true"></i> Convertir en Presupuesto
+        </button>
+    }
+
+    @* PRESUPUESTO INTERNO *@
+    @if (Sesion.HasPermission("PRO-PRESUPUESTO_APROBACION_CREAR")
+                        && Model.EstadoId == ProduccionCustom.EstadoPresupuesto.InicialsinAprobar.GetHashCode())
+    {
+        //Solicitar Aprobacion
+        <a href="@Url.Action("Crear", "AprobacionPresupuesto", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-toggle="modal" data-target="#">
+            <i class="fa fa-share-square-o" aria-hidden="true"></i> Solicitar aprobación
+        </a>
+    }
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeAprobacion.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeAprobacionCliente.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Rechazado.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.RechazadoPorCliente.GetHashCode())
+    {
+        <a href="@Url.Action("ListarJerarquia", "AprobacionPresupuesto", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-size="lg" data-toggle="modal" data-target="#" data-execute-onload="AprobacionPresupuestoListarJerarquia.Onload">
+            <i class="fa fa-users" aria-hidden="true"></i> Ver jerarquía de aprobación
+        </a>
+    }
+
+    @* PRESUPUESTO JERARQUIA APROBACION CANCELACION *@
+    @if (Sesion.HasPermission("PRO-PRESUPUESTO_CANCELACION_SOLICITUD_CREAR")
+                        && Model.EstadoId == ProduccionCustom.EstadoPresupuesto.InicialsinAprobar.GetHashCode())
+    {
+        //Solicitar Cancelacion
+        <a href="@Url.Action("Crear", "AprobacionCancelacionPresupuesto", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-toggle="modal" data-target="#">
+            <i class="fa fa-trash" aria-hidden="true"></i> Solicitar cancelación
+        </a>
+    }
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeCancelacion.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Cancelado.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CancelacionRechazada.GetHashCode())
+    {
+        <a href="@Url.Action("ListarJerarquia", "AprobacionCancelacionPresupuesto", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-size="lg" data-toggle="modal" data-target="#" data-execute-onload="AprobacionCancelacionPresupuestoListarJerarquia.Onload">
+            <i class="fa fa-users" aria-hidden="true"></i> Ver jerarquía de aprobación
+        </a>
+    }
+
+    @* PRESUPUESTO JERARQUIA APROBACION CIERRE *@
+    @if (Sesion.HasPermission("PRO-PRESUPUESTO_CIERRE_SOLICITUD_CREAR")
+         && Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode())
+    {
+        //Solicitar Cierre
+        <a href="@Url.Action("Crear", "AprobacionCierrePresupuesto", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-toggle="modal" data-target="#">
+            <i class="fa fa-trash" aria-hidden="true"></i> Solicitar cierre
+        </a>
+    }
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeCierre.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Cerrado.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CierreRechazado.GetHashCode())
+    {
+        <a href="@Url.Action("ListarJerarquia", "AprobacionCierrePresupuesto", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-size="lg" data-toggle="modal" data-target="#" data-execute-onload="AprobacionCierrePresupuestoListarJerarquia.Onload">
+            <i class="fa fa-users" aria-hidden="true"></i> Ver jerarquía de aprobación
+        </a>
+    }
+
+    @* BOTONES ORDENES DE COMPRA, PRODUCCION,  *@
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeCierre.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CierreRechazado.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Cerrado.GetHashCode())
+    {
+        //Orden produccion
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-suitcase" aria-hidden="true"></i> OP
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu text-left" role="menu">
+                @if (Sesion.HasPermission("PRO-ANTICIPO_MASIVO"))
+                {
+                    if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode())
+                    {
+                        <li>
+                            <a href="@Url.Action("Crear", "PresupuestoOrdenProduccion", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-size="all" data-toggle="modal" data-target="#" data-execute-onload="PresupuestoOrdenProduccionCrear.OnLoad">
+                                <i class="fa fa-suitcase" aria-hidden="true"></i> Generar OP
+                            </a>
+                        </li>
+                    }
+                }
+                <li>
+                    <a href="@Url.Action("Listar", "PresupuestoOrdenProduccion", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-size="all" data-toggle="modal" data-target="#" data-execute-onload="PresupuestoOrdenProduccionListar.OnLoad">
+                        <i class="fa fa-history" aria-hidden="true"></i> Histórico OP
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        //Orden Compra
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-suitcase" aria-hidden="true"></i> OC
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu text-left" role="menu">
+                @if (Sesion.HasPermission("PRO-ANTICIPO_MASIVO"))
+                {
+                    if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+                        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode())
+                    {
+                        <li>
+                            <a href="@Url.Action("Crear", "PresupuestoOrdenCompra", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-size="all" data-toggle="modal" data-target="#" data-execute-onload="PresupuestoOrdenCompraCrear.OnLoad">
+                                <i class="fa fa-suitcase" aria-hidden="true"></i> Generar OC
+                            </a>
+                        </li>
+                    }
+                }
+                <li>
+                    <a href="@Url.Action("Listar", "PresupuestoOrdenCompra", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-size="all" data-toggle="modal" data-target="#" data-execute-onload="PresupuestoOrdenCompraListar.OnLoad">
+                        <i class="fa fa-history" aria-hidden="true"></i> Histórico OC
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        //Anticipos
+        <div class="btn-group" role="group">
+
+
+
+
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-money" aria-hidden="true"></i> Anticipos
+                <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu text-left" role="menu">
+
+                @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+                || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode()
+                )
+                {
+
+                    <li>
+                        <a onclick="PresupuestoItemListar.AbrirModalAnticiposMasivosItems()" class="btn btn-secondary" data-size="all" data-toggle="modal" data-target="#">
+                            <i class="fa fa-money" aria-hidden="true"></i>  Anticipos Masivos
+                        </a>
+                    </li>
+
+                }
+
+
+                <li>
+                    <a href="@Url.Action("Listar", "PresupuestoItemAnticipo", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-size="all" data-toggle="modal" data-target="#" data-execute-onload="PresupuestoItemAnticipoListar.OnLoad">
+                        <i class="fa fa-history" aria-hidden="true"></i>  Histórico Anticipos
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+        //Legalizacion
+        <a href="@Url.Action("Listar", "Legalizacion", new {Area = "Produccion", Id = Model.PresupuestoId })" class="btn btn-secondary">
+            <i class="fa fa-money" aria-hidden="true"></i> Legalizaciones
+        </a>
+    }
+
+    @*Immpresiones*@
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-print" aria-hidden="true"></i> Imprimir
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu text-left" role="menu">
+            @if (Sesion.HasPermission("PRO-PRESUPUESTO_INTERNO_IMPRIMIR"))
+            {
+                <li>
+                    <a class="btn btn-secondary" onclick="PresupuestoConsultar.ImprimirInterno()">
+                        <i class="fa fa-print" aria-hidden="true"></i> Presupuesto Interno
+                    </a>
+                </li>
+            }
+            <li>
+                <a class="btn btn-secondary" onclick="PresupuestoConsultar.ImprimirExterno()">
+                    <i class="fa fa-print" aria-hidden="true"></i> Presupuesto Externo
+                </a>
+            </li>
+            @if (Sesion.HasPermission("PRO-PRESUPUESTO_EXTERNO_CON_PROVEEDOR_IMPRIMIR"))
+            {
+                <li>
+                    <a class="btn btn-secondary" onclick="PresupuestoConsultar.ImprimirExternoConProveedor()">
+                        <i class="fa fa-print" aria-hidden="true"></i> Presupuesto Externo Con Proveedor
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<div class="pull-right">
+    @*Histórico de rentabilidad*@
+    <a href="@Url.Action("Listar", "PresupuestoRentabilidad", new { Area = "Produccion", id = Model.PresupuestoId })" class="btn btn-secondary" data-size="all" data-toggle="modal" data-target="#" data-execute-onload="PresupuestoRentabilidadListar.OnLoad">
+        <i class="fa fa-history" aria-hidden="true"></i> Histórico de rentabilidad
+    </a>
+</div>
+
+<div class="pull-right">
+    @*Histórico de Preaupuesto Version*@
+    <a href='/informes_process/ReporteHistoricoPresupuestos.html?presupuestoId=@Model.PresupuestoId' target="_blank" class="btn btn-secondary">
+        <i class="fa fa-history" aria-hidden="true"></i> Histórico Versiones
+    </a>
+</div>
+
+<div id="container_tabla_presupuesto_items">
+    <!--// Acciones-->
+    <div class="clearfix"></div>
+    <!--Botones funciones de los items-->
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.InicialsinAprobar.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionSinAprobar.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionAprobada.GetHashCode())
+    {
+
+        <div class="ln_solid"></div>
+        if (Model.Bloqueo == 0)
+        {
+            <div class="pull-left">
+                <button type="button" onclick="PresupuestoItemCrear.CrearItem()" class="btn btn-secondary">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Adicionar Item
+                </button>
+                <button type="button" onclick="PresupuestoItemCrear.DuplicarItem()" class="btn btn-secondary">
+                    <i class="fa fa-clipboard" aria-hidden="true"></i> Copiar Item
+                </button>
+                <button type="button" onclick="PresupuestoItemCrear.DuplicarItemPorGrupo()" class="btn btn-secondary">
+                    <i class="fa fa-clone" aria-hidden="true"></i> Copiar Grupo Items
+                </button>
+
+                <a href="@Url.Action("CopiarItemOtroPresupuesto", "PresupuestoItem", new { Area = "Produccion" })" class="btn btn-secondary" data-size="all" data-toggle="modal" data-target="#" data-execute-onload="CopiarItemOtroPresupuesto.OnLoad">
+                    <i class="fa fa-object-group" aria-hidden="true"></i> Copiar Items de otro presupuesto
+                </a>
+
+
+            </div>
+        }
+    }
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.InicialsinAprobar.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionSinAprobar.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionAprobada.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode())
+    {
+        <div class="pull-right">
+            <!--// Boton cancelar ppto-->
+
+            <button type="button" class="btn btn-danger" onclick="Cancelacion.OnChangeCancelacion(this, @Model.EstadoId)">Cancelar PPTO</button>
+
+            <!--// -->
+
+            <input type="checkbox" id="btn_autoguardar_presupuesto" data-toggle="toggle" data-on="AutoGuardar" data-off="No AutoGuardar" data-onstyle="success" data-offstyle="danger" onchange="PresupuestoConsultar.OnChangeAutoGuardar(this)" />
+            <button class="btn btn-secondary" onclick="PresupuestoItemEditar.GuardarCambios()">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar
+            </button>
+        </div>
+        <div class="clearfix"></div>
+        <div class="ln_solid"></div>
+    }
+    <!--// Botones funciones de los items-->
+    <!--Filtros tabla-->
+    <div class="pull-left">
+        <form id="form-filtro-tabla-presupuesto" class="form-inline">
+            <div class="form-group">
+                <input type="search" id="input-filtro-tabla-presupuesto" class="form-control" placeholder="Filtro" />
+                <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+                <input type="button" class="btn btn-secondary" value="VER TODO" onclick="PresupuestoItemListar.ResetearTabla()" />
+
+            </div>
+        </form>
+    </div>
+    <div class="pull-right">
+        @if (Sesion.HasPermission("PRO-PRESUPUESTO_BLOQUEAR"))
+        {
+            if (Model.Bloqueo == 0)
+            {
+                <button type="button" class="btn btn-danger" onclick="Bloquar.OnChangeBloquear(this, @Model.Bloqueo)">Bloquear</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-secondary alert-success" onclick="Bloquar.OnChangeBloquear(this, @Model.Bloqueo)">Desbloquear</button>
+            }
+
+        }
+        <button type="button" class="btn btn-secondary" onclick='PresupuestoItemListar.VerPresupuesto(@Model.PresupuestoId)'>Version Ejecutada</button>
+        <button type="button" class="btn btn-secondary" onclick="PresupuestoItemListar.FullScreen()">Fullscreen</button>
+    </div>
+    <!--// Filtros tabla-->
+    <div class="clearfix"></div>
+    <!--Tabla-->
+    <div class="row">
+        <div class="col-md-12">
+            <table id="tabla_presupuesto_items" class="table table-striped table-bordered compact text-center tabla-presupuesto tabla_presupuesto_items_active padding-bottom-1 padding-top-1" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center titulo-interno" colspan="22">Presupuesto Interno</th>
+                        <th class="text-center titulo-externo" colspan="5">Presupuesto Externo</th>
+                        <th class="text-center titulo-rentabilidad-parcial" colspan="2">Rentabilidad Parcial</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center azul">#</th>
+                        <th class="text-center azul">Elim</th>
+                        <th class="text-center azul">Sel.</th>
+                        <th class="text-center azul">ANT</th>
+                        <th class="text-center azul">Comision<br />Cliente</th>
+                        <th class="text-center azul">MNC</th>
+                        <th class="text-center azul">OP</th>
+                        <th class="text-center azul">OC</th>
+                        <th class="text-center azul">Asociado(s)</th>
+                        <th class="text-center azul">Grupo</th>
+                        <th class="text-center azul">Nombre Item</th>
+                        <th class="text-center azul">Descripción</th>
+                        <th class="text-center azul">Proveedor</th>
+                        <th class="text-center azul">Dias</th>
+                        <th class="text-center azul">Cant.</th>
+                        <th class="text-center azul">Valor Unitario</th>
+                        <th class="text-center gris-oscuro">SubTotal</th>
+                        <th class="text-center gris-oscuro">Asociados</th>
+                        <th class="text-center azul">Anticipo</th>
+                        <th class="text-center azul">Impuesto(s)</th>
+                        <th class="text-center azul">Volumen</th>
+                        <th class="text-center gris">Total Interno</th>
+                        <th class="text-center rosa">Descripción</th>
+                        <th class="text-center rosa">Valor Unitario</th>
+                        <th class="text-center gris-oscuro">SubTotal</th>
+                        <th class="text-center rosa">Impuesto(s)</th>
+                        <th class="text-center rosa">Total Externo</th>
+                        <th class="text-center gris-oscuro">Porcentaje</th>
+                        <th class="text-center gris-oscuro">Total</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="16"></th>
+                        <th class="gris">
+                            <div class="input-group">
+                                <label class="input-group-addon">$</label>
+                                <input type="text" id="TotalSubtotalInterno" class="form-control" data-format-price="" value="0" readonly="readonly" />
+                            </div>
+                        </th>
+                        <th class="gris">
+                            <div class="input-group">
+                                <label class="input-group-addon">$</label>
+                                <input type="text" id="TotalSubtotalAsociados" class="form-control" data-format-price="" value="0" readonly="readonly" />
+                            </div>
+                        </th>
+                        <th colspan="3"></th>
+                        <th class="gris">
+                            <div class="input-group">
+                                <label class="input-group-addon">$</label>
+                                <input type="text" id="TotalCostoInterno" class="form-control" data-format-price="" value="0" readonly="readonly" />
+                            </div>
+                        </th>
+                        <th colspan="2"></th>
+                        <th class="rosa">
+                            <div class="input-group">
+                                <label class="input-group-addon">$</label>
+                                <input type="text" id="TotalSubtotalExterno" class="form-control" data-format-price="" value="0" readonly="readonly" />
+                            </div>
+                        </th>
+                        <th colspan="3"></th>
+                        <th class="gris">
+                            <div class="input-group hide">
+                                <label class="input-group-addon">$</label>
+                                <input type="text" id="TotalRentabilidadParcial" class="form-control" data-format-price="" value="0" readonly="readonly" />
+                            </div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <!--// Tabla-->
+    <div class="ln_solid"></div>
+    <div class="clearfix"></div>
+    <!--Rentabilidad Brutra-->
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 text-left">
+        <div class="content-circulo-porcentaje-presupuesto text-center">
+            <div class="circulo-porcentaje-presupuesto form-inline">
+                <div class="form-group col-md-5 col-md-offset-1">
+                    <label class="control-label">Rentabilidad Bruta</label><br />
+                    <div class="input-group">
+                        <label class="input-group-addon">$</label>
+                        <input type="text" id="totalRentabilidadBrutaF" class="form-control" readonly="readonly" data-format-price="" />
+                    </div>
+                </div>
+                <div class="form-group col-md-5">
+                    <label class="control-label">% Rentabilidad Bruta</label><br />
+                    <div class="input-group">
+                        <label class="input-group-addon">%</label>
+                        <input type="text" id="porcentajeRentabilidadBrutaF" class="form-control" readonly="readonly" data-format-price="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <!--Rentabilidad anterior-->
+    <div class="col-md-12 text-left" style="display:none">
+        <div class="content-circulo-porcentaje-presupuesto text-center">
+            <div class="circulo-porcentaje-presupuesto form-inline">
+                <div class="form-group col-md-3 col-md-offset-1">
+                    <label class="control-label">Rentabilidad Bruta</label>
+                    <div class="input-group">
+                        <label class="input-group-addon">%</label>
+                        <input type="text" id="PorcentajeRentabilidadbruta" class="form-control" readonly="readonly" data-format-price="" />
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="control-label">Rentabilidad Neta</label>
+                    <div class="input-group">
+                        <label class="input-group-addon">%</label>
+                        <input type="text" id="PorcentajeRentabilidadNeta" class="form-control" readonly="readonly" data-format-price="" />
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label">Rent. Comercial</label>
+                    <div class="input-group">
+                        <label class="input-group-addon">%</label>
+                        <input type="text" id="PorcentajeRentabilidadX" class="form-control" readonly="readonly" data-format-price="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Rentabilidad-->
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 text-left">
+        <div class="content-circulo-porcentaje-presupuesto text-center">
+            <div class="circulo-porcentaje-presupuesto form-inline">
+                <div class="form-group col-md-5 col-md-offset-1">
+                    <label class="control-label">Rentabilidad Bruta Con Comision</label><br />
+                    <div class="input-group">
+                        <label class="input-group-addon">$</label>
+                        <input type="text" id="totalRentabilidadBrutaComisionF" class="form-control" readonly="readonly" data-format-price="" />
+                    </div>
+                </div>
+                <div class="form-group col-md-5">
+                    <label class="control-label">% Rentabilidad Bruta Con Comision</label><br />
+                    <div class="input-group">
+                        <label class="input-group-addon">%</label>
+                        <input type="text" id="porcentajeRentabilidadBrutaComisionF" class="form-control" readonly="readonly" data-format-price="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <!--Rentabilidad-->
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 text-left">
+        <div class="content-circulo-porcentaje-presupuesto text-center">
+            <div class="circulo-porcentaje-presupuesto form-inline">
+                <div class="form-group col-md-5 col-md-offset-1">
+                    <label class="control-label">Rentabilidad Neta</label><br />
+                    <div class="input-group">
+                        <label class="input-group-addon">$</label>
+                        <input type="text" id="totalRentabilidadNetaF" class="form-control" readonly="readonly" data-format-price="" />
+                    </div>
+                </div>
+                <div class="form-group col-md-5">
+                    <label class="control-label">% Rentabilidad Neta</label><br />
+                    <div class="input-group">
+                        <label class="input-group-addon">%</label>
+                        <input type="text" id="porcentajeRentabilidadNetaF" class="form-control" readonly="readonly" data-format-price="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Rentabilidad-->
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 text-left">
+        <div class="content-circulo-porcentaje-presupuesto text-center">
+            <div class="circulo-porcentaje-presupuesto form-inline">
+                <div class="form-group col-md-11 col-md-offset-1">
+                    <label class="control-label">Valor Comision</label>
+                    <div class="input-group">
+                        <label class="input-group-addon">%</label>
+                        <input type="text" id="comisionF" class="form-control" readonly="readonly" data-format-price="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <!--Resumen Actividad-->
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <div class="form-group col-md-12" id="resumen-actividad">
+                <table id="tabla_resumen_actividad" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%" data-role="datatable" data-info="false">
+                    <thead>
+                        <tr>
+                            <th colspan="9" scope="col" class="text-center">Resumen de actividad</th>
+                        </tr>
+                        <tr>
+                            <th class="success">Total Valor Legalizado</th>
+                            <th>Total Valores comisionables</th>
+                            <th>Total Valores no comisionables</th>
+                            <th>Total Excedente de asociados</th>
+                            <th>Total costos de ejecución</th>
+                            <th>Total comisión presupuesto</th>
+                            <th>Total actividad</th>
+                            <th>Rentabilidad bruta del presupuesto</th>
+                            <th>Utilidad comercial</th>
+                            <th>% Utilidad comercial</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="clearfix"></div>
+        <div class="clearfix"></div>
+        <!--Resumen Impuestos-->
+        <div class="col-md-12 text-left">
+            <div class="form-group col-md-12" id="resumen-impuestos">
+                <table id="tabla_resumen_impuestos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%" data-role="datatable" data-info="false">
+                    <thead>
+                        <tr>
+                            <th colspan="6" scope="col" class="text-center">Resumen de impuestos</th>
+                        </tr>
+                        <tr>
+                            <th>Valor total sin impuestos</th>
+                            <th>Valor total impuestos</th>
+                            <th>Factoring</th>
+                            @*<th>Anticipos intereses bancarios ($)</th>*@
+                            <th>Totalizar costos financieros e impuestos</th>
+                            <th>Utilidad final</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        //Presupuesto
+        var PRESUPUESTOID = @Model.PresupuestoId;
+        var PRESUPUESTOVERSION = @Model.PresupuestoVersionId;
+        ///
+        var URL_CONSULTAR_DATOS_PRESUPUESTO = "@Url.Action("ConsultarDatos", "Presupuesto", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_VERSION_INTERNA_CREAR = "@Url.Action("CrearInterna", "PresupuestoVersion", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_VERSION_EXTERNA_CREAR = "@Url.Action("CrearExterna", "PresupuestoVersion", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_BOQUEAR = "@Url.Action("Bloqueo", "Presupuesto", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_CANCELACION = "@Url.Action("Cancelacion", "Presupuesto", new { Area = "Produccion" })";
+        var PERMISO_VER_INTERNO = ("@Sesion.HasPermission("PRO-PRESUPUESTO_INTERNO_CONSULTAR")" === "True");
+        var PERMISO_VER_EXTERNO = ("@Sesion.HasPermission("PRO-PRESUPUESTO_EXTERNO_CONSULTAR")" === "True");
+        var PERMISO_VER_RENTABILIDAD = ("@Sesion.HasPermission("PRO-PRESUPUESTO_RENTABILIDAD_CONSULTAR")" === "True");
+
+        //Copiar Items de otro Presupuesto
+        var URL_CLIENTE_POR_EMPRESA_LISTAR = "@Url.Action("ListarOpcionesPorEmpresa", "UsuarioCliente", new { Area = "Gestion" })";
+        var URL_ORDEN_TRABAJO_POR_EMPRESA_CLIENTE_ESTADO_LISTAR = "@Url.Action("ListarOpcionesPorEmpresaClienteEstado", "OrdenTrabajo", new { Area = "Trafico" })";
+        var URL_PRESUPUESTO_LISTAR = "@Url.Action("ListarPorEmpresaClienteOrdenTrabajo", "Presupuesto", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_ITEM_LISTAR = "@Url.Action("Listar", "PresupuestoItem", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_ITEM_OTRO_PRESUPUESTO_DUPLICAR = "@Url.Action("DuplicarOtroPresupuesto", "PresupuestoItem", new { Area = "Produccion"})";
+
+        @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionAprobada.GetHashCode())
+        {
+            //Cotizacion
+            <text>
+            var URL_PRESUPUESTO_COTIZACION_CONVERTIR_EN_PRESUPUESTO = "@Url.Action("ConvertirEnPresupuesto", "PresupuestoCotizacion", new { Area = "Produccion" })";
+            </text>
+        }
+
+        @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionPendientePorAprobar.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionAprobada.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionRechazada.GetHashCode())
+        {
+            <text>
+            var URL_JERARQUIA_APROBACION_COTIZACION_LISTAR = "@Url.Action("ListarJerarquia", "AprobacionCotizacion", new { Area = "Produccion" })";
+            </text>
+        }
+
+        @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeAprobacion.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeAprobacionCliente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Rechazado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.RechazadoPorCliente.GetHashCode())
+        {
+            //Jerarquia Aprobacion
+            <text>
+            var URL_JERARQUIA_APROBACION_PRESUPUESTO_LISTAR = "@Url.Action("ListarJerarquia", "AprobacionPresupuesto", new { Area = "Produccion" })";
+            </text>
+        }
+
+        @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeCancelacion.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CancelacionRechazada.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Cancelado.GetHashCode()
+            )
+        {
+            //Jerarquia Aprobacion Cancelacion
+            <text>
+            var URL_JERARQUIA_APROBACION_PRESUPUESTO_LISTAR = "@Url.Action("ListarJerarquia", "AprobacionCancelacionPresupuesto", new { Area = "Produccion" })";
+            </text>
+        }
+
+        @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeCierre.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CierreRechazado.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Cerrado.GetHashCode()
+            )
+        {
+            //Jerarquia Aprobacion cierre
+            <text>
+                var URL_JERARQUIA_APROBACION_PRESUPUESTO_LISTAR = "@Url.Action("ListarJerarquia", "AprobacionCierrePresupuesto", new { Area = "Produccion" })";
+            </text>
+        }
+
+        //Presupuesto Historico
+        var URL_PRESUPUESTO_HISTORICO_LISTAR = "@Url.Action("Listar", "PresupuestoHistorico", new { Area = "Produccion"})";
+
+        //Rentabilidad presupuesto
+        var URL_CONSULTAR_RENTABILIDAD_PRESUPUESTO = "@Url.Action("ConsultarRentabilidad", "PresupuestoHistorico", new { Area = "Produccion"})";
+        var URL_CONSULTAR_RENTABILIDAD_PRESUPUESTO_FINAL = "@Url.Action("ConsultarRentabilidadFinal", "PresupuestoHistorico", new { Area = "Produccion"})";
+
+        //Rentabilidad Historico
+        var URL_PRESUPUESTO_RENTABILIDAD_LISTAR = "@Url.Action("Listar", "PresupuestoRentabilidad", new { Area = "Produccion"})";
+
+        // Anticipos
+        var URL_PRESUPUESTO_ANTICIPOS = "@Url.Action("Crear", "PresupuestoItemAnticipo", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_ANTICIPOS_LISTAR = "@Url.Action("Listar", "PresupuestoItemAnticipo", new { Area = "Produccion" })";
+
+        var PERMISO_DESEMBOLSAR_ANTICIPO = ("@Sesion.HasPermission("PRO-ANTICIPO_DESEMBOLSAR_CREAR")" === "True");
+        var PERMISO_APROBACION_ANTICIPO = ("@Sesion.HasPermission("PRO-ANTICIPO_APROBACION_CREAR")" === "True");
+        var URL_APROBACION_ANTICIPO = "@Url.Action("Crear", "AprobacionAnticipo", new { Area = "Produccion" })";
+        var URL_JERARQUIA_APROBACION_ANTICIPO_LISTAR = "@Url.Action("ListarJerarquia", "AprobacionAnticipo", new { Area = "Produccion" })";
+
+
+        //Listar resumen actividad
+        var URL_PRESUPUESTO_RESUMEN_ACTIVIDAD = "@Url.Action("ListarResumenActividad", "Presupuesto", new { Area = "Produccion"})";
+        var URL_PRESUPUESTO_RESUMEN_IMPUESTOS = "@Url.Action("ListarResumenImpuestos", "Presupuesto", new { Area = "Produccion"})";
+        var URL_PRESUPUESTO_EDITAR_FACTORING = "@Url.Action("EditarFactoring", "Presupuesto", new { Area = "Produccion"})";
+
+        //Presupuesto Items
+        var URL_PRESUPUESTO_ITEM_LISTAR = "@Url.Action("Listar", "PresupuestoItem", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_ITEM_CREAR = "@Url.Action("Crear", "PresupuestoItem", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_ITEM_ELIMINAR = "@Url.Action("Eliminar", "PresupuestoItem", new { Area = "Produccion" })";
+        var URL_LISTA_PRESUPUESTO_ITEMS_EDITAR = "@Url.Action("EditarListaItems", "PresupuestoItem", new { Area = "Produccion" })";
+        var URL_COMISION_ITEM_EDITAR = "@Url.Action("EditarComision", "PresupuestoItem", new { Area = "Produccion" })";
+        var URL_MANDATO_ITEM_EDITAR = "@Url.Action("EditarMandato", "PresupuestoItem", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_ITEM_DUPLICAR = "@Url.Action("Duplicar", "PresupuestoItem", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_ITEM_DUPLICAR_POR_GRUPO = "@Url.Action("DuplicarPorGrupo", "PresupuestoItem", new { Area = "Produccion" })";
+
+        //Presupuesto Items Asociados
+        var URL_PRESUPUESTO_ITEM_ASOCIADO_LISTAR = "@Url.Action("Listar", "PresupuestoItemAsociado", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_ITEM_ASOCIADO_CREAR = "@Url.Action("Crear", "PresupuestoItemAsociado", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_ITEM_ASOCIADO_ELIMINAR = "@Url.Action("Eliminar", "PresupuestoItemAsociado", new { Area = "Produccion" })";
+        var URL_LISTA_PRESUPUESTO_ITEM_ASOCIADOS_EDITAR = "@Url.Action("EditarListaAsociados", "PresupuestoItemAsociado", new { Area = "Produccion" })";
+
+        //Proveedores
+        var URL_LISTAR_OPCIONES_PROVEEDORES = "@Url.Action("ListarOpcionesPorEmpresa", "EmpresaProveedor", new { Area = "Gestion"})";
+
+        //Impuestos
+        var URL_LISTAR_OPCIONES_IMPUESTOS_POR_EMPRESA = "@Url.Action("ListarOpcionesPorEmpresa", "EmpresaImpuesto", new { Area = "Gestion" })";
+
+        //Proveedores Items y Asociados
+        var URL_PRESUPUESTO_LISTAR_ITEMS_INTERNO_POR_PROVEEDOR = "@Url.Action("ListarItemsInternosPorProveedor", "PresupuestoItem", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_LISTAR_ITEMS_ASOCIADOS_POR_PROVEEDOR = "@Url.Action("ListarItemsAsociadosPorProveedor", "PresupuestoItemAsociado", new { Area = "Produccion" })";
+
+        @* ORDENES DE COMPRA Y PRODUCCION *@
+        @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeCierre.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CierreRechazado.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Cerrado.GetHashCode()
+            )
+        {
+            //Orden de compra
+            <text>
+            var URL_PRESUPUESTO_ORDEN_COMPRA_LISTAR = "@Url.Action("Listar", "PresupuestoOrdenCompra", new { Area = "Produccion" })";
+            var URL_PRESUPUESTO_ORDEN_COMPRA_CONSULTAR = "@Url.Action("Consultar", "PresupuestoOrdenCompra", new { Area = "Produccion" })";
+            var URL_PRESUPUESTO_ORDEN_COMPRA_CANCELAR = "@Url.Action("Cancelar", "PresupuestoOrdenCompra", new { Area = "Produccion"})";
+            var URL_PRESUPUESTO_ORDEN_COMPRA_EDITAR = "@Url.Action("Editar", "PresupuestoOrdenCompra", new { Area = "Produccion"})";
+            var URL_PRESUPUESTO_ITEMS_INTERNO_LISTAR_POR_ORDEN_COMPRA = "@Url.Action("ListarItemsInternosPorOrdenCompra", "PresupuestoItem", new { Area = "Produccion" })";
+            var URL_PRESUPUESTO_ITEMS_ASOCIADOS_LISTAR_POR_ORDEN_COMPRA = "@Url.Action("ListarPorOrdenCompra", "PresupuestoItemAsociado", new { Area = "Produccion" })";
+            var URL_PRESUPUESTO_ORDEN_COMPRA_CREAR_APARTIR_ORDEN_PRODUCCION = "@Url.Action("CrearApartirOrdenProduccion", "PresupuestoOrdenCompra")";
+
+            //Orden de produccion
+            var URL_PRESUPUESTO_ORDEN_PRODUCCION_LISTAR = "@Url.Action("Listar", "PresupuestoOrdenProduccion", new { Area = "Produccion"})";
+            var URL_PRESUPUESTO_ORDEN_PRODUCCION_CONSULTAR = "@Url.Action("Consultar", "PresupuestoOrdenProduccion", new { Area = "Produccion"})";
+            var URL_PRESUPUESTO_ITEMS_INTERNO_LISTAR_POR_ORDEN_PRODUCCION = "@Url.Action("ListarItemsInternosPorOrdenProduccion", "PresupuestoItem", new { Area = "Produccion" })";
+            var URL_PRESUPUESTO_ITEMS_ASOCIADOS_LISTAR_POR_ORDEN_PRODUCCION = "@Url.Action("ListarPorOrdenProduccion", "PresupuestoItemAsociado", new { Area = "Produccion" })";
+            </text>
+        }
+    </script>
+    @* Presupuesto *@
+    @Scripts.Render("~/Areas/Produccion/scripts/Presupuesto/Consultar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/Presupuesto/Editar.js")
+    @* Presupuesto Historico *@
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoHistorico/Listar.js")
+    @* Presupuesto Item *@
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItem/Listar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItem/Crear.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItem/Eliminar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItem/Editar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItem/CopiarItemOtroPresupuesto.js")
+    @* Presupuesto Item Asociado *@
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItemAsociado/Listar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItemAsociado/Crear.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItemAsociado/Editar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItemAsociado/Eliminar.js")
+
+    @* COTIZACION *@
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionSinAprobar.GetHashCode())
+    {
+        @Scripts.Render("~/Areas/Produccion/scripts/AprobacionCotizacion/Crear.js")
+    }
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionPendientePorAprobar.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionAprobada.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionRechazada.GetHashCode())
+    {
+        @Scripts.Render("~/Areas/Produccion/scripts/AprobacionCotizacion/ListarJerarquia.js")
+    }
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CotizacionAprobada.GetHashCode())
+    {
+        @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoCotizacion/ConvertirEnPresupuesto.js")
+    }
+
+    @* PRESUPUESTO *@
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.InicialsinAprobar.GetHashCode())
+    {
+        @Scripts.Render("~/Areas/Produccion/scripts/AprobacionPresupuesto/Crear.js")
+        @Scripts.Render("~/Areas/Produccion/scripts/AprobacionCancelacionPresupuesto/Crear.js")
+    }
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeAprobacion.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeAprobacionCliente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Rechazado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.RechazadoPorCliente.GetHashCode()
+        )
+    {
+        @Scripts.Render("~/Areas/Produccion/scripts/AprobacionPresupuesto/ListarJerarquia.js")
+    }
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeCancelacion.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Cancelado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CancelacionRechazada.GetHashCode())
+    {
+        @Scripts.Render("~/Areas/Produccion/scripts/AprobacionCancelacionPresupuesto/ListarJerarquia.js")
+    }
+
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode())
+    {
+        @Scripts.Render("~/Areas/Produccion/scripts/AprobacionCierrePresupuesto/Crear.js")
+    }
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeCierre.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Cerrado.GetHashCode()
+         || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CierreRechazado.GetHashCode())
+    {
+        @Scripts.Render("~/Areas/Produccion/scripts/AprobacionCierrePresupuesto/ListarJerarquia.js")
+    }
+
+    @* ORDENES DE COMPRA Y PRODUCCION *@
+    @if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PendienteDeCierre.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.CierreRechazado.GetHashCode()
+        || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Cerrado.GetHashCode())
+    {
+        @* Orden de Compra *@
+        if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode())
+        {
+            @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoOrdenCompra/Crear.js")
+        }
+
+        @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoOrdenCompra/Listar.js")
+        @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoOrdenCompra/Consultar.js")
+        @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoOrdenCompra/Cancelar.js")
+        @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoOrdenCompra/Editar.js")
+
+        @* Orden de Produccion *@
+        if (Model.EstadoId == ProduccionCustom.EstadoPresupuesto.AprobadoPorCliente.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EnOrdenacion.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.EdicionTotal.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Facturado.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.ParcialmenteFacturado.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.Pagado.GetHashCode()
+            || Model.EstadoId == ProduccionCustom.EstadoPresupuesto.PagadoParcialmente.GetHashCode())
+        {
+            @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoOrdenProduccion/Crear.js")
+        }
+
+        @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoOrdenProduccion/Listar.js")
+        @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoOrdenProduccion/Consultar.js")
+    }
+
+    @* Rentabilidad *@
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoRentabilidad/Listar.js")
+    @* Anticipos *@
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItemAnticipo/Consultar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItemAnticipo/Listar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoItemAnticipo/ConsultarDetalle.js")
+
+    @* Jerarquia Aprobacion *@
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionAnticipo/Crear.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionAnticipo/ListarJerarquia.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/Anticipo/Listar.js")
+}

@@ -1,0 +1,85 @@
+﻿@model TraficoPendienteViewModel
+@{
+    ViewBag.Title = "Crear solicitud de tráfico cliente";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("Crear", "TraficoPendiente", new { Area = "Trafico" },
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnBegin = "OnBeginCrearStatus",
+            OnSuccess = "OnSuccessCrearStatus"
+        },
+        new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.IdSolicitud)
+
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Titulo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Titulo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Titulo, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.DeptoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.DeptoId, Model.ListaDeptos, "Seleccione",
+                new
+                {
+                    @class = "form-control"
+                })
+            @Html.ValidationMessageFor(m => m.DeptoId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.GruposId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.GruposId, Model.ListaGrupos, "Seleccione",
+                new
+                {
+                    @class = "form-control"
+                })
+            @Html.ValidationMessageFor(m => m.GruposId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.EstadoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.EstadoId, Model.ListaEstados, "Seleccione",
+                new
+                {
+                    @class = "form-control"
+                })
+            @Html.ValidationMessageFor(m => m.EstadoId, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.FechaEntrega, new { @class = "control-label" })
+            <div class="input-group date">
+                @Html.TextBoxFor(m => m.FechaEntrega, new { @class = "form-control datepicker" })
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>
+            @Html.ValidationMessageFor(m => m.FechaEntrega, "", new { @class = "text-danger" })
+        </div>
+        <div class="clearfix"></div>
+        <br />
+
+        <div class="text-right">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    }
+</div>
+<script>
+    $("#FechaEntrega").datetimepicker({
+        viewMode: 'days',
+        format: 'DD/MM/YYYY'
+    });
+</script>

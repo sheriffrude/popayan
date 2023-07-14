@@ -1,0 +1,137 @@
+﻿@model EditarProveedorViewModel
+@{
+    //Titulo
+    ViewBag.Title = "Editar Proveedor";
+
+    //Clase body personalizado
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<!--Formulario-->
+@using (Ajax.BeginForm("Editar", "Proveedor", new { Area = "Gestion" },
+                                            new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginFormEditarProveedor", OnSuccess = "OnSuccessFormEditarProveedor" },
+                                            new { @class = "", role = "form" })
+                                            )
+{
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NombreComercial, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.NombreComercial, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NombreComercial, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NombreLegal, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.NombreLegal, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NombreLegal, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Nit, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Nit, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nit, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.FechaConstitucion, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaConstitucion, new { @class = "form-control", placeholder = "DD/MM/YYYY", maxlength = "10" })
+        @Html.ValidationMessageFor(m => m.FechaConstitucion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-2">
+        @Html.LabelFor(m => m.ParPaisId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.ParPaisId, Model.ListaPaises, "Seleccione", new
+   {
+       @class = "form-control",
+       onchange = "OnchangePais(this, '" + Url.Action("ListaOpcionesPorPais", "Departamento", new { Area = "Parametrizacion" }) + "');"
+   })
+        @Html.ValidationMessageFor(m => m.ParPaisId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-2">
+        @Html.LabelFor(m => m.ParDepartamentoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.ParDepartamentoId, Model.ListaDepartamentos, "Seleccione", new
+   {
+       @class = "form-control",
+       onchange = "OnchangeDepartamento(this, '" + Url.Action("ListaOpcionesCiudadesPorDepartamento", "Ciudad", new { Area = "Parametrizacion" }) + "');"
+   })
+        @Html.ValidationMessageFor(m => m.ParDepartamentoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-2">
+        @Html.LabelFor(m => m.ParCiudadId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.ParCiudadId, Model.ListaCiudades, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+        @Html.ValidationMessageFor(m => m.ParCiudadId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Direccion, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Direccion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Telefono, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", @type = "number", @max = "999999999999" })
+        @Html.ValidationMessageFor(m => m.Telefono, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Correo, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.CorreoGerente, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.CorreoGerente, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CorreoGerente, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="form-group col-md-6">
+        <a href="@Url.Action("Asociar", "Proveedor", new { Area = "Gestion" })" class="btn btn-info" data-toggle="modal" data-target="#">ASOCIAR EMPRESAS</a>
+    </div>
+    <div class="form-group col-md-12">
+        <table id="tabla-empresas" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Dia de pago</th>
+                    <th></th>
+                    <th >Eliminar</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="col-md-12 text-right">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a type="button" href="@Url.Action("Ver", "Proveedor", new { Area = "Gestion", id = Model.Id } )" class="btn btn-warning">Cerrar</a>
+    </div>
+}
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+<script type="text/javascript">
+    var URL_CAMBIAR_ESTADO_ASOCIACION_EMPRESA = "@Url.Action("CambiarEstadoAsociacion", "Proveedor", new { Area = "Gestion" })";
+    var URL_LISTAR_EMPRESAS_ASOCIADAS_PROVEEDOR = "@Url.Action("ListarAsociacionEmpresasProveedor", "Proveedor", new { Area = "Gestion" })";
+    var URL_EDITAR_ASOCIACION_EMPRESA_PROVEEDOR = "@Url.Action("EditarAsociacionEmpresasProveedor", "Proveedor", new { Area = "Gestion" })";
+    
+    var redireccion = "@Url.Action("Ver", "Proveedor", new { Area = "Gestion", id = Model.Id })";
+
+</script>
+
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Proveedor/Editar.js")
+}
+
+
+
+

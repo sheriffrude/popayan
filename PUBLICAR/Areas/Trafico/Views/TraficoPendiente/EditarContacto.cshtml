@@ -1,0 +1,72 @@
+﻿@model TraficoPendienteCrearContactoViewModel
+@{
+    ViewBag.Title = "Editar Contacto ";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("EditarContacto", "SolicitudPendiente", new { Area = "Trafico" },
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnBegin = "OnBeginEditarContacto",
+            OnSuccess = "OnSuccessEditarContacto"
+        },
+        new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ContactoId)
+        <div class="clearfix"></div>
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+        <div class="clearfix"></div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Nombre, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Cargo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Cargo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Cargo, "", new { @class = "text-danger" })
+        </div>
+        <div class="clearfix"></div>
+        <div class="help-block"></div>
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Correo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Correo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Direccion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Direccion, "", new { @class = "text-danger" })
+        </div>
+        <div class="clearfix"></div>
+        <div class="help-block"></div>
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Fijo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Fijo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Fijo, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Cel, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Cel, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Cel, "", new { @class = "text-danger" })
+        </div>
+        <div class="clearfix"></div>
+        <div class="help-block"></div>
+        <div class="text-right">
+            <button type="submit" class="btn btn-success">Editar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+        <div class="clearfix"></div>
+        <div class="help-block"></div>
+    }
+</div>

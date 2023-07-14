@@ -1,0 +1,41 @@
+﻿@model CamapanaViewModel
+
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.EmpresaId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.EmpresaId, Model.ListaEmpresas, "Seleccione", new
+{
+    @class = "form-control"
+   ,
+    onchange = "OnchangePais(this)"
+})
+    @Html.ValidationMessageFor(m => m.EmpresaId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    <div class="select-style">
+        <label for="ClienteId">Seleccione un Cliente:</label>
+        <select id="ClienteId" class="form-control"></select>
+    </div>
+</div>
+<div class="form-group col-md-3">
+    <div class="select-style">
+        <label for="Buscar"></label>
+        <input type="button" class="btn-trafico" value="Buscar" id="Buscar" onclick="ListarCampana()">
+    </div>
+</div>
+<!--Tabla-->
+<div class="clearfix"></div>
+<div class="hidden" id="Table-Campanas">
+    <div class="col-md-6 " id="Listar_Campana">
+        <table id="tabla-campana" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Campaña</th>
+                    <th class="text-center">Editar</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>

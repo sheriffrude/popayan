@@ -1,0 +1,139 @@
+﻿@model CrearJerarquiaAprobacionViewModel
+@{
+    var nombreTipoJerarquia = "";
+    if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.Cotizacion.GetHashCode())
+    {
+        nombreTipoJerarquia = "Cotizaciones";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.PresupuestoInterno.GetHashCode())
+    {
+        nombreTipoJerarquia = "Presupuesto Interno";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.CancelacionPresupuesto.GetHashCode())
+    {
+        nombreTipoJerarquia = "Cancelación Presupuesto";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.CierrePresupuesto.GetHashCode())
+    {
+        nombreTipoJerarquia = "Cierre Presupuesto";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.FacturaProveedor.GetHashCode())
+    {
+        nombreTipoJerarquia = "Factura proveedor";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.Anticipos.GetHashCode())
+    {
+        nombreTipoJerarquia = "Anticipo";
+    }
+    else if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.Legalizacion.GetHashCode())
+    {
+        nombreTipoJerarquia = "Legalización";
+    }
+
+    ViewBag.Title = "Crear jerarquía de aprobación " + nombreTipoJerarquia;
+}
+
+<div class="panel-body">
+    @using (Ajax.BeginForm("Crear", "JerarquiaAprobacion",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnBegin = "CrearJerarquiaAprobacion.OnBegin",
+                    OnComplete = "CrearJerarquiaAprobacion.OnComplete"
+                }, new { id = "form_jerarquia_aprobacion_crear" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="clearfix"></div>
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+        <div class="clearfix"></div>
+
+        @Html.HiddenFor(m => m.JerarquiaAprobacionTipoId)
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(m => m.Empresas, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.Empresas, Model.ListaEmpresas, null, new { @class = "form-control selectpicker", data_live_search = "true", multiple = "", onChange = "CrearJerarquiaAprobacion.OnChangeEmpresa()" })
+            @Html.ValidationMessageFor(m => m.Empresas, "", new { @class = "text-danger" })
+        </div>
+
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.Clientes, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.Clientes, Model.ListaClientes, null, new { @class = "form-control selectpicker", data_live_search = "true", multiple = "" })
+                @Html.ValidationMessageFor(m => m.Clientes, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.CentrosCosto, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.CentrosCosto, Model.ListaCentrosCosto, null, new { @class = "form-control selectpicker", data_live_search = "true", multiple = "" })
+                @Html.ValidationMessageFor(m => m.CentrosCosto, "", new { @class = "text-danger" })
+            </div>
+
+        if (Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.PresupuestoInterno.GetHashCode()
+                || Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.Cotizacion.GetHashCode()
+                || Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.CancelacionPresupuesto.GetHashCode()
+                || Model.JerarquiaAprobacionTipoId == GestionCustom.JerarquiaAprobacionTipo.CierrePresupuesto.GetHashCode())
+        {
+            <div class="clearfix"></div>
+            <div class="form-group col-md-2">
+                @Html.LabelFor(m => m.PorcentajeRentabilidad, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.PorcentajeRentabilidad, new { @class = "form-control", required = "required", placeholder = "Porcentaje de rentabilidad minimo", type = "number" })
+                @Html.ValidationMessageFor(m => m.PorcentajeRentabilidad, "", new { @class = "text-danger" })
+            </div>
+        }
+
+        <div class="clearfix"></div>
+        <div class="ln_solid"></div>
+
+        <div class="pull-right">
+            <a href="@Url.Action("CrearGrupo", "JerarquiaAprobacion", new {Area = "Gestion", Id = Model.JerarquiaAprobacionTipoId })" class="btn btn-secondary form-control" data-toggle="modal" data-target="#" data-execute-onload="JerarquiaAprobacionGrupoCrear.OnLoad">Crear grupo</a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tabla_grupos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Orden de Aprobación</th>
+                            <th class="text-center">Grupo</th>
+                            <th class="text-center">Posición Rentabilidad</th>
+                            <th class="text-center">Usuario(s)</th>
+                            <th class="text-center">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="pull-right">
+            <button type="submit" class="btn btn-success">GUARDAR</button>
+            <button type="button" class="btn btn-warning" onclick="CrearJerarquiaAprobacion.Cancelar()">CERRAR</button>
+        </div>
+    }
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <script type="text/javascript">
+        var URL_UNIDAD_NEGOCIO_POR_EMPRESA_LISTAR = "@Url.Action("ListarOpcionesPorEmpresa", "EmpresaCentroCosto", new { area = "Gestion" })";
+        var URL_UNIDAD_NEGOCIO_LISTAR = "@Url.Action("ListarOpciones", "EmpresaCentroCosto", new { area = "Gestion" })";
+
+        var URL_CLIENTE_POR_EMPRESA_LISTAR = "@Url.Action("ListarPorEmpresa", "Cliente", new { area = "Gestion" })";
+        var URL_CLIENTE_LISTAR = "@Url.Action("ListarOpciones", "Cliente", new { area = "Gestion" })";
+
+        var URL_GRUPO_EDITAR = "@Url.Action("CrearGrupo", "JerarquiaAprobacion", new { area = "Gestion" })";
+
+        var URL_JERARQUIA_APROBACION_LISTAR = "@Url.Action("Listar", "JerarquiaAprobacion", new { area = "Gestion", id = Model.JerarquiaAprobacionTipoId })";
+
+        var URL_JERARQUIA_APROBACION_LISTAR_GRUPO_USUARIOS = "@Url.Action("ListarGrupoUsuarios", "JerarquiaAprobacion", new { area = "Gestion" })";
+    </script>
+
+    @Scripts.Render("~/Areas/Gestion/Scripts/JerarquiaAprobacion/Crear.js")
+    @Scripts.Render("~/Areas/Gestion/Scripts/JerarquiaAprobacion/CrearGrupo.js")
+    @Scripts.Render("~/Areas/Gestion/Scripts/JerarquiaAprobacion/ListarGrupoUsuarios.js")
+}

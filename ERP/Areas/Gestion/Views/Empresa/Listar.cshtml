@@ -1,0 +1,56 @@
+﻿@model ListarEmpresaViewModel
+@{
+    ViewBag.Title = "Empresas";
+    ViewBag.BodyClass = "body-background-gray";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+
+<!-- Titulo y boton volver -->
+<div class="col-md-12">
+    <div class="pull-right">
+        @if (Sesion.HasPermission("GES-EMPRESA_CREAR"))
+        {
+            <a href="@Url.Action("Crear", "Empresa", new { Area = "Gestion" })" class="btn btn-secondary">
+                Adicionar Empresa
+            </a>
+        }
+    </div>
+</div>
+
+<div class="col-md-12 content-menu">
+    @if (Model.ListaEmpresas == null || Model.ListaEmpresas.Count == 0)
+    {
+        <h4>No existen empresas creadas</h4>
+    }
+    else
+    {
+        foreach (var item in Model.ListaEmpresas)
+        {
+            <div class="col-md-2 col-sm-4 text-center">
+                <a href="@Url.Action("Menu", "Empresa", new {Area = "Gestion", Id = item.Id})" class="img-responsive" title="@item.NombreComercial">
+                    @if (item.Logo != null)
+                    {
+                        <img src="@Url.Content(item.Logo)" alt="@item.NombreComercial" class="img-empresa" />
+                    }
+                    else
+                    {
+                        @item.NombreComercial
+                    }
+                </a>
+                <h4>@item.NombreComercial</h4>
+            </div>
+        }
+    }
+</div>

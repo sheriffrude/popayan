@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Jerarquia de aprobaciones";
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("GES-JERARQUIAS-LISTAR-JAP"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "JerarquiaAprobacion", new {Area = "Gestion", Id = GestionCustom.JerarquiaAprobacionTipo.PresupuestoInterno.GetHashCode() })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Jerarquia_ aprobacion_ presupuestos_internos.svg")" class="img-response" />
+                <h4 class="text-center">Jerarquia de aprobación de presupuestos internos</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-JERARQUIAS-LISTAR-JAAC"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "JerarquiaAprobacion", new {Area = "Gestion", Id = GestionCustom.JerarquiaAprobacionTipo.Cotizacion.GetHashCode() })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Jerarquia_ aprobacion_ presupuestos_internos.svg")" class="img-response" />
+                <h4>Jerarquia de aprobación de cotizaciones</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-JERARQUIAS-LISTAR-JACP"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "JerarquiaAprobacion", new {Area = "Gestion", Id = GestionCustom.JerarquiaAprobacionTipo.CierrePresupuesto.GetHashCode() })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Jerarquia_ aprobacion_ presupuestos_internos.svg")" class="img-response" />
+                <h4>Jerarquia de aprobación de cierre de presupuestos</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-JERARQUIAS-LISTAR-JACP"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "JerarquiaAprobacion", new {Area = "Gestion", Id = GestionCustom.JerarquiaAprobacionTipo.CancelacionPresupuesto.GetHashCode() })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Jerarquia_ aprobacion_ presupuestos_internos.svg")" class="img-response" />
+                <h4>Jerarquia de aprobación de cancelación de presupuestos</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-JERARQUIAS-LISTAR-JAF"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "JerarquiaAprobacion", new {Area = "Gestion", Id = GestionCustom.JerarquiaAprobacionTipo.FacturaProveedor.GetHashCode() })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Jerarquia_aprobacion_facturas_proveedor.svg")" class="img-response" />
+                <h4 class="text-center">Jerarquia de aprobación de facturas proveedor</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-JERARQUIAS-LISTAR-JAA"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "JerarquiaAprobacion", new {Area = "Gestion", Id = GestionCustom.JerarquiaAprobacionTipo.Anticipos.GetHashCode() })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Jerarquia_aprobacion_facturas_proveedor.svg")" class="img-response" />
+                <h4>Jerarquia de aprobación de anticipos</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-JERARQUIAS-LISTAR-JAL"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "JerarquiaAprobacion", new {Area = "Gestion", Id = GestionCustom.JerarquiaAprobacionTipo.Legalizacion.GetHashCode() })" class="content-img-response">
+                <img src="@Url.Content("~/Content/images/Gestion/Jerarquia_aprobacion_facturas_proveedor.svg")" class="img-response" />
+                <h4>Jerarquia de aprobación de legalizaciones</h4>
+            </a>
+        </div>
+    }
+</div>

@@ -1,0 +1,36 @@
+﻿@model ServiciosViewModel
+@{
+    ViewBag.Title = Model.Nombre + " Listar Servicios";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+@Html.HiddenFor(m => m.ProveedorId)
+<div class="modal-body">
+    <!--Tabla-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group col-md-10">
+                @Html.LabelFor(m => m.ServicioId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.ServicioId, Model.ListaServicios, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+                @Html.ValidationMessageFor(m => m.ServicioId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-2">
+                <input type="button" class="btn btn-secondary" value="AGREGAR" onclick="GuardarAsociacionServicios()">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table id="tabla-listar-servicio" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nombre</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>

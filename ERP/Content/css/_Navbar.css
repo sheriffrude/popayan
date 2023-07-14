@@ -1,0 +1,27 @@
+﻿body {
+    padding-top: 60px;
+}
+
+/**CUSTOM NAVBAR**/
+.navbar {
+    background-color: #EEEEEE;
+}
+
+.navbar-login {
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session {
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.navbar .divider-vertical {
+    height: 50px;
+    margin: 0 9px;
+    border-left: 1px solid #f2f2f2;
+    border-right: 1px solid #fff;
+}
+/**FIN CUSTOM NAVBAR**/

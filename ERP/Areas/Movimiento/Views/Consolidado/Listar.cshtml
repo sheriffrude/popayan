@@ -1,0 +1,166 @@
+﻿@model ConsolidadoViewModel
+@{
+    ViewBag.Title = "Listar";
+}
+
+<div class="col-md-3">
+    <label for="FechaInicio"> Desde:</label>
+    <input type="text" class="form-control" id="FechaInicio">
+</div>
+
+<div class="col-md-3">
+    <label for="FechaFin"> Hasta:</label>
+    <input type="text" class="form-control" id="FechaFin">
+</div>
+
+<div class="col-md-2">
+    <input type="button" class="btn btn-trafico" value="Buscar" onclick="BuscarOts()">
+</div>
+
+<div class="help-block"></div>
+<div class="clearfix"></div>
+
+<div class="col-md-12 text-center">
+    <span>@Model.Nombre</span>
+</div>
+<div class="help-block"></div>
+<div class="col-md-12 text-center">
+    <span>@Model.Cargo</span>
+</div>
+<div class="help-block"></div>
+<div class="clearfix"></div>
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse1">¿Cuántas OTs tiene?</a>
+            </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse" >
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <div id="chartContainer_CuantasOt" ></div>
+
+                </div>
+                <div class="col-md-6">
+                    <table id="tabla-OTCreadas" class="table table-striped table-bordered compact text-center hidden" cellpadding="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Número Ots</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="help-block"></div>
+<div class="clearfix"></div>
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse2">¿Qué Clientes Maneja?</a>
+            </h4>
+        </div>
+        <div id="collapse2" class="panel-collapse">
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <div id="chartContainer_Clientes"></div>
+
+                </div>
+                <div class="col-md-6">
+                    <div id="chartContainer_Clientes_Cerradas"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="help-block"></div>
+<div class="clearfix"></div>
+<div class="col-md-12">
+    <table id="tabla-Clientes" class="table table-striped table-bordered compact text-center hidden" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th class="text-center">Cliente</th>
+                <th class="text-center">Activas</th>
+                <th class="text-center">Cerradas</th>
+                <th class="text-center">Productos</th>
+                <th class="text-center">Tarea</th>
+                <th class="text-center">Pptos</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+        <td></td>
+        <td><span id="Activas"></span></td>
+        <td></td>
+        <td><input type="button" name="Opcion-tarea" class="btn btn-trafico" value="Ver Total" Onclick="SumPptos()"></td>
+        <td><input type="button" name="Opcion-tarea" class="btn btn-trafico" value="Ver Total" Onclick="SumTareas()"></td>
+        <td><input type="button" name="Opcion-tarea" class="btn btn-trafico" value="Ver Total" Onclick="SumPresupuestos()"></td>
+        </tfoot>
+    </table>
+</div>
+
+<a href="@Url.Action("Productos", "Consolidado", new { Area = "Trafico" })" data-toggle="modal" data-target="#" class="hidden" data-size="all" id="ModalProductos"  data-execute-onload="OnLoadProducto"></a>
+<a href="@Url.Action("Tareas", "Consolidado", new { Area = "Trafico" })" data-toggle="modal" data-target="#" class="hidden" data-size="all" id="ModalTareas" data-execute-onload="OnLoadTarea"></a>
+<style>
+    .canvasjs-chart-container{
+        height: 410px;
+    }
+    </style>
+
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <script type="text/javascript">
+        var URL_GRAFICA_OT_CREADA = "@Url.Action("PieOtCreada", "Consolidado", new { Area = "Trafico" })";
+        var URL_TABLAS_OT_CREADA = "@Url.Action("TablaOtCreada", "Consolidado", new { Area = "Trafico" })";
+        var URL_GRAFICA_CLIENTES = "@Url.Action("ReporteClientePie", "Consolidado", new { Area = "Trafico" })";
+        var URL_GRAFICA_CLIENTES_CERRADA = "@Url.Action("ReporteClientePieCerrada", "Consolidado", new { Area = "Trafico" })";
+        var URL_TABLAS_CLIENTE = "@Url.Action("TablaClienteCreada", "Consolidado", new { Area = "Trafico" })";
+        var URL_GRAFICA_CLIENTES_PRODUCTOS = "@Url.Action("ClienteProductos", "Consolidado", new { Area = "Trafico" })";
+        var URL_PRODUCTOS = "@Url.Action("ProdcustosTabla", "Consolidado", new { Area = "Trafico" })";
+        var URL_GRAFICA_CLIENTES_TAREAS= "@Url.Action("ClienteTareas", "Consolidado", new { Area = "Trafico" })";
+        var URL_TAREAS = "@Url.Action("TareasTabla", "Consolidado", new { Area = "Trafico" })";
+        var URL_DETALLE_TAREAS = "@Url.Action("DetalleTareas", "Consolidado", new { Area = "Trafico" })";
+        var URL_TAREAS_DETALLE = "@Url.Action("ListaOt", "Consolidado", new { Area = "Trafico" })";
+        var URL_DESCRIPCION_TAREA = "@Url.Action("DescripcionTareas", "Consolidado", new { Area = "Trafico" })";
+        var URL_MODAL_TAREAS = "@Url.Action("Productos", "Consolidado", new { Area = "Trafico" })";
+        var URL_SUMATORIA_PRODUCTOS = "@Url.Action("SumatoriaProductos", "Consolidado", new { Area = "Trafico" })";
+        var URL_GRAFICA_SUMATORIA_PRODUCTOS = "@Url.Action("SumatoriaProductosPie", "Consolidado", new { Area = "Trafico" })";
+        var URL_TAREAS_SUMATORIA = "@Url.Action("TareasTablaSumatoria", "Consolidado", new { Area = "Trafico" })";
+        var URL_SUMATORIA_TAREAS = "@Url.Action("SumatoriaTareas", "Consolidado", new { Area = "Trafico" })";
+        var URL_GRAFICA_SUMATORIA_TAREAS = "@Url.Action("SumatoriaTareasPie", "Consolidado", new { Area = "Trafico" })";
+        var URL_TAREAS_SUMATORIA_TABLA = "@Url.Action("TareaSumatoriaDatatable", "Consolidado", new { Area = "Trafico" })";
+        var URL_PPTOS = "@Url.Action("Presupuestos", "Consolidado", new { Area = "Trafico" })";
+        var URL_GRAFICA_CLIENTES_PRESUPUESTOS = "@Url.Action("PresupuestosPie", "Consolidado", new { Area = "Trafico" })";
+        var URL_TABLA_PRESUPUESTO = "@Url.Action("PresupuestoTabla", "Consolidado", new { Area = "Trafico" })";
+        var URL_SUMATORIA_PRESUPUESTOS = "@Url.Action("SumatoriaPresupuesto", "Consolidado", new { Area = "Trafico" })";
+        var URL_GRAFICA_TOTAL_PRESUPUESTOS = "@Url.Action("SumatoriaPresupuestoPie", "Consolidado", new { Area = "Trafico" })";
+        var URL_PRESUPUESTOS_SUMATORIA_TABLA= "@Url.Action("PresupuestoTablaTotal", "Consolidado", new { Area = "Trafico" })";
+    </script>
+    @Scripts.Render("~/bundles/canvasjs")
+    @Scripts.Render("~/Areas/Trafico/scripts/Consolidado/Listar.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Consolidado/Producto.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Consolidado/Tareas.js")
+    @Scripts.Render("~/Areas/Trafico/scripts/Consolidado/Pptos.js")
+}
+
+
+
+
+
+
+
+

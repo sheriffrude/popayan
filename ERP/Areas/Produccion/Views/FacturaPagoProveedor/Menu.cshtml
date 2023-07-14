@@ -1,0 +1,55 @@
+﻿@model CrearFacturaPagoProveedorViewModel
+@{
+    ViewBag.Title = "Pago Proveedor";
+}
+<div class="col-md-2">
+    <!-- required for floating -->
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs tabs-left" id="nav-tabs-facturacion">
+        @if (Sesion.HasPermission("PRO-FACTURA_PAGO_PROVEEDOR_CREAR"))
+        {
+            <li class="active"><a href="#registrar-pago-proveedor" data-toggle="tab" data-number-tab="1">REGISTRAR PAGO PROVEEDOR</a></li>
+        }
+        @if (Sesion.HasPermission("PRO-FACTURA_PAGO_PROVEEDOR_LISTAR"))
+        {
+            <li><a href="#consultar-pagos-proveedor" onclick="consultarFacturaPagoProveedor.CrearTablaFacturasPagoProveedor()" data-toggle="tab" data-number-tab="2">CONSULTAR PAGO A PROVEEDORES</a></li>
+        }
+    </ul>
+</div>
+<div class="col-md-10">
+    <!-- Tab panes -->
+    <div class="tab-content">
+        @if (Sesion.HasPermission("PRO-FACTURA_PAGO_PROVEEDOR_CREAR"))
+        {
+            <div class="tab-pane active" id="registrar-pago-proveedor">
+                @Html.Partial("~/Areas/Produccion/Views/FacturaPagoProveedor/Crear.cshtml")
+            </div>
+        }
+        @if (Sesion.HasPermission("PRO-FACTURA_PAGO_PROVEEDOR_LISTAR"))
+        {
+            <div class="tab-pane" id="consultar-pagos-proveedor">
+                @Html.Partial("~/Areas/Produccion/Views/FacturaPagoProveedor/Listar.cshtml")
+            </div>
+        }
+    </div>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaPagoProveedor/Crear.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaPagoProveedor/Listar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaPagoProveedor/Consultar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaProveedor/Crear.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoOrdenCompra/VerImpuestoOrdenCompraFactura.js")
+
+    <script type="text/javascript">
+            var URL_CONSULTAR_FACTURA_PROVEEDOR = "@Url.Action("ConsultarFacturaOrden", "FacturaProveedor", new { Area = "Produccion"})";
+            var URL_UPLOAD = "@Url.Action("CrearUpload", "FacturaProveedor", new { area= "Produccion" })";
+            var URL_CONSULTAR_ITEM_ORDEN_COMPRA_FACTURA = "@Url.Action("ConsultarItemOrdenCompraFactura", "PresupuestoItem", new { Area = "Produccion"})";
+            var URL_CONSULTAR_ASOCIADO_ORDEN_COMPRA_FACTURA = "@Url.Action("ConsultarAsociadoOrdenCompraFactura", "PresupuestoItem", new { Area = "Produccion"})";
+            var URL_CONSULTAR_FACTURA_PAGO_PROVEEDOR = "@Url.Action("Listar", "FacturaPagoProveedor", new { Area = "Produccion"})";
+            var URL_LISTAR_TIPO_DOCUMENTO = "@Url.Action("Listar", "FacturaPagoProveedor", new { area= "Produccion" })";
+            var URL_DETALLE_PAGO_FACTURA_PROVEEDOR = "@Url.Action("Consultar", "FacturaPagoProveedor", new { Area = "Produccion" })";
+            var URL_CANCELAR_PAGO_FACTURA_PROVEEDOR = "@Url.Action("Cancelar", "FacturaPagoProveedor", new { area= "Produccion" })";
+    </script>
+
+}

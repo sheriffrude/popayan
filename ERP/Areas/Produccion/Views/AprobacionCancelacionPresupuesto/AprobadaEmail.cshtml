@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "layout";
+    ViewBag.Title = "Cancelación de presupuesto aprobada";
+}
+
+<p><strong>Número de Presupuesto: </strong>@Model.PresupuestoId</p>
+<p><strong>Versión Interna: </strong>@Model.VersionInterna</p>
+<p><strong>Versión Externa: </strong>@Model.VersionExterna</p>
+<p><strong>Tipo de Presupuesto: </strong>@Model.PresupuestoTipo</p>
+<p><strong>Empresa: </strong>@Model.Empresa</p>
+<p><strong>Cliente: </strong>@Model.Cliente</p>
+<p><strong>Producto: </strong>@Model.Producto</p>
+<p><strong>Órden de Trabajo: </strong>@Model.OrdenTrabajo</p>
+<p><strong>Enviado por: </strong>@Model.EnviadoPor</p>
+<p><strong>Fecha y Hora de la solicitud: </strong>@Model.FechaHora</p>
+<table style="width: 100%">
+    <tr>
+        <td align="center">
+            <p style="font-size: 16px; font-weight: normal; margin: 0; text-aling: center;">
+                <a href="@Model.Link" class="button" style="display: inline-block; color: white; background: #005661; border: solid #005661; border-width: 10px 20px 8px; font-weight: bold; border-radius: 4px;text-decoration: none;">Ver presupuesto</a>
+            </p>
+        </td>
+    </tr>
+</table>

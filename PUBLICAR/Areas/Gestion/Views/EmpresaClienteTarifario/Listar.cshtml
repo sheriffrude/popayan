@@ -1,0 +1,71 @@
+﻿@model ListarEmpresaClienteTarifarioViewModel
+@{
+    ViewBag.Title = "Tarifarios clientes";
+}
+
+<!-- Titulo y boton volver -->
+<div class="row">
+    <div class="col-md-10 text-left">
+        <h3>@ViewBag.Title</h3>
+    </div>
+    
+</div>
+
+<!--Filtro de la tabla-->
+<div class="row margin-top-1">
+    <div class="col-md-10 text-left">
+        <form id="form-filtro-tabla" class="form-inline">
+            <div class="form-group">
+                <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                <input type="submit" class="btn btn-default" value="BUSCAR" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2 text-right">
+        @if (Sesion.HasPermission("GES-EMPRESA_CLIENTE_TARIFARIO_CREAR"))
+        {
+            <a href="@Url.Action("Crear", "EmpresaClienteTarifario", new {Area = "Gestion", id = Model.EmpresaId })" class="btn btn-default" data-toggle="modal" data-target="#">Adicionar</a>
+        }
+    </div>
+</div>
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        @Html.HiddenFor(m => m.EmpresaId)
+        <table id="tabla-empresa-cliente-tarifario" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Tarifario</th>
+                    <th class="text-center">Cliente</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <!--Script listar Empresa impuestos-->
+    <script type="text/javascript">
+        var URL_LISTAR_EMPRESA_CLIENTE_TARIFARIO = "@Url.Action("Listar", "EmpresaClienteTarifario", new { Area = "Gestion", id = Model.EmpresaId })";
+        var URL_EDITAR_EMPRESA_CLIENTE_TARIFARIO = "@Url.Action("Editar", "EmpresaClienteTarifario", new { Area = "Gestion" })";
+        var URL_ELIMINAR_EMPRESA_CLIENTE_TARIFARIO = "@Url.Action("Eliminar", "EmpresaClienteTarifario", new { Area = "Gestion" })";
+        var PERMISO_EDITAR_EMPRESA_CLIENTE_TARIFARIO = ("@Sesion.HasPermission("GES-EMPRESA_IMPUESTO_EDITAR")" === "True");
+        var PERMISO_ELIMINAR_EMPRESA_CLIENTE_TARIFARIO = ("@Sesion.HasPermission("GES-EMPRESA_IMPUESTO_ELIMINAR")" === "True");
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaClienteTarifario/Listar.js")
+
+    <!--Script modal Crear Empresa impuestos-->
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaClienteTarifario/Crear.js")
+
+    <!--Script modal Editar Empresa impuestos-->
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaClienteTarifario/Editar.js")
+
+}

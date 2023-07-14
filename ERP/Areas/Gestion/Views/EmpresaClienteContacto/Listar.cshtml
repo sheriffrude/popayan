@@ -1,0 +1,69 @@
+﻿@model ListarEmpresaClienteContactoViewModel
+@{
+    ViewBag.Title = "Contactos clientes";
+}
+
+<script type="text/javascript" src="locale/ne.js"></script>
+
+<!-- Titulo y boton volver -->
+<div class="text-right">
+    @if(Sesion.HasPermission("GES-EMPRESA_CLIENTE_CONTACTOS_CREAR"))
+    { 
+        <a href="@Url.Action("Crear", "EmpresaClienteContacto", new { Area = "Gestion",id= Model.EmpresaId})" data-toggle="modal" data-target="#" class="btn btn-primary">
+            Nuevo Contacto
+        </a>
+    }
+</div>
+<!--Filtro de la tabla-->
+<div class="text-left">
+    <form id="form-filtro-tabla" action="#" class="form-inline">
+        <div class="form-group">
+            @Html.LabelFor(m => m.ClienteId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.ClienteId, Model.ListaClientes, "Seleccione Cliente", new
+            {
+                @class = "form-control selectpicker",
+                onchange = "OnChangeCliente(this);"
+            })
+            @Html.ValidationMessageFor(m => m.ClienteId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <br />
+            <input type="search" class="form-control" placeholder="Filtro" />
+            <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+        </div>
+    </form>
+</div>
+
+<!--Tabla-->
+<table id="tabla-empresa-cliente-contacto" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+    <thead>
+        <tr>
+            <th class="text-center">Cliente</th>
+            <th class="text-center">Nombre Contacto</th>
+            <th class="text-center">Cargo</th>
+            <th class="text-center">Correo</th>
+            <th class="text-center">Teléfono</th>
+            <th class="text-center">Celular</th>
+            <th class="text-center">Mes nacimiento</th>
+            <th class="text-center">Día nacimiento</th>
+            <th class="text-center">Editar</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        var URL_EMPRESA_CLIENTE = "@Url.Action("Listar", "EmpresaClienteContacto", new { Area = "Gestion", id = Model.EmpresaId })";
+        var URL_EMPRESA_CLIENTE_CONTACTO_EDITAR = "@Url.Action("Editar", "EmpresaClienteContacto", new { Area = "Gestion" })";
+        var URL_EMPRESA_CLIENTE_CONTACTO_CAMBIAR_ESTADO = "@Url.Action("CambiarEstado", "EmpresaClienteContacto", new { Area = "Gestion"})";
+        var PERMISO_EMPRESA_CLIENTE_CONTACTO_EDITAR = ("@Sesion.HasPermission("GES-EMPRESA_CLIENTE_CONTACTOS_EDITAR")" === "True");
+    </script>
+
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaClienteContacto/Listar.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaClienteContacto/Crear.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaClienteContacto/Editar.js")
+}

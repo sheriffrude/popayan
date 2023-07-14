@@ -1,0 +1,50 @@
+﻿@model ListarBriefViewModel
+@{
+    ViewBag.Title = "Briefs";
+}
+
+<!--Filtro-->
+<div class="col-md-12">
+    <div class="pull-left">
+        <form id="form-filtro-tabla" class="form-inline">
+            <div class="form-group">
+                <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+            </div>
+        </form>
+    </div>
+    @if (Sesion.HasPermission("GES-BRIEF_CREAR"))
+    {
+        <div class="pull-right">
+            <a href="@Url.Action("Crear", "Brief", new { Area = "Gestion", id = Model.UnidadNegocioId })" class="btn btn-secondary">Adicionar</a>
+        </div>
+    }
+</div>
+
+<!--Tabla-->
+<div class="col-md-12">
+    <table id="tabla-brief" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th class="text-center">Nombre</th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        var PERMISO_EDITAR = ("@Sesion.HasPermission("GES-BRIEF_EDITAR")" === "True");
+        var URL_LISTAR_BRIEF = "@Url.Action("Listar", "Brief", new { Area = "Gestion", id = Model.UnidadNegocioId })";
+        var URL_EDITAR_BRIEF = "@Url.Action("Editar", "Brief", new { Area = "Gestion" })";
+        var URL_CAMBIAR_ESTADO_BRIEF = "@Url.Action("CambiarEstado", "Brief", new { Area = "Gestion" })";
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/Brief/Listar.js")
+}
+
+

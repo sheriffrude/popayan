@@ -1,0 +1,219 @@
+﻿@model LegalizacionViewModel
+@{
+    ViewBag.Title = "Crear legalización de un anticipo";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+    @using (Ajax.BeginForm("Crear", "Legalizacion", new { Area = "Produccion" },
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnBegin = "LegalizacionCrear.OnBeginCrear",
+            OnSuccess = "LegalizacionCrear.OnSuccessCrear"
+        },
+        new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+        <table id="tabla-mis-anticipos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Número de anticipo</th>
+                    <th>Presupuesto</th>
+                    <th>Versión</th>
+                    <th>Usuario</th>
+                    <th>Razón de la solicitud</th>
+                    <th>Fecha de solicitud</th>
+                    <th>Fecha en la que es requerido</th>
+                    <th>Fecha máxima de legalización</th>
+                    <th>Forma de pago</th>
+                    <th>Estado</th>
+                    <th>Total del anticipo</th>
+                    <th>Total desembolsado</th>
+                    <th>Total legalizado</th>
+                    <th>Total legalizado aprobado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        @Html.HiddenFor(m => m.Porcentaje)
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Concepto, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Concepto, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Concepto, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.ValorItem, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.ValorItem, new { @class = "form-control", @onkeyup = "LegalizacionCrear.OnChangeItem(this)", data_format_price = "" })
+            @Html.ValidationMessageFor(m => m.ValorItem, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Manual, new { @class = "control-label" })
+            @Html.CheckBox("Manual", false, new { @onclick = "LegalizacionCrear.ImpuestoManualLegalizacion(this)", data_format_price = "" })
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.ImpuestoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.ImpuestoId, new List<SelectListItem>(), new { @class = "form-control selectpicker-label select_impuestos_item_asociado", data_live_search = "true", onchange = "LegalizacionCrear.OnChangeImpuesto(this, '" + Url.Action("ConsultarImpuestosEmpresa", "Legalizacion", new { Area = "Produccion" }) + "');" })
+            @Html.ValidationMessageFor(m => m.ImpuestoId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.TotalImpuestos, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.TotalImpuestos, new { @class = "form-control", data_format_price = "", @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.TotalImpuestos, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Retenciones, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.Retenciones, Model.ListaRetenciones, null, new { @class = "form-control selectpicker", multiple = true, data_live_search = "true", onchange = "LegalizacionCrear.OnChangeImpuestoRetenciones(this, '" + Url.Action("RetencionesEmpresa", "Legalizacion", new { Area = "Produccion" }) + "');" })
+            @Html.ValidationMessageFor(m => m.Retenciones, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Retencion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Retencion, new { @class = "form-control", data_format_price = "", @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.Retencion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Total, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Total, new { @class = "form-control", data_format_price = "", @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.Total, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.FechaFactura, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaFactura, new { @class = "form-control datepicker" })
+            @Html.ValidationMessageFor(m => m.FechaFactura, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.NumeroFactura, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NumeroFactura, new { @class = "form-control datos-basicos" })
+            @Html.ValidationMessageFor(m => m.NumeroFactura, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Nit, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Nit, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Nit, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Beneficiario, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Beneficiario, new { @class = "form-control datos-basicos" })
+            @Html.ValidationMessageFor(m => m.Beneficiario, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Telefono, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control datos-basicos" })
+            @Html.ValidationMessageFor(m => m.Telefono, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-2">
+            @Html.LabelFor(m => m.PaisId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.PaisId, Model.ListaPaises, "Seleccione", new
+            {
+                @class = "form-control selectpicker",
+                data_live_search = "true",
+                onchange = "LegalizacionCrear.OnChangePais(this, " + "'" + Url.Action("ListaOpcionesPorPais", "Departamento", new { Area = "Parametrizacion" }) + "', " + "'" + Url.Action("ListarOpcionesPorPais", "CajaCompensacion", new { Area = "Parametrizacion" }) + "');"
+            })
+            @Html.ValidationMessageFor(m => m.PaisId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-2">
+            @Html.LabelFor(m => m.DepartamentoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.DepartamentoId, Model.ListaDepartamentos, "Seleccione", new
+            {
+                @class = "form-control selectpicker",
+                data_live_search = "true",
+                onchange = "LegalizacionCrear.OnChangeDepartamento(this, '" + Url.Action("ListaOpcionesCiudadesPorDepartamento", "Ciudad", new { Area = "Parametrizacion" }) + "');"
+            })
+            @Html.ValidationMessageFor(m => m.DepartamentoId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-2">
+            @Html.LabelFor(m => m.CiudadId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.CiudadId, Model.ListaCiudades, "Seleccione", new
+            {
+                @class = "form-control selectpicker",
+                data_live_search = "true"
+            })
+            @Html.ValidationMessageFor(m => m.CiudadId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Direccion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control datos-basicos" })
+            @Html.ValidationMessageFor(m => m.Direccion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+            <input id="Documento" name="Documento" type="file" class="form-control" onchange="LegalizacionCrear.UploadFileFactura(this)" />
+            @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+            <br />
+        </div>
+        <br>
+        <div class="clearfix"></div>
+        <hr />
+        <div class="col-md-12">
+            <button type="button" onclick="LegalizacionCrear.AdicionarItem()" class="btn btn-secondary">
+                <span class="glyphicon glyphicon-plus">Adicionar</span>
+            </button>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="clearfix"></div>
+
+        <table id="tabla-datos-legalizacion" class="table table-striped table-bordered compact text-center hidden" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Anticipo</th>
+                    <th>Concepto</th>
+                    <th>Nit</th>
+                    <th>Beneficiario</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Fecha de factura</th>
+                    <th>Número de factura</th>
+                    <th>Valor</th>
+                    <th>Impuesto</th>
+                    <th>Total</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th colspan="9" style="text-align:right">Totales:</th>
+                    <th style="text-align: center"></th>
+                    <th style="text-align: center"></th>
+                    <th style="text-align: center"></th>
+                    <th style="text-align: center"></th>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="clearfix"></div>
+        <br />
+        <div class="ln_solid"></div>
+        <div class="clearfix"></div>
+        <br />
+        <div class="text-right">
+            @if (Sesion.HasPermission("PRO-LEGALIZACION_CREAR"))
+            {
+                <button type="submit" class="btn btn-success">Guardar</button>
+            }
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    }
+</div>

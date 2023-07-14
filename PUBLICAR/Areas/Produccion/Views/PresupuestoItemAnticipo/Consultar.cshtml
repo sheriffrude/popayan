@@ -1,0 +1,112 @@
+﻿@model ConsultarDetalleAnticipoViewModel
+@{
+    ViewBag.Title = "Consultar detalle del anticipo";
+}
+@Html.HiddenFor(m => m.Id)
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.UsuarioRegistro, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.UsuarioRegistro, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.UsuarioRegistro, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.RazonSolicitud, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.RazonSolicitud, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.RazonSolicitud, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.FechaRegistro, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaRegistro, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.FechaRegistro, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.FechaAnticipo, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaAnticipo, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.FechaAnticipo, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.FechaLegalizacionAnticipo, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaLegalizacionAnticipo, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.FechaLegalizacionAnticipo, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.FormaPago, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FormaPago, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.FormaPago, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Estado, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.FechaDesembolsoAnticipo, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaDesembolsoAnticipo, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.FechaDesembolsoAnticipo, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group   col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.TotalAnticipo, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.TotalAnticipo, "{0:c}", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.TotalAnticipo, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.TotalLegalizado, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.TotalLegalizado, "{0:c}", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.TotalLegalizado, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        @Html.LabelFor(m => m.TotalDesembolsado, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.TotalDesembolsado, "{0:c}", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.TotalDesembolsado, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-xs-6 padding-left-0">
+        <br />
+        @if (Model.Adjunto != " ")
+        {
+            <a class="btn btn-secondary" href="@Url.Content(Model.Adjunto)">Descargar adjuntos</a>
+        }
+        else
+        {
+            <div><strong>No se cargó archivo adjunto</strong></div>
+        }
+    </div>
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
+    <h2>Items del anticipo</h2>
+    <div class="col-md-12">
+        <table id="tabla_anticipo_detalle" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Número de anticipo </th>
+                    <th class="text-center">Número de item</th>
+                    <th class="text-center">Grupo</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Descripción</th>
+                    <th class="text-center">Días</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-center">Valor unitario</th>
+                    <th class="text-center">Valor item</th>
+                    <th class="text-center">Valor solicitado del anticipo</th>
+                    <th class="text-center">Valor impuestos</th>
+                    <th class="text-center">Valor total</th>
+                    <th class="text-center">Desembolsar</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="text-right">
+        <button class="btn btn-success" onclick="consultarItemPresupuestoAnticipo.DescargarInforme()"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Descargar</button>
+
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+    </div>
+    <div class="clearfix"></div>
+</div>

@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Reportes";
+}
+
+<div class="col-md-12 content-menu">
+    @*<div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "Gestion", new {Area = "Reportes"})">
+                <h4 class="text-center">Gestión</h4>
+            </a>
+        </div>*@
+    @if (Sesion.HasPermission("REP-TRAFICO_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "Trafico", new {Area = "Reportes"})">
+                <img src="/Content/images/Menu/Trafico.svg" class="img-responsive" alt="">
+            </a>
+            <a href="@Url.Action("Menu", "Trafico", new {Area = "Reportes"})">
+                <h4 class="text-center">Tráfico</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("REP-PRODUCCION_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "Produccion", new {Area = "Reportes"})">
+                <img src="/Content/images/Menu/Produccion.svg" class="img-responsive" alt="">
+            </a>
+            <a href="@Url.Action("Menu", "Produccion", new {Area = "Reportes"})">
+                <h4 class="text-center">Producción</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("REP-HORAS_HOMBRE_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "HorasHombre", new {Area = "Reportes"})">
+                <img src="/Content/images/Menu/Hoh.svg" class="img-responsive" alt="">
+            </a>
+            <a href="@Url.Action("Menu", "HorasHombre", new {Area = "Reportes"})">
+                <h4 class="text-center">Horas Hombre</h4>
+            </a>
+
+        </div>
+    }
+    @if (Sesion.HasPermission("REP-FINANCIEROS_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "Financieros", new {Area = "Reportes"})">
+                <img src="/Content/images/Menu/Parametrizacion.svg" class="img-responsive" alt="">
+            </a>
+            <a href="@Url.Action("Menu", "Financieros", new {Area = "Reportes"})">
+                <h4 class="text-center">Financieros</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("REP-PRODUCCION_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "Gestion", new {Area = "Reportes"})">
+                <img src="/Content/images/Menu/Gestion.svg" class="img-responsive" alt="">
+            </a>
+            <a href="@Url.Action("Menu", "Gestion", new {Area = "Reportes"})">
+                <h4 class="text-center">Gestion</h4>
+            </a>
+        </div>
+    }
+</div>

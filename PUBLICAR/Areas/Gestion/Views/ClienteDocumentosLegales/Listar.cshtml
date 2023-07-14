@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Listar documentos legales";
+}
+<div>
+    <div class="help-block"></div>
+    <!--Filtro de la tabla-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div id="form-filtro-tabla" class="form-inline">
+                    <div class="form-group">
+                        <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                        <input type="button" class="btn btn-parametrizacion" value="BUSCAR" onclick="ListarDocumentosLegalesClientes.reconstruirTabla()" />
+                        <input type="button" class="btn btn-parametrizacion" value="VER TODO" onclick="ListarDocumentosLegalesClientes.ResetearTablaPais()" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1 col-md-offset-5">
+                <a href="@Url.Action("Crear", "ClienteDocumentosLegales", new {Area = "Gestion", Id = ViewBag.Id})" class="btn btn-primary" >Adicionar</a>
+            </div>
+        </div>
+    </div>
+    <hr />
+
+    <!--Tabla-->
+    <div class="row">
+        <div class="col-md-12">
+            <table id="tabla-documentos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nombre de cliente</th>
+                        <th class="text-center">Nit</th>
+                        <th class="text-center">Tipo de documento</th>
+                        <th class="text-center"></th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/Scripts/ClienteDocumentoLegal/Listar.js")
+    @Scripts.Render("~/Areas/Gestion/Scripts/ClienteDocumentoLegal/Crear.js")
+
+    <script type="text/javascript">
+        var urlListar = "@Url.Action("Listar", "ClienteDocumentosLegales", new { area = "Gestion", Id = ViewBag.Id })";
+        var urlEditar = "@Url.Action("Editar", "ClienteDocumentosLegales", new { area = "Gestion" })";
+        var urlDescargar = "@Url.Action("DownloadFile", "ClienteDocumentosLegales", new { area = "Gestion" })";
+        urlEliminacion = "@Url.Action("EliminarDocumento", "ClienteDocumentosLegales", new { area = "Gestion" })";
+    </script>
+}
+
+

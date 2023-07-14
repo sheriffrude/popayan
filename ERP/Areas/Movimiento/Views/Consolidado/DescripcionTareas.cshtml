@@ -1,0 +1,171 @@
+﻿@model DetalleTareaViewModel
+@{
+    ViewBag.Title = "DETALLE OT ";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title"> @ViewBag.Title  @Model.Ot</h4>
+</div>
+
+<div class="row">
+    <div class="col-md-10 text-left">
+    </div>
+    <div class="col-md-2 text-right">
+      
+            <a href="@Url.Action("DetalleTareas", "Consolidado", new { Area = "Trafico" })" data-toggle="modal" data-target="#" data-execute-onload="OnLoadDetalleTarea" data-size="all" id="Modal-detalle-tarea">
+                <img src="@Url.Content("~/Content/images/boton-regresar-menu.png")" alt="" />
+            </a>
+        
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="clearfix"></div>
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group  col-md-3 padding-left-0">
+        @Html.LabelFor(m => m.FechaCreacion, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaCreacion, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.FechaCreacion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group  col-md-3 padding-left-0">
+        @Html.LabelFor(m => m.HoraCreacion, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.HoraCreacion, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.HoraCreacion, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-md-3 padding-left-0">
+        <table>
+            <thead>
+                <tr>
+                    <th>Responsable(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ListaResponsables != null)
+                {
+                    foreach (var item in Model.ListaResponsables)
+                    {
+                        <tr>
+                            <td>@item.Text</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+    </div>
+    <div class="form-group  col-md-3 padding-left-0">
+        <table>
+            <thead>
+                <tr>
+                    <th>Asignado(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ListaAsignados != null)
+                {
+                    foreach (var item in Model.ListaAsignados)
+                    {
+                        <tr>
+                            <td>@item.Text</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="form-group  col-md-3 padding-left-0">
+        @Html.LabelFor(m => m.Departamento, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Departamento, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Departamento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group  col-md-3 padding-left-0">
+        @Html.LabelFor(m => m.FechaEntrega, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FechaEntrega, "", new { @class = "form-control", @readonly = "readonly" })
+        @if ((Model.UsuarioId == Model.UsuarioSesionId) && (Model.EstadoTarea == 1))
+            {
+            <span class="glyphicon glyphicon-pencil" onclick="MostrarNuevaFecha()"></span>
+        }
+        <span class="glyphicon glyphicon-folder-open" onclick="MostrarHistorico()"></span>
+        @Html.ValidationMessageFor(m => m.FechaEntrega, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group  col-md-3 padding-left-0">
+        @Html.LabelFor(m => m.HoraEntrega, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.HoraEntrega, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.HoraEntrega, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-md-3 padding-left-0">
+        @Html.LabelFor(m => m.TipoTarea, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.TipoTarea, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.TipoTarea, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="clearfix"></div>
+    
+    <div class="form-group hidden" id="CambiarFecha">
+        <h3>Recuerde que debe especificar las razones por las cuales se cambia la Fecha Prometida de ésta tarea.</h3>
+        <div class="form-group  col-md-3 padding-left-0">
+            @Html.LabelFor(m => m.NuevaFecha, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NuevaFecha, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.NuevaFecha, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group  col-md-6 padding-left-0">
+            @Html.LabelFor(m => m.Justificacion, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Justificacion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Justificacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="clearfix"></div>
+        
+        <div class="label-text-aling-left">
+            <button class="btn btn-default" onclick="GuardarCambioFecha()">Guardar</button>
+            <button type="button" class="btn btn-warning" onclick="CancelarCambioFecha()">Cancelar</button>
+        </div>
+
+        <div class="clearfix"></div>
+
+    </div>
+
+    <div class="clearfix"></div>
+    
+    <div class="form-group hidden" id="MostrarHistorial">
+
+        <div class="col-md-12">
+            <table id="tabla-historial" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Realizado Por</th>
+                        <th class="text-center">Fecha Cambio</th>
+                        <th class="text-center">Hora Cambio</th>
+                        <th class="text-center">Fecha Anterior</th>
+                        <th class="text-center">Fecha Nueva</th>
+                        <th class="text-center">Justificación</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="form-group  col-md-3 padding-left-0">
+        @Html.LabelFor(m => m.Titulo, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Titulo, "", new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Titulo, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group  col-md-6 padding-left-0">
+        @Html.LabelFor(m => m.Descripcion, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="clearfix"></div>
+
+</div>

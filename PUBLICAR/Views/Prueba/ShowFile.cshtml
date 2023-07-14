@@ -1,0 +1,16 @@
+﻿@model FileViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowFile</title>
+</head>
+<body>
+<img src="@($"data:{Model.Archivo.FileContentType};base64,{Convert.ToBase64String(Model.Archivo.FileContent)}")" alt="" />
+<div>
+    <a href="@Url.Action("DownloadFile", "Prueba", new { area = "", id = Model.Id })">Download</a>
+</div>
+</body>
+</html>

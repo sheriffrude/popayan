@@ -1,0 +1,135 @@
+﻿@model PresupuestoItemAnticipoViewModel
+@{
+    ViewBag.Title = "Crear anticipo de presupuesto";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("Crear", "PresupuestoItemAnticipo", new { Area = "Produccion" },
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnBegin = "consultarItemPresupuestoAnticipo.OnBeginCrear",
+            OnComplete = "consultarItemPresupuestoAnticipo.OnCompleteCrear"
+        },
+        new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Item)
+        @Html.HiddenFor(m => m.Asociado)
+
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+
+
+        <div class="col-md-12">
+            <!--// Botones funciones de los items-->
+            <table id="tabla_presupuesto_items_anticipos" class="table table-striped table-bordered compact text-center tabla-presupuesto" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center azul">#</th>
+                        <th class="text-center azul">Sel.</th>
+                        <th class="text-center azul">Item</th>
+                        <th class="text-center azul">Grupo</th>
+                        <th class="text-center azul">Nombre item</th>
+                        <th class="text-center azul">Dias</th>
+                        <th class="text-center azul">Cant.</th>
+                        <th class="text-center gris-oscuro">Valor Unitario ($)</th>
+                        <th class="text-center gris-oscuro">Total ($)</th>
+                        <th class="text-center gris-oscuro">Total acumulado solicitado en anticipo ($)</th>
+                        <th class="text-center gris-oscuro">Diponible ($)</th>
+                        <th class="text-center gris-oscuro">Valor anticipo ($)</th>
+                        <th class="text-center gris-oscuro">Impuestos manual</th>
+                        <th class="text-center gris-oscuro">Impuestos</th>
+                        <th class="text-center gris-oscuro">Valor impuestos anticipo ($)</th>
+                        <th class="text-center gris-oscuro">Anticipo + Impuestos ($)</th>
+                        <th class="text-center gris-oscuro">Excedente ($)</th>
+                        <th class="text-center azul">Porcentaje Excedente (%)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Item, new { @class = "control-label hidden" })
+            @Html.TextBoxFor(m => m.Item, new { @class = "form-control hidden", placeholder = "dd/mm/aaaa", onkeydown = "javascript:return false;" })
+            @Html.ValidationMessageFor(m => m.Item, "", new { @class = "text-danger" })
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.FechaAnticipo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaAnticipo, new { @class = "form-control", placeholder = "dd/mm/aaaa", onkeydown = "javascript:return false;" })
+            @Html.ValidationMessageFor(m => m.FechaAnticipo, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.FechaLegalizacionAnticipo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaLegalizacionAnticipo, new { @class = "form-control", placeholder = "dd/mm/aaaa", onkeydown = "javascript:return false;", onchange = "consultarItemPresupuestoAnticipo.onChangeFechaLegalizacionAnticipo(this)" })
+            @Html.ValidationMessageFor(m => m.FechaLegalizacionAnticipo, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.TipoAnticipoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.TipoAnticipoId, Model.TipoAnticipo, "Seleccione",
+                new
+                {
+                    @class = "form-control"
+                })
+            @Html.ValidationMessageFor(m => m.TipoAnticipoId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.FormaPagoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.FormaPagoId, Model.FormaPago, "Seleccione",
+                new
+                {
+                    @class = "form-control"
+                })
+            @Html.ValidationMessageFor(m => m.FormaPagoId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Razones, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Razones, 3, 120, new { @class = "form-control", maxlength = "500" })
+            @Html.ValidationMessageFor(m => m.Razones, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="clearfix"></div>
+        <br />
+        <div class="col-md-12 " id="file">
+            <input type="file" id="uploadFile" onchange="consultarItemPresupuestoAnticipo.SubirArchivo(this)" />
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-md-12 hidden" id="Contenedor_Archivos">
+            <table id="tabla-Archivos" class="table table-striped table-bordered compact text-center " cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="clearfix"></div>
+        <br />
+        <div class="ln_solid"></div>
+
+        <div class="clearfix"></div>
+        <br />
+        <div class="text-right">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+
+    }
+</div>

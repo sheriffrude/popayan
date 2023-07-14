@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Tráfico";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("TRA-ORDEN_TRABAJO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "OrdenTrabajo", new { Area = "Trafico" })">
+                <img src="@Url.Content("~/Content/images/Menu/Trafico.svg")" class="img-responsive" />
+                <h4 class="text-center">Tráfico</h4>    
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("TRA-TIMETABLE_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TimeTable", new { Area = "Trafico" })">
+                <img src="@Url.Content("~/Content/images/Trafico/Time_table.svg")" class="img-responsive" />
+                <h4 class="text-center">Time Table</h4>
+            </a>
+        </div>
+    }
+    @*<div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "Reportes", new { Area = "Trafico" })" >
+                <img src="@Url.Content("~/Content/images/Trafico/menu/reportes.png")" class="img-responsive" />
+            </a>
+        </div>*@
+    @if (Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_ADMINISTRATIVA_MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Menu", "TraficoAdministrativo", new { Area = "Trafico" })">
+                <img src="@Url.Content("~/Content/images/Trafico/Trafico_administrativo.svg")" class="img-responsive" />
+                <h4 class="text-center">Tráfico Administrativo</h4>
+                
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("TRA-TRAFICO_CLIENTE_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TraficoCliente", new { Area = "Trafico" })">
+                <img src="@Url.Content("~/Content/images/Trafico/Trafico_cliente.svg")" class="img-responsive" />
+                <h4 class="text-center">Tráfico Cliente</h4>
+            </a>
+        </div>
+    }
+</div>

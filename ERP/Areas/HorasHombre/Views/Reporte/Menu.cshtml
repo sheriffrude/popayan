@@ -1,0 +1,54 @@
+﻿@model ReporteViewModel
+@{
+    ViewBag.Title = "Reportes";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+<div class="col-sm-12 content-menu">
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "EmpleadoCliente", new {Area = "HorasHombre"})">
+            <img src="@Url.Content("~/Content/images/HorasHombre/Empleado_cliente.svg")" class="img-responsive" alt="Registrar Actividad" />
+            <h4 class="text-center">Empleado Cliente</h4>
+        </a>
+    </div>
+
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "IndicadorCorporativo", new {Area = "HorasHombre"})">
+            <img src="@Url.Content("~/Content/images/HorasHombre/Indicador_corporativo.svg")" class="img-responsive" alt="Indicador corporativo" />
+            <h4 class="text-center">Indicador Corporativo
+            </h4>
+        </a>
+    </div>
+
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "ComparativoUsuario", new {Area = "HorasHombre" })">
+            <img src="@Url.Content("~/Content/images/HorasHombre/Corporativo_empleado.svg")" class="img-responsive" alt="Comparativo cliente" />
+            <h4 class="text-center">Corporativo Empleado Día</h4>
+        </a>
+    </div>
+
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "Extras", new {Area = "HorasHombre"})">
+            <img src="@Url.Content("~/Content/images/HorasHombre/Tiempo_adicional.svg")" class="img-responsive" alt="Comparativo cliente" />
+            <h4 class="text-center">Tiempo Adicional</h4>
+        </a>
+    </div>
+
+    <div class="col-md-2 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "HorasPorPresupuesto", new {Area = "HorasHombre"})">
+            <img src="@Url.Content("~/Content/images/HorasHombre/Horas_pptos.svg")" class="img-responsive" alt="Hora vs Ppto" />
+            <h4 class="text-center">Hora vs Ppto</h4>
+        </a>
+    </div>
+</div>

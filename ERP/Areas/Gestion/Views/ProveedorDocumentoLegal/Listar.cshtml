@@ -1,0 +1,62 @@
+﻿@model ListarProveedorDocumentoLegalViewModel
+@{
+    ViewBag.Title = "Documentos legales";
+}
+
+<!--Filtro de la tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div id="form-filtro-tabla" class="form-inline">
+                <div class="form-group">
+                    <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                    <input type="button" class="btn btn-parametrizacion" value="BUSCAR" onclick="ListarDocumentosLegalesProveedores.reconstruirTabla()" />
+                    <input type="button" class="btn btn-parametrizacion" value="VER TODO" onclick="ListarDocumentosLegalesProveedores.ResetearTablaPais()" />
+                </div>
+            </div>
+        </div>
+        @if (Sesion.HasPermission("GES-PROVEEDOR_DOCUMENTO_LEGAL_CREAR")) {
+            <div class="col-md-1 col-md-offset-5">
+                <a href="@Url.Action("Crear", "ProveedorDocumentoLegal", new {Area = "Gestion", id = Model.ProveedorId})" class="btn btn-parametrizacion">Adicionar</a>
+            </div>
+        }
+    </div>
+</div>
+<hr />
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        @Html.HiddenFor(m => m.ProveedorId)
+        <table id="tabla-proveedor-documento-legal" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">NIT</th>
+                    <th class="text-center">Proveedor</th>
+                    <th class="text-center">Documento</th>
+                    <th class="text-center">Descargar</th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <!--Script listar Empresa impuestos-->
+    <script type="text/javascript">
+        var URL_LISTAR_PROVEEDOR_DOCUMENTO_LEGAL = "@Url.Action("Listar", "ProveedorDocumentoLegal", new { Area = "Gestion", id = Model.ProveedorId })";
+        var URL_DESCARGAR_PROVEEDOR_DOCUMENTO_LEGAL = "@Url.Action("DownloadFile", "ProveedorDocumentoLegal", new { Area = "Gestion"})";
+        var PERMISO_DESCARGAR_PROVEEDOR_DOCUMENTO_LEGAL = ("@Sesion.HasPermission("GES-PROVEEDOR_DOCUMENTO_LEGAL_DESCARGAR")" === "True");
+        var PERMISO_EDITAR_EMPRESA_DOCUMENTO_LEGAL = ("@Sesion.HasPermission("GES-EMPRESA_IMPUESTO_EDITAR")" === "True");
+        var PERMISO_ELIMINAR_EMPRESA_DOCUMENTO_LEGAL = ("@Sesion.HasPermission("GES-EMPRESA_IMPUESTO_ELIMINAR")" === "True");
+        var urlEliminarArchivo = "@Url.Action("EliminarDocumento", "ProveedorDocumentoLegal", new { Area = "Gestion", id = Model.ProveedorId })"
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/ProveedorDocumentoLegal/Listar.js")
+
+}

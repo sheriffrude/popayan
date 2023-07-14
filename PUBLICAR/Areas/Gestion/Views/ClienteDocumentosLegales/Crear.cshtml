@@ -1,0 +1,47 @@
+﻿@model ProcessPlusERP.Areas.Gestion.Models.ClienteDocumentoLegal.RegistroClienteDocumentoLegalViewModel
+@{
+    ViewBag.Title = "Cargar documentos legales de cliente";
+    ViewBag.BodyClass = "body-background-gray";
+}
+
+<!--Formulario-->
+@using (Html.BeginForm("Crear", "ClienteDocumentosLegales", new { Area = "Gestion" },
+        FormMethod.Post,                                                    
+        new {
+            enctype = "multipart/form-data",
+            @class = "",
+            role = "form"
+        })
+    )
+{
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(m => m.ClienteId)
+    <div class="form-group">
+        @Html.LabelFor(m => m.TipoDocumentoId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.TipoDocumentoId, Model.TiposDocumento, "Seleccione", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.TipoDocumentoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group ">
+        @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+        <input id="Documento" name="Documento" type="file" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-12 text-right">
+        <button type = "submit" class="btn btn-success">Guardar</button>
+        <a type = "button" href="@Url.Action("Listar", "ClienteDocumentosLegales", new { Area = "Gestion", Id = ViewBag.Id })" class="btn btn-warning">Cerrar</a>
+    </div>
+}
+@Scripts.Render("~/Areas/Gestion/Scripts/ClienteDocumentoLegal/Crear.js")
+
+
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts
+{
+    @Scripts.Render("~/bundles/dataTables.js")
+}

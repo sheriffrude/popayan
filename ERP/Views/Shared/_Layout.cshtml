@@ -1,0 +1,100 @@
+﻿@using ProcessPlusERP.Helpers
+@{
+    var pathUploadsBase = UploadP._pathBase;
+    var urlReportService = ReportP._urlReportService;
+    var classBody = ViewBag.SideBarPosition == "open" ? "nav-md" : "nav-sm";
+    var baseUrl = GeneralP._baseUrl;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>:: Process + :: @ViewBag.Title</title>
+
+    @Styles.Render("~/bundles/jquery-ui.css")
+    @Styles.Render("~/bundles/bootstrap.css")
+    @Styles.Render("~/Content/template.css")
+    @Styles.Render("~/Content/custom.css")
+</head>
+<body class="@classBody">
+    <!--Formulario POST-->
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+
+    <!--Container-->
+    <div class="container body">
+        <!--main_container-->
+        <div class="main_container">
+            <!--Navbar-->
+            @Html.Partial("~/Views/Shared/_Navbar.cshtml")
+            <!-- page content -->
+            <div class="right_col" role="main">
+
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>@ViewBag.Title</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    <a href="https://processpluserp.com" target="_blank">Process Plus ERP</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+        <!--// main_container-->
+    </div>
+    <!--// Container-->
+    <!--Loading-->
+    <div id="container-loading" class="container-loading">
+        <div>
+            <img src="@Url.Content("~/Content/images/loading.gif")" alt="" />
+            <p>Cargando...<br />Por favor, espere un momento.</p>
+        </div>
+    </div>
+    <!--Modal-->
+    <div id="all-modal" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/jquery-ui.js")
+    @Scripts.Render("~/bundles/bootstrap.js")
+    @Scripts.Render("~/Content/template.js")
+    <script type="text/javascript">
+        var PATH_BASE = "@baseUrl";
+        var PATH_UPLOADS_BASE = "@pathUploadsBase";
+        var URL_REPORT_SERVICE = "@urlReportService";
+
+        var URL_MENU_TOOGLE = "@Url.Action("CustomSideBarPosition", "General", new { Area = ""})";
+
+        @if (ViewBag.ValidarHorasHombre == null)
+        {
+            <text>var VALIDAR_HORAS_HOMBRE = true;</text>
+        }
+        else
+        {
+            <text>var VALIDAR_HORAS_HOMBRE = false;</text>
+        }
+        var URL_VALIDAR_REGISTRO_HORAS_HOMBRE = "@Url.Action("ValidarRegistroHorasHombre", "General", new { Area = "" })";
+        var URL_REGISTRO_ACTIVIDADES = "@Url.Action("Listar", "Actividad", new { Area = "HorasHombre" })";
+    </script>
+    @Scripts.Render("~/Content/custom.js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

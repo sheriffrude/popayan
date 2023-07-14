@@ -1,0 +1,102 @@
+﻿@model EmpresaRepresentanteSuplenteViewModel
+@{
+    var edicionDisabled = ViewBag.Edicion == "Si" ? "disabled" : "";
+    var lecturaDisabled = ViewBag.Lectura == "Si" ? "disabled" : "";
+}
+
+@Html.HiddenFor(p => p.PersonaSuplenteId, new { @class = "representante-suplente" })
+<div class="col-md-6">
+    <div class="form-group">
+        @Html.LabelFor(m => m.DocumentoSuplente, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.DocumentoSuplente, new { @class = "form-control representante-suplente representante-data-suplente" })
+        @Html.ValidationMessageFor(m => m.DocumentoSuplente, "", new { @class = "text-danger" })
+    </div>
+    <div class="text-right">
+        <button type="button" onclick="Empresa_RepresentanteLegalSuplente.CambiarDocumento(true)" class="btn btn-secondary" id="boton-cambiar-suplente">Cambiar</button>
+    </div>   
+</div>
+
+<div class="clearfix"></div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoDocumentoSuplenteId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.TipoDocumentoSuplenteId, Model.ListaTiposDocumento, "Seleccione", new { @class = "form-control representante-data-suplente selectpicker", data_live_search = "true" })
+    @Html.ValidationMessageFor(m => m.TipoDocumentoSuplenteId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PrimerNombreSuplente, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PrimerNombreSuplente, new { @class = "form-control representante-suplente representante-data-suplente" })
+    @Html.ValidationMessageFor(m => m.PrimerNombreSuplente, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SegundoNombreSuplente, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SegundoNombreSuplente, new { @class = "form-control representante-suplente representante-data-suplente" })
+    @Html.ValidationMessageFor(m => m.SegundoNombreSuplente, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PrimerApellidoSuplente, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PrimerApellidoSuplente, new { @class = "form-control representante-suplente representante-data-suplente" })
+    @Html.ValidationMessageFor(m => m.PrimerApellidoSuplente, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SegundoApellidoSuplente, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SegundoApellidoSuplente, new { @class = "form-control representante-suplente representante-data-suplente" })
+    @Html.ValidationMessageFor(m => m.SegundoApellidoSuplente, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.SexoSuplenteId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.SexoSuplenteId, Model.ListaSexos, "Seleccione", new { @class = "form-control representante-data-suplente selectpicker" })
+    @Html.ValidationMessageFor(m => m.SexoSuplenteId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.FechaNacimientoSuplente, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.FechaNacimientoSuplente, new { @class = "form-control representante-suplente representante-data-suplente" })
+    @Html.ValidationMessageFor(m => m.FechaNacimientoSuplente, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.CorreoSuplente, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.CorreoSuplente, new { @class = "form-control representante-suplente representante-data-suplente" })
+    @Html.ValidationMessageFor(m => m.CorreoSuplente, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.DireccionSuplente, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.DireccionSuplente, new { @class = "form-control representante-suplente representante-data-suplente" })
+    @Html.ValidationMessageFor(m => m.DireccionSuplente, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TelefonoSuplente, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.TelefonoSuplente, new { @class = "form-control representante-suplente representante-data-suplente" })
+    @Html.ValidationMessageFor(m => m.TelefonoSuplente, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.CelularSuplente, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.CelularSuplente, new { @class = "form-control representante-suplente representante-data-suplente" })
+    @Html.ValidationMessageFor(m => m.CelularSuplente, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.RHSuplenteId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.RHSuplenteId, Model.ListaRH, "Seleccione", new { @class = "form-control representante-data-suplente selectpicker", data_live_search = "true" })
+    @Html.ValidationMessageFor(m => m.RHSuplenteId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-3">
+    @Html.LabelFor(m => m.EstadoCivilSuplenteId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.EstadoCivilSuplenteId, Model.ListaEstadosCiviles, "Seleccione", new { @class = "form-control representante-data-suplente selectpicker", data_live_search = "true" })
+    @Html.ValidationMessageFor(m => m.EstadoCivilSuplenteId, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.FotoSuplente, new { @class = "control-label" })<br />
+   
+    <div id="content-logo-view_representante_legal_suplente" class="col-md-12">
+        @if (Model.FotoPathSuplente != null)
+        {
+            <img src="Model.FotoPathSuplente" class="img-responsive img-center" />
+        }
+    </div><br />
+    <a id="btn_upload_suplente_representante_legal" href="@Url.Action("CrearUploadImageRepresentanteLegalSuplente", "Empresa", new { Area = "Gestion" })" class="btn btn-secondary" data-size="lg" data-target="#modal" data-toggle="modal" hidden>
+        Cargar Foto
+    </a>
+    @Html.ValidationMessageFor(m => m.FotoSuplente, "", new { @class = "text-danger" })
+   
+</div>
+<div class="clearfix"></div>

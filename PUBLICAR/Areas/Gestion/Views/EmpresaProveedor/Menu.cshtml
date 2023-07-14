@@ -1,0 +1,49 @@
+﻿@model MenuEmpresaProveedorViewModel
+@{
+    ViewBag.Title = "Proveedor";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+<div class="col-md-12 text-center">
+    <h3>@Model.NombreComercial</h3>
+    <br />
+    @if (Model.LogoPath != null)
+    {
+        <img src="@Url.Content(Model.LogoPath)" class="img-responsive img-center" />
+    }
+</div>
+
+<div class="clearfix"></div>
+<div class="ln_solid"></div>
+
+<div class="col-md-12 content-menu">
+        @*  @if (Sesion.HasPermission("GES-BANCO_VER"))
+            {*@
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "EmpresaProveedor", new {Area = "Gestion", id = Model.EmpresaId})" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Proveedor.svg")" class="img-response" alt="Proveedores" />
+                <h4 class="text-center">Listar Proveedores</h4>
+            </a>
+        </div>
+        @*}
+            @if (Sesion.HasPermission("GES-EMPRESA_BANCO_CONTACTO_LISTAR"))
+                    {*@
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "EmpresaProveedorContacto", new {Area = "Gestion", id = Model.EmpresaId})" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Personas.svg")" class="img-response" alt="Personas" />
+                <h4 class="text-center">Contactos</h4>
+            </a>
+        </div>
+        @*}*@
+</div>

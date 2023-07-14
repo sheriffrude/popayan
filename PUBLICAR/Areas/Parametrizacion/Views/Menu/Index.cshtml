@@ -1,0 +1,329 @@
+﻿@{
+    ViewBag.Title = "Parametrización";
+}
+
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("PAR-CONFIG_SOFTWARE_EDITAR"))
+    {
+        <div class="col-sm-12 col-md-2 text-center">
+            <a href="@Url.Action("Editar", "ConfigSoftware", new {Area = "Parametrizacion"})" style="width:100%!important">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Configuracion_Software.svg")" class="img img-responsive" />
+                <h4 class="text-center">Configuración de Software</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-HORARIO_LABORAL_EDITAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Editar", "HorarioLaboral", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Horario_laboral.svg")" class="img-responsive" />
+                <h4 class="text-center">Horario Laboral</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-ROL_LISTAR"))
+    {
+        <div class="col-sm-12 col-md-2 text-center">
+            <a href="@Url.Action("Listar", "Rol", new {Area = "Parametrizacion"})" style="width:100%!important">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Roles.svg")" class="img-responsive" />
+                <h4 class="text-center">Roles</h4>
+            </a>
+        </div>
+    }
+</div>
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("PAR-PAIS_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Pais", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Paises.svg")" class="img-responsive" />
+                <h4 class="text-center">Países</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-DEPARTAMENTO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Departamento", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Departamentos.svg")" class="img-responsive" />
+                <h4 class="text-center">Departamentos</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-CIUDAD_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Ciudad", new { Area = "Parametrizacion" })">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Ciudades.svg")" class="img-responsive" />
+                <h4 class="text-center">Ciudades</h4>
+            </a>
+        </div>
+    }
+</div>
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("PAR-ENTIDAD_SALUD_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "EntidadSalud", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Entidades_salud.svg")" class="img-responsive" />
+                <h4 class="text-center">Entidades de salud</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-ARL_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "ARL", new { Area = "Parametrizacion" })">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Entidades_salud.svg")" class="img-responsive" />
+                <h4 class="text-center">Entidades de atención a riesgos laborales</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-ENTIDAD_PENSION_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "EntidadPension", new { Area = "Parametrizacion" })">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Entidades_pensiones.svg")" class="img-responsive" />
+                <h4 class="text-center">Entidades de fondos de pensión</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-CAJA_COMPENSACION_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "CajaCompensacion", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Caja_compensacion.svg")" class="img-responsive" />
+                <h4 class="text-center">Entidades de cajas de compensación</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-ENTIDAD_CESANTIA_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "EntidadCesantia", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Entidades_cesantias.svg")" class="img-responsive" />
+                <h4 class="text-center">Entidades de cesantías</h4>
+            </a>
+        </div>
+    }
+</div>
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("PAR-VALOR_SALARIAL_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "ValorSalarial", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/trafico.png")" class="img-responsive" />
+                <h4 class="text-center">Valores Salariales</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-IMPUESTO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Impuesto", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Impuestos_tarifas.svg")" class="img-responsive" />
+                <h4 class="text-center">Impuestos y Tarifas</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_SALARIO_MINIMO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoSalarioMinimo", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Salario_minimo.svg")" class="img-responsive" />
+                <h4 class="text-center">Salario mínimo</h4>
+            </a>
+        </div>
+    }
+    @*@if (Sesion.HasPermission("PAR-TIPO_DOCUMENTO_LEGAL_LISTAR"))
+        {
+            <div class="col-md-2 col-sm-4 text-center">
+                <a href="@Url.Action("Listar", "TipoDocumentoLegal", new {Area = "Parametrizacion"})">
+                    <img src="@Url.Content("~/Content/images/Parametrizacion/Tipo_documento.svg")" class="img-responsive" />
+                    <h4 class="text-center">Tipos de documentos legales</h4>
+                </a>
+            </div>
+        }*@
+</div>
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("PAR-TIPO_DOCUMENTO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoDocumento", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_documento_legal.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipo identificaciones legales de personas</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_DOCUMENTO_LEGAL_EMP_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoDocumentoLegalEmpleado", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_documento_legal.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipo de documentos legales de empleados</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_DOCUMENTO_LEGAL_EMPRESA_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoDocumentoLegalEmpresa", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_documento_legal.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipo de documentos legales de empresas</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_DOCUMENTO_LEGAL_CLIENTE_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoDocumentoLegalCliente", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_documento_legal.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipo de documentos legales de clientes</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_DOCUMENTO_LEGAL_PRVD_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoDocumentoLegalProveedor", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_documento_legal.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos de documentos legales del proveedores</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_ANTICIPO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoAnticipo", new { Area = "Parametrizacion" })">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_documento_legal.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos de anticipo</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_PAGO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoPago", new { Area = "Parametrizacion" })">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_documento_legal.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos de pagos (Anticipos/Desembolsos)</h4>
+            </a>
+        </div>
+    }
+    @*@if (Sesion.HasPermission("PAR-TIPO_PREGUNTA_BRIEF_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoPreguntaBrief", new { Area = "Parametrizacion" })">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_documento_legal.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos de peguntas brief (Tráfico)</h4>
+            </a>
+        </div>
+    }*@
+    @*@if (Sesion.HasPermission("PAR-TIPO_RANGO_CANTIDAD_LISTAR"))
+        {
+            <div class="col-md-2 col-sm-4 text-center">
+                <a href="@Url.Action("Listar", "TipoRangoCantidad", new { Area = "Parametrizacion" })">
+                    <img src="@Url.Content("~/Content/images/Parametrizacion/Entidades_pensiones.svg")" class="img-responsive" />
+                    <h4 class="text-center">Tipos de rangos de cantidad</h4>
+                </a>
+            </div>
+        }*@
+    @if (Sesion.HasPermission("PAR-TIPO_CONTRATO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoContrato", new { Area = "Parametrizacion" })">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipo_contrato.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos de contratos laborales</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_NOVEDAD_EMPLEADO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoNovedadEmpleado", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_novedades.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos de novedades de empleado</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_REGIMEN_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoRegimen", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_regimen.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos de régimen</h4>
+            </a>
+        </div>
+    }
+    @*@if (Sesion.HasPermission("PAR-TIPO_PRODUCTO_BANCO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoProductoBanco", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_producto.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos de productos de banco</h4>
+            </a>
+        </div>
+    }*@
+    @if (Sesion.HasPermission("PAR-TIPO_CREDITO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoCredito", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_credito.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos de créditos bancarios</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_RESERVA_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoReserva", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_reserva.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos de reserva</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_DOCUMENTO_FACTURACION_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoDocumentoFacturacion", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Documentos_Facturacion.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos de documentos de facturación</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-TIPO_ACTIVIDAD_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "TipoActividad", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Tipos_actividades.svg")" class="img-responsive" />
+                <h4 class="text-center">Tipos Actividades (Horas Hombre)</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PAR-PROVEEDOR_SERVICIO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "ProveedorServicio", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Parametrizacion/Servicios_proveedores.svg")" class="img-responsive" />
+                <h4 class="text-center">Servicios proveedores</h4>
+            </a>
+        </div>
+    }
+    @*@if (Sesion.HasPermission("PAR-SALARIO_INTEGRAL_LISTAR"))
+        {
+            <div class="col-md-2 col-sm-4 text-center">
+                <a href="@Url.Action("Listar", "SalarioIntegral", new {Area = "Parametrizacion"})">
+                    <img src="@Url.Content("~/Content/images/Parametrizacion/Salario_minimo.svg")" class="img-responsive" />
+                    <h4 class="text-center">Salario integral</h4>
+                </a>
+            </div>
+        }*@
+    @*@if (Sesion.HasPermission("PAR-MONETIZACION_SALARIAL_LISTAR"))
+        {
+            <div class="col-md-2 col-sm-4 text-center">
+                <a href="@Url.Action("Listar", "MonetizacionSalarial", new {Area = "Parametrizacion"})">
+                    <img src="@Url.Content("~/Content/images/Parametrizacion/Monetizacion.svg")" class="img-responsive" />
+                    <h4 class="text-center">Monetización salarial</h4>
+                </a>
+            </div>
+        }*@
+</div>

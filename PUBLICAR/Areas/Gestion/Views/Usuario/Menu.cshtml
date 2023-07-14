@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Usuarios";
+    ViewBag.BodyClass = "body-background-gray";
+}
+<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("GES-USUARIO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Usuario", new {Area = "Gestion"})" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Usuarios2.svg")" alt="Ver empresa" class="icono-menu" />
+                <h4 class="text-center">Usuarios</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("GES-USUARIO_DEPARTAMENTO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "UsuarioDepartamento", new { Area = "Gestion" })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Usuario_Responsable.svg")" alt="Ver empresa" class="icono-menu" />
+                <h4 class="text-center">Departamento tráfico a usuario</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("GES-USUARIO_DIRECTOR_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "UsuarioDirector", new { Area = "Gestion" })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Usuario_Asignados.svg")" alt="Ver empresa" class="icono-menu" />
+                <h4 class="text-center"> Director a usuario</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("GES-USUARIO_RESPONSABLE_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "UsuarioResponsable", new { Area = "Gestion" })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Usuario_Responsable.svg")" alt="Ver empresa" class="icono-menu" />
+                <h4 class="text-center">Usuario - Responsable de departamento</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("GES-USUARIO_ASIGNADO_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "UsuarioAsignado", new { Area = "Gestion" })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Usuario_Asignados.svg")" alt="Ver empresa" class="icono-menu" />
+                <h4 class="text-center">Usuario - Asignados</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("GES-USUARIO_EMPRESA_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "UsuarioEmpresa", new { Area = "Gestion" })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Empresas_usuario.svg")" alt="Ver empresa" class="icono-menu" />
+                <h4 class="text-center">Empresas a Usuario</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("GES-USUARIO_UNIDAD_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "UsuarioUnidad", new { Area = "Gestion" })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Uen_usuario.svg")" alt="Ver empresa" class="icono-menu" />
+                <h4 class="text-center">Unidad de negocio a usuario</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("GES-USUARIO_CLIENTE_LISTAR"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "UsuarioCliente", new { Area = "Gestion"})" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Clientes_productos.svg")" alt="Ver empresa" class="icono-menu" />
+                <h4 class="text-center">Clientes y productos a usuario</h4>
+            </a>
+        </div>
+    }
+</div>

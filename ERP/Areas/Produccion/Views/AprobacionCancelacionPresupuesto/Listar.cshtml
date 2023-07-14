@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Aprobaciones para Cancelación de Presupuestos";
+}
+
+<!--Filtro de la tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-left">
+            <form id="form-filtro-tabla" class="form-inline">
+                <div class="form-group">
+                    <div class="form-group">
+                        <select name="Estado" id="Estado" class="btn dropdown-toggle btn-default">
+                            <option>todas</option>
+                            <option value="1">Pendiente</option>
+                            <option value="3">Rechazado</option>
+                        </select>
+                    </div>
+                    <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                    <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+                    <input type="button" class="btn btn-secondary" value="VER TODO" onclick="AprobacionCancelacionPresupuestoListar.ResetearFiltroTabla()" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <table id="tabla_aprobaciones_presupuestos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Presupuesto</th>
+                    <th>Aprobar/Rechazar</th>
+                    <th class="text-center">Versión Interna</th>
+                    <th class="text-center">Versión Externa</th>
+                    <th class="text-center">Tipo Presupuesto</th>
+                    <th class="text-center">Empresa</th>
+                    <th class="text-center">Cliente</th>
+                    <th class="text-center">Producto</th>
+                    <th class="text-center">OT</th>
+                    <th class="text-center">Enviado Por</th>
+                    <th class="text-center">Fecha y Hora</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <script type="text/javascript">
+        var URL_APROBACION_PRESUPUESTO_LISTAR = "@Url.Action("Listar", "AprobacionCancelacionPresupuesto", new { Area = "Produccion" })";
+        var URL_PRESUPUESTO_CONSULTAR = "@Url.Action("Consultar", "Presupuesto", new { Area = "Produccion" })";
+        var URL_APROBACION_PRESUPUESTO_RESPONDER = "@Url.Action("Responder", "AprobacionCancelacionPresupuesto", new { Area = "Produccion" })";
+        var URL_JERARQUIA_APROBACION_PRESUPUESTO_LISTAR = "@Url.Action("ListarJerarquia", "AprobacionCancelacionPresupuesto", new { Area = "Produccion" })";
+    </script>
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionCancelacionPresupuesto/Listar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionCancelacionPresupuesto/Responder.js")
+
+    @* Jerarquia Aprobacion *@
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionCancelacionPresupuesto/ListarJerarquia.js")
+}

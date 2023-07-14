@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Bienvenido";
+}
+
+<div class="col-md-10 col-md-offset-1 text-center content-bienvenida">
+    <div class="col-md-6 col-md-offset-3">
+        <img src="@Url.Content("~/Content/images/Menu/logo-process-plus.png")" alt="logo-process" class="img-responsive" />
+    </div>
+</div>
+
+<div class="height-1"></div>
+<div class="clearfix"></div>
+
+<div class="col-sm-12 content-menu-principal">
+    @if (Sesion.HasPermission("PAR-MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Index", "Menu", new {Area = "Parametrizacion"})">
+                <img src="@Url.Content("~/Content/images/Menu/Parametrizacion.svg")" class="img-responsive" alt="" />
+                <h4 class="text">Parametrización</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Index", "Menu", new {Area = "Gestion"})">
+                <img src="@Url.Content("~/Content/images/Menu/Gestion.svg")" class="img-responsive" alt="" />
+                <h4 class="text">Gestión</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("TRA-MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Index", "Menu", new { Area = "Trafico" })">
+                <img src="@Url.Content("~/Content/images/Menu/Trafico.svg")" class="img-responsive" alt="" />
+                <h4 class="text">Tráfico</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("PRO-MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Index", "Menu", new {Area = "Produccion"})">
+                <img src="@Url.Content("~/Content/images/Menu/Produccion.svg")" class="img-responsive" alt="" />
+                <h4 class="text">Producción</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("HOH-MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Index", "Menu", new { Area = "HorasHombre" })">
+                <img src="@Url.Content("~/Content/images/Menu/Hoh.svg")" class="img-responsive" alt="" />
+                <h4 class="text">Horas Hombre</h4>
+            </a>
+        </div>
+    }
+
+    @if (Sesion.HasPermission("REP-MENU"))
+    {
+        <div class="col-md-2 col-sm-4 text-center">
+            <a href="@Url.Action("Index", "Menu", new { Area = "Reportes" })">
+                <img src="@Url.Content("~/Content/images/HorasHombre/Reportes.svg")" class="img-responsive" alt="" />
+                <h4 class="text">Reportes</h4>
+            </a>
+        </div>
+    }
+</div>
+
+@if (Sesion.HasPermission("HOH-MENU"))
+{
+    @section Scripts {
+        @Scripts.Render("~/scripts/General/Menu.js");
+        <script type="text/javascript">
+        </script>
+    }
+}

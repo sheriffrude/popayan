@@ -1,0 +1,51 @@
+﻿@model MenuClienteViewModel
+@{
+    ViewBag.Title = "Cliente";
+}
+
+<div class="row content-menu">
+    <div class="col-md-12">
+        <div class="col-md-2 col-sm-3 text-center">
+            <a href="@Url.Action("Listar", "ClienteDocumentosLegales", new {Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Proveedor.svg")" class="img-response" alt="Documentos legales" />
+                <h4 class="text-center">Documentos legales</h4>
+            </a>
+        </div>
+
+        <div class="col-md-2 col-sm-3 text-center">
+            <a href="@Url.Action("Listar", "ClienteContacto", new {Area = "Gestion", id = Model.Id })" class="content-icono-menu">              
+                <img src="@Url.Content("~/Content/images/Gestion/Personas.svg")" class="img-response" alt="Contactos" />
+                <h4 class="text-center">Contactos</h4>
+                
+            </a>
+        </div>
+
+        <div class="col-md-2 col-sm-3 text-center">
+            <a href="@Url.Action("Listar", "ClienteGrupoTarifario", new {Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Proveedor.svg")" class="img-response" alt=" Grupos tarifarios" />
+                <h4 class="text-center"> Grupos tarifarios</h4>
+            </a>
+        </div>
+
+        <div class="col-md-2 col-sm-3 text-center">
+            <a href="@Url.Action("Listar", "ClienteTarifario", new {Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Proveedor.svg")" class="img-response" alt="Tarifario" />
+                <h4 class="text-center">Tarifario</h4>
+            </a>
+        </div>
+
+        <div class="col-md-2 col-sm-3 text-center">
+            <a href="@Url.Action("Listar", "ClienteContrato", new {Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Proveedor.svg")" class="img-response" alt="Contratos" />
+                <h4 class="text-center">Contratos</h4>
+            </a>
+        </div>
+
+        <div class="col-md-2 col-sm-3 text-center">
+            <a href="@Url.Action("Listar", "ClienteProducto", new {Area = "Gestion", id = Model.Id })" class="content-icono-menu">
+                <img src="@Url.Content("~/Content/images/Gestion/Proveedor.svg")" class="img-response" alt="Producto" />
+                <h4 class="text-center">Producto</h4>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Usuarios";
+}
+
+<div class="col-md-12">
+    <div class="pull-left">
+        <form id="form-filtro-tabla" class="form-inline">
+            <div class="form-group">
+                <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+                <input type="button" class="btn btn-secondary" value="VER TODO" onclick="ResetearTablaUsuarios()" />
+            </div>
+        </form>
+    </div>
+    @if (Sesion.HasPermission("GES-USUARIO_CREAR"))
+    {
+        <div class="pull-right">
+            <a href="@Url.Action("Crear", "Usuario", new {Area = "Gestion"})" class="btn btn-secondary" data-toggle="modal" data-target="#">Crear usuario</a>
+        </div>
+    }
+</div>
+
+<div class="col-md-12">
+    <table id="tabla-usuarios" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th class="text-center">Nombre Persona</th>
+                <th class="text-center">Documento</th>
+                <th class="text-center">Nombre Usuario</th>
+                <th class="text-center">Rol</th>
+                <th class="text-center">Director</th>
+                <th class="text-center">Estado</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    <script type="text/javascript">
+        var URL_LISTAR_USUARIO = "@Url.Action("Listar", "Usuario", new { Area = "Gestion" })";
+        var URL_EDITAR_USUARIO = "@Url.Action("Editar", "Usuario", new { Area = "Gestion" })";
+        var PERMISO_EDITAR_USUARIO = ("@Sesion.HasPermission("GES-USUARIO_EDITAR")" === "True");
+        var URL_PERMISO_USUARIO = "@Url.Action("Listar", "UsuarioPermiso", new { Area = "Gestion" })";
+        var PERMISO_LISTAR_USUARIO_PERMISO = ("@Sesion.HasPermission("GES-USUARIO_PERMISO_LISTAR")" === "True");
+    </script>
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Usuario/Listar.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Usuario/Crear.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Usuario/Editar.js")
+}

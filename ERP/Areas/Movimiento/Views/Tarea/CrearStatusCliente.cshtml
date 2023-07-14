@@ -1,0 +1,56 @@
+﻿@model CrearTareaStatusClienteViewModel
+@{
+    ViewBag.Title = $"Crear status cliente - Tarea # {Model.Numero}";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("CrearStatusCliente", "Tarea", new { Area = "Trafico" },
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnComplete = "TAREA_STATUS_CLIENTE_CREAR.OnComplete"
+        },
+        new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="clearfix"></div>
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+        <div class="clearfix"></div>
+
+        @Html.HiddenFor(m => m.TareaId)
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.StatusClienteId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.StatusClienteId, Model.ListaStatusCliente, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+            @Html.ValidationMessageFor(m => m.StatusClienteId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.FechaEntrega, new { @class = "control-label" })
+            <div class="input-group date">
+                @Html.TextBoxFor(m => m.FechaEntrega, new { @class = "form-control datepicker" })
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>
+            @Html.ValidationMessageFor(m => m.FechaEntrega, "", new { @class = "text-danger" })
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(m => m.Observaciones, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Observaciones, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group text-right">
+            <a href="@Url.Action("ListarStatusCliente", "Tarea", new { Area = "Trafico", id = Model.TareaId })" class="btn btn-secondary" data-toggle="modal" data-target="#" data-execute-onload="TAREA_STATUS_CLIENTE_LISTAR.OnLoad">Volver</a>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+        <div class="clearfix"></div>
+    }
+</div>

@@ -1,0 +1,152 @@
+﻿/**
+ * Variables Globales
+ */
+var DATA_OPCIONES = [];
+var $TABLA_OPCIONES = null;
+
+/**
+ * Onchange del select TipoPregunta
+ * @param {Object<>} e 
+ * @returns {} 
+ */
+function OnChangeTipoPregunta(e) {
+    var tipoOpcion = $(e).val();
+    var $contenedorOpciones = $("#contenedor-opciones");
+    if (tipoOpcion == 2 || tipoOpcion == 3) {
+        $contenedorOpciones.show();
+    } else
+        $contenedorOpciones.hide();
+}
+
+/**
+ * Muestra la tabla de opciones
+ * @returns {} 
+ */
+function AdicionarOpcion() {
+    var opcion = $("#Opcion").val();
+    if (opcion == null || opcion == "") {
+        Utils._BuilderMessage("danger", "El campo Opción es requerido.");
+    } else {
+        var longitudDataOpciones = DATA_OPCIONES.length;
+        for (var i = 0; i < longitudDataOpciones; i++) {
+            if (DATA_OPCIONES[i]['Opcion'] == opcion) {
+                Utils._BuilderMessage("danger", "Ya existe esta Opción.");
+                return false;
+            }
+        }
+
+        DATA_OPCIONES.push({
+            Opcion: opcion,
+        });
+
+        longitudDataOpciones = DATA_OPCIONES.length;
+        for (var i = 0; i < longitudDataOpciones; i++) {
+            DATA_OPCIONES[i]['Id'] = i;
+        }
+
+        if ($TABLA_OPCIONES != null)
+            $TABLA_OPCIONES.fnDestroy();
+        ContruirTablaOpciones();
+        $("#Opcion").val('');
+    }
+    return false;
+}
+
+/**
+ * Eliminar opcion
+ * @param {int} id 
+ * @returns {} 
+ */
+function EliminarOpcion(id) {
+    var longitudDataOpciones = DATA_OPCIONES.length;
+    for (var i = 0; i < longitudDataOpciones; i++) {
+        if (DATA_OPCIONES[i]["Id"] == id) {
+            DATA_OPCIONES.splice(i, 1);
+            break;
+        }
+    }
+
+    var longitudDataOpciones = DATA_OPCIONES.length;
+    for (var i = 0; i < longitudDataOpciones; i++) {
+        DATA_OPCIONES[i]['Id'] = i;
+    }
+
+    if ($TABLA_OPCIONES != null)
+        $TABLA_OPCIONES.fnDestroy();
+    ContruirTablaOpciones();
+}
+
+/**
+ * Contruir tabla de opciones
+ * @returns {} 
+ */
+function ContruirTablaOpciones() {
+    $TABLA_OPCIONES = $("#tabla-opciones").dataTable({
+        "destroy": true,
+        "serverSide": false,
+        "data": DATA_OPCIONES,
+        "columns": [
+            {
+                "data": "Opcion",
+                "orderable": false,
+            },
+            {
+                "data": "Id",
+                "orderable": false,
+                "searchable": false,
+                "width": "5%",
+                "render": function (data, type, full, meta) {
+                    return '<input type="button" class="btn btn-danger btn-sm" value="ELIMINAR" onclick="EliminarOpcion(' + data + ')" >';
+                }
+            }
+        ]
+    });
+}
+
+/**
+ * Guardar pregunta
+ * @returns {boolean} 
+ */
+function OnBeginCrearPregunta(jqXHR, settings) {
+    ///Valida el tipo de pregunta y la cantidad de Opciones
+    var tipo = $("#TipoPregunta").val();
+    var longitudDataOpcion = DATA_OPCIONES.length;
+    if ((tipo == 2 || tipo == 3) && longitudDataOpcion < 2) {
+        Utils._BuilderMessage("danger", "Debe agregar mínimo 2 Opciones para continuar.");
+        return false;
+    }
+
+    ///Obtiene las Opciones
+    var opciones = [];
+    for (var i = 0; longitudDataOpcion > i; i++) {
+        opciones.push(DATA_OPCIONES[i]["Opcion"]);
+    }
+
+    var data = $(this).serializeObject();
+    data["ListaOpciones"] = opciones;
+
+    settings.data = jQuery.param(data);
+
+    ///Destruye la tabla de Opciones
+    if ($TABLA_OPCIONES != null)
+        $TABLA_OPCIONES.fnDestroy();
+    DATA_OPCIONES = [];
+    return true;
+}
+
+/**
+ * OnCompleteCrearPregunta
+ * @param {any} response
+ */
+function OnCompleteCrearPregunta(response) {
+    var resultado = RequestHttp._ValidateResponse(response);
+    if (resultado != null) {
+        if (resultado.state == true) {
+            Utils._BuilderMessage("success", resultado.message);
+            RecargarTabla();
+            Utils._CloseModal();
+        } else {
+            Utils._BuilderMessage("danger", resultado.message);
+        }
+    }
+}

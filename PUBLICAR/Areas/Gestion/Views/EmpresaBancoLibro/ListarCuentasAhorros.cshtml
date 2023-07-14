@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Libro de Bancos";
+}
+
+<!--Filtro de la tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-left">
+            <form id="form-filtro-tabla" class="form-inline">
+                <div class="form-group">
+                    <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                    <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+                    <input type="button" class="btn btn-secondary" value="VER TODO" onclick="AnticipoListar.ResetearTabla()" />
+                </div>
+            </form>
+        </div>
+        @if (Sesion.HasPermission("GES-EMPRESA_BANCO_LIBRO_LISTAR"))
+        {
+            <div class="pull-right">
+                <a href="@Url.Action("Crear", "Legalizacion", new {Area = "Produccion"})" class="btn btn-primary" data-toggle="modal" data-size="all" data-execute-onload="LegalizacionCrear.OnLoadLegalizacion" data-target="#">Crear</a>
+            </div>
+        }
+    </div>
+</div>
+
+<input id="TipoProductoId" hidden value="@ViewBag.TipoProducto" />
+<input id="BancoId" hidden value="@ViewBag.BancoId" />
+
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <table id="tabla-cuenta-ahorro" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Eliminar</th>
+                    <th>Editar</th>
+                    <th>Descargar</th>
+                    <th>A favor de</th>
+                    <th>Valor</th>
+                    <th>Tipo</th>
+                    <th>Retirado por</th>
+                    <th>Fecha retiro</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+<script type="text/javascript">
+        var PERMISO_APROBACION_LEGALIZACION = ("@Sesion.HasPermission("PRO-LEGALIZACION_APROBACION_CREAR")" === "True");
+        var PERMISO_CONSULTAR_DETALLE_LEGALIZACION = ("@Sesion.HasPermission("PRO-LEGALIZACION_CONSULTAR")" === "True");
+        var PERMISO_CAMBIAR_ESTADO_LEGALIZACION = ("@Sesion.HasPermission("PRO-LEGALIZACION_CANCELAR")" === "True");
+        var URL_APROBACION_LEGALIZACION = "@Url.Action("Crear", "AprobacionLegalizacion", new { Area = "Produccion" })";
+        var URL_JERARQUIA_APROBACION_LEGALIZACION_LISTAR = "@Url.Action("ListarJerarquia", "AprobacionLegalizacion", new { Area = "Produccion" })";
+        var URL_CAMBIAR_ESTADO_LEGALIZACION = "@Url.Action("Cancelar", "Legalizacion", new { Area = "Produccion" })";
+
+        /**
+         * Edicion de los item de la legalización
+         */
+        var URL_CONSULTAR_ITEMS_EDITAR_LEGALIZACION = "@Url.Action("ConsultarItemAEditar", "Legalizacion", new { Area = "Produccion" })";
+        var URL_EDITAR_LEGALIZACION = "@Url.Action("Editar", "Legalizacion", new { Area = "Produccion" })";
+
+</script>
+
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaBancoLibro/ListarCuentasAhorros.js")
+
+
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaBancoLibro/Crear.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaBancoLibro/Crear.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaBancoLibro/ListarJerarquia.js")
+
+}

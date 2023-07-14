@@ -1,0 +1,32 @@
+﻿@model CrearProspectoInfoLaboralViewModel
+
+@Html.HiddenFor(p => p.AreaId, new { id = "AreaAuxId" })
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.UnidadNegocioId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.UnidadNegocioId, Model.UnidadesNegocio, "Seleccione", new { @class = "form-control info-laboral", onchange = "OnchangeUnidadNegocioInfoLaboral(this)" })
+    @Html.ValidationMessageFor(m => m.UnidadNegocioId, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.AreaId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.AreaId, Model.Areas, "Seleccione", new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.AreaId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.CargoId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.CargoId, Model.Cargos, "Seleccione", new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.CargoId, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoContratoId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.TipoContratoId, Model.TiposContratos, "Seleccione", new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.TipoContratoId, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ModalidadPagoId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.ModalidadPagoId, Model.ModalidadesPagos, "Seleccione", new { @class = "form-control info-laboral" })
+    @Html.ValidationMessageFor(m => m.ModalidadPagoId, "", new { @class = "text-danger" })
+</div>

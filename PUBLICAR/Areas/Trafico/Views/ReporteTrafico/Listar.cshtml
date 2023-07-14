@@ -1,0 +1,206 @@
+﻿@model ReporteTraficoViewModel
+@{
+    ViewBag.Title = "ReporteTrafico";
+}
+
+<div class="col-md-2">
+    <label class="text-center">FILTROS</label>
+    <table id="tabla-Asociacion" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th class="text-center">FECHAS OT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>FECHA INICIAL <input type="text" class="form-control" id="FechaInicio"></td>
+            </tr>
+            <tr>
+                <td>FECHA FINAL  <input type="text" class="form-control" id="FechaFin"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table id="tabla-Asociacion" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th class="text-center" colspan="2">EMPRESAS</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (dynamic item in Model.ListaEmpresas)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" id="@item.Value" onclick="SeleccionarEmpresa(@item.Value)" class="custom-radio" />
+                    </td>
+                    <td class="text-left">@item.Text</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    <table id="tabla-Unidades_Filtros" class="table table-striped table-bordered compact text-center " cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th></th>
+                <th class="text-center" >UNIDADES</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    
+        <table id="tabla-Estado_UnidadesNegocio_Reporte" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center"></th>
+                    <th class="text-center">Estado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+    <table id="tabla-Clientes" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th class="text-center"></th>
+                <th class="text-center">Cliente</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <table id="tabla-Ejecutivos" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th class="text-center"></th>
+                <th class="text-center">Ejecutivo</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+   
+
+</div>
+
+<div class="col-md-10">
+    <div class="col-md-12">
+        <div id="chartContainer_pieEmpresas" height="500px"></div>
+        <div id="chartContainer_pieUnidadesNegocio" height="500px"></div>
+        <div id="chartContainer_pieEstadosUnidadNegocio" height="500px"></div>
+        <div id="chartContainer_pieEjecutivo" height="500px"></div>
+        <div id="chartContainer_pieEProducto" height="500px"></div>
+        
+    </div>
+    <div class="col-md-12">
+        <div class="clearfix"></div>
+        <div class="hidden" id="tabla_Empresas">
+            <table id="tabla-Empresas_Reporte" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Estado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="hidden" id="tabla_UnidadesNegocio">
+            <table id="tabla-UnidadesNegocio_Reporte" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Estado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="hidden" id="tabla_EstadosUnidadesNegocio">
+            <table id="tabla-Estado_Unidades_Negocio_Reporte" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Estado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="hidden" id="tabla_Clientes">
+            <table id="tabla-Clientes_Por_Estado" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Estado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+
+        <div class="hidden" id="tabla_Ejecutivos">
+            <table id="tabla-Ejecutivos_Por_Cliente" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Estado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="hidden" id="tabla_Productos">
+            <table id="tabla-Productos_Ejecutivo" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Estado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <script type="text/javascript">
+        var URL_GRAFICA_EMPRESAS = "@Url.Action("PieEmpresas", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_TABLA_EMPRESA = "@Url.Action("TablaEmpresas", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_TABLA_UNIDADES_FILTRO = "@Url.Action("TablaUnidadesFiltro", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_GRAFICA_UNIDADES = "@Url.Action("PieUnidades", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_CONSULTAR_UNIDADES_ARRAY = "@Url.Action("UnidadesArrayId", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_GRAFICA_UNIDADNEGOCIO = "@Url.Action("UnidadesNegocioPie", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_TABLA_UNIDADNEGOCIO = "@Url.Action("TablaUnidadesNegocio", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_GRAFICA_ESTADOS_UNIDADNEGOCIO = "@Url.Action("PieEstadosUnidades", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_TABLA_ESTADOS_UNIDADNEGOCIO = "@Url.Action("TablaEstadosUnidadesNegocio", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_TABLA_CLIENTES = "@Url.Action("TablaClientes", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_CONSULTAR_CLIENTE_ARRAY = "@Url.Action("ClientesArrayId", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_GRAFICA_CLIENTE = "@Url.Action("ClientesPie", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_TABLA_CLIENTES_DATA = "@Url.Action("DataTablaClientes", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_CONSULTAR_EJECUTIVO_ARRAY = "@Url.Action("ListaEjecutivos", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_TABLA_EJECUTIVOS = "@Url.Action("EjecutivosDatetable", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_GRAFICA_EJECUTIVO = "@Url.Action("EjecutivoPie", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_TABLA_EJECUTIVOS_DATA = "@Url.Action("TablaEjecutivosPorCliente", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_GRAFICA_PRODUCTO = "@Url.Action("ProductosPie", "ReporteTrafico", new { Area = "Trafico" })";
+        var URL_TABLA_PRODUCTOS_DATA = "@Url.Action("ProductosDataTable", "ReporteTrafico", new { Area = "Trafico" })";
+    </script>
+    @Scripts.Render("~/bundles/canvasjs")
+    @Scripts.Render("~/Areas/Trafico/scripts/ReporteTrafico/Listar.js")
+}
+

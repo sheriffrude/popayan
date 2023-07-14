@@ -1,0 +1,90 @@
+﻿<h2>Upload Image</h2>
+
+@using (Ajax.BeginForm("UploadImage", "Prueba", new { Area = "" }, new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnBegin = "UploadImage.OnBegin",
+    OnComplete = "UploadImage.OnComplete",
+},
+                        new { id = "", @class = "", role = "form" }))
+{
+    <div class="clearfix"></div>
+    <div class="form-group col-md-6">
+        <a href="@Url.Action("UploadImageModal", "Prueba", new { Area = "" })" class="btn btn-secondary" data-size="lg" data-target="#modal" data-toggle="modal">
+            Cargar Imagen
+        </a>
+        <div id="content-logo-view" class="col-md-12">
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group text-right">
+        <input type="submit" value="Guardar" class="btn btn-primary" />
+    </div>
+}
+<script type="text/javascript">
+    var URL_UPLOAD_IMAGE_TEMP = "@Url.Action("UploadImageTemp", "Prueba", new { Area = "" })";
+    var UploadImage = {
+        IMAGE: {},
+        Upload: function (e) {
+            RequestHttp._UploadFile(e, URL_UPLOAD_IMAGE_TEMP, function (data) {
+                if (data != null) {
+                    FILE = {
+                        'Name': data.Name,
+                        'Path': data.Path,
+                        'Url': data.Url
+                    };
+
+                    $("#content-imagen-upload, #btn_logo_view_crop").show();
+
+                    UploadImage.IMAGE.Image = FILE;
+
+                    $("#logo-view-crop").attr("src", data.Url);
+
+                    $('#logo-view-crop').cropper({
+                        aspectRatio: 1 / 1,
+                        minCropBoxWidth: 150,
+                        minCropBoxHeight: 150,
+                        'getCroppedCanvas':
+                        {
+                            width: 150,
+                            height: 150,
+                            minWidth: 150,
+                            minHeight: 150,
+                            maxWidth: 150,
+                            maxHeight: 150,
+                            fillColor: '#fff',
+                            imageSmoothingEnabled: false,
+                            imageSmoothingQuality: 'high',
+                        },
+                    }
+                    );
+                }
+            });
+        },
+        Crop: function () {
+            var canvas = $('#logo-view-crop').cropper('getCroppedCanvas');
+            $("#content-logo-view").html(canvas);
+
+            UploadImage.IMAGE.DataCrop = $('#logo-view-crop').cropper('getData');
+            console.log(UploadImage.IMAGE);
+
+            Utils._CloseModal();
+        },
+        OnBegin: function (jqXHR, settings) {
+            var data = $(this).serializeObject();
+            data["Imagen"] = UploadImage.IMAGE;
+            console.log(data);
+            settings.data = jQuery.param(data);
+            return true;
+        },
+        OnComplete: function (response) {
+            var resultado = RequestHttp._ValidateResponse(response);
+            if (resultado != null) {
+                if (resultado.state == true)
+                    Utils._BuilderMessage('success', resultado.message);
+                else
+                    Utils._BuilderMessage('danger', resultado.message);
+            }
+        },
+    }
+</script>

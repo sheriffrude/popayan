@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Facturas Proveedor";
+}
+<div class="col-md-2">
+    <!-- required for floating -->
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs tabs-left" id="nav-tabs-facturacion">
+        <!-- 'tabs-right' for right tabs -->
+        @if (Sesion.HasPermission("PRO-FACTURA_PROVEEDOR_CREAR"))
+        {
+            <li class="active"><a href="#registrar-factura" onclick="LimpiarRegistroFactura()" data-toggle="tab" data-number-tab="1">REGISTRAR FACTURA</a></li>
+        }
+        @if (Sesion.HasPermission("PRO-FACTURA_PROVEEDOR_LISTAR"))
+        {
+            <li><a href="#consultar-factura" onclick="CargarFacturasProveedor()" data-toggle="tab" data-number-tab="2">CONSULTAR FACTURAS RADICADAS</a></li>
+        }
+    </ul>
+</div>
+<div class="col-md-10">
+    <!-- Tab panes -->
+    <div class="tab-content">
+        @if (Sesion.HasPermission("PRO-FACTURA_PROVEEDOR_CREAR"))
+        {
+            <div class="tab-pane active" id="registrar-factura">
+                @Html.Partial("~/Areas/Produccion/Views/FacturaProveedor/_RegistrarFactura.cshtml")
+            </div>
+        }
+        @if (Sesion.HasPermission("PRO-FACTURA_PROVEEDOR_LISTAR"))
+        {
+            <div class="tab-pane" id="consultar-factura">
+                @Html.Partial("~/Areas/Produccion/Views/FacturaProveedor/_ConsultarFacturasProveedor.cshtml")
+            </div>
+        }
+    </div>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <!--Script listar Empresa impuestos-->
+    <script type="text/javascript">
+        @*var URL_LISTAR_TARIFARIO_ITEM = "@Url.Action("ListarItem", "Tarifario", new { Area = "Gestion", id = Model.EmpresaId })";*@
+        var URL_CONSULTAR_ORDEN_COMPRA_FACTURA = "@Url.Action("ListarPorIdFactura", "PresupuestoOrdenCompra", new { Area = "Produccion"})";
+        var URL_CONSULTAR_ITEM_ORDEN_COMPRA_FACTURA = "@Url.Action("ConsultarItemOrdenCompraFactura", "PresupuestoItem", new { Area = "Produccion"})";
+        var URL_CONSULTAR_ASOCIADO_ORDEN_COMPRA_FACTURA = "@Url.Action("ConsultarAsociadoOrdenCompraFactura", "PresupuestoItem", new { Area = "Produccion"})";
+        var URL_CONSULTAR_IMPUESTOS_ORDEN_COMPRA_FACTURA = "@Url.Action("VerImpuestoOrdenCompraFactura", "PresupuestoOrdenCompra", new { Area = "Produccion" })";
+        var URL_CONSULTAR_IMPUESTO_ORDEN_COMPRA = "@Url.Action("ConsultarImpuestosOrdenCompra", "PresupuestoOrdenCompra", new { Area = "Produccion" })";
+        var URL_REGISTRAR_FACTURA = "@Url.Action("Crear", "FacturaProveedor", new { Area = "Produccion" })";
+        var URL_LISTAR_FACTURA = "@Url.Action("Listar", "FacturaProveedor", new { Area = "Produccion" })";
+        var URL_DETALLE_FACTURA_PROVEEDOR = "@Url.Action("Consultar", "FacturaProveedor", new { Area = "Produccion" })";
+        var URL_CANCELAR_FACTURA = "@Url.Action("Cancelar", "FacturaProveedor", new { area= "Produccion" })";
+
+        var URL_UPLOAD = "@Url.Action("CrearUpload", "FacturaProveedor", new { area= "Produccion" })";
+        var URL_CONSULTAR_FACTURA = "@Url.Action("ListarPorId", "FacturaProveedor", new { area= "Produccion" })";
+        var URL_LISTAR_TIPO_DOCUMENTO = "@Url.Action("ListarTipoDocumento", "FacturaProveedor", new { area= "Produccion" })";
+        var URL_CONSULTAR_DOCUMENTO = "@Url.Action("ListarDocumento", "EnviarDocumento", new { area= "Produccion" })";
+        var URL_CONSULTAR_ANTICIPO_FACTURA = "@Url.Action("ListarAnticipo", "FacturaProveedor", new { area= "Produccion" })";
+        var URL_VER_HISTORICO_ANTICIPO_FACTURAS = "@Url.Action("VerHistoricoAnticipoDocumento", "EnviarDocumento", new { area= "Produccion" })";
+        var URL_CONSULTAR_ANTICIPO_ENVIAR_DOCUMENTO = "@Url.Action("ConsultarAnticiposEnviarDocumento", "PresupuestoAnticipo", new { Area = "Produccion" })";
+        var URL_VER_DETALLE_ANTICIPOS = "@Url.Action("VerDetalleAnticipo", "PresupuestoAnticipo", new { Area = "Produccion" })";
+        var URL_VER_JERARQUIA_ANTICIPO = "@Url.Action("VerJerarquia", "PresupuestoAnticipo", new { Area = "Produccion" })";
+
+        var URL_LISTAR_PROVEEDORES_VERSION = "@Url.Action("ListarProveedoresPorVersion", "Presupuesto", new { Area = "Produccion"})";
+        var URL_LISTAR_PROVEEDOR_DOCUMENTO_LEGAL_ANTICIPO = "@Url.Action("ListarPorAnticipo", "ProveedorDocumentoLegal", new { Area = "Gestion"})";
+        var URL_DESCARGAR_PROVEEDOR_DOCUMENTO_LEGAL = "@Url.Action("DownloadFile", "ProveedorDocumentoLegal", new { Area = "Gestion"})";
+        var URL_DETALLE_ITEM_ANTICIPO_CONTABLE = "@Url.Action("VerDetalleItemAnticipo", "PresupuestoAnticipo", new { Area = "Produccion" })";
+        var URL_DETALLE_ASOCIADO_ANTICIPO_CONTABLE = "@Url.Action("VerDetalleAsociadoAnticipo", "PresupuestoAnticipo", new { Area = "Produccion" })";
+
+        var URL_AUTOCOMPLETAR_LISTAR_USUARIO = "@Url.Action("ListarUsuariosAutoCompletar", "Usuario", new { Area = "Gestion"})";
+        var URL_ENVIAR_DOCUMENTO = "@Url.Action("EnviarDocumento", "EnviarDocumento", new { Area = "Produccion" })";
+
+        var URL_CONSULTAR_DOCUMENTO_REVISAR = "@Url.Action("ListarDocumento", "RevisarDocumento", new { Area = "Produccion" })";
+        var URL_APROBAR_DOCUMENTO = "@Url.Action("AprobarDocumento", "RevisarDocumento", new { Area = "Produccion" })";
+        var URL_RECHAZAR_DOCUMENTO = "@Url.Action("RechazarDocumento", "RevisarDocumento", new { Area = "Produccion" })";
+
+        var URL_CONSULTAR_DOCUMENTO_ENVIADO = "@Url.Action("ListarHistoricoDocumento", "EnviarDocumento", new { area= "Produccion" })";
+        var URL_CONSULTAR_DOCUMENTO_REVISADO = "@Url.Action("ListarHistoricoDocumento", "RevisarDocumento", new { area= "Produccion" })";
+        var URL_VER_DOCUMENTO_RECHAZAR = "@Url.Action("RechazarDocumento", "RevisarDocumento", new { area= "Produccion" })";
+        var URL_CONSULTAR_TODOS_DOCUMENTOS = "@Url.Action("ConsultarTodosDocumentos", "RevisarDocumento", new { area= "Produccion" })";
+        ////////////////////////////////////////////////////////PERMISOS////////////////////////////////
+        var PERMISO_VER_DETALLE_CONTABLE_ANTICIPO = ("@Sesion.HasPermission("PRO-VER_DETALLE_CONTABLE_ANTICIPO")" === "True");
+        var PERMISO_APROBACION_FACTURA_PROVEEDOR = ("@Sesion.HasPermission("PRO-FACTURA_PROVEEDOR_APROBACION_CREAR")" === "True");
+        var URL_APROBACION_FACTURA_PROVEEDOR_LISTAR = "@Url.Action("Crear", "AprobacionFacturaProveedor", new { Area = "Produccion" })";
+
+    </script>
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaProveedor/Menu.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaProveedor/Crear.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoOrdenCompra/VerImpuestoOrdenCompraFactura.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/EnviarDocumento/EnviarDocumento.js");
+    @Scripts.Render("~/Areas/Produccion/scripts/EnviarDocumento/VerHistoricoAnticipoDocumento.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoAnticipo/VerDetalleContable.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoAnticipo/VerDetalle.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/PresupuestoAnticipo/VerJerarquiaAnticipo.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/RevisarDocumento/RevisarDocumento.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/EnviarDocumento/EnviarDocumentoHistorico.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/RevisarDocumento/RevisarDocumentoHistorico.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/RevisarDocumento/RechazarDocumento.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/AprobacionFacturaProveedor/Crear.js")
+}

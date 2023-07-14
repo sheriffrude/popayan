@@ -1,0 +1,48 @@
+﻿@model ListarProveedorViewModel
+@{
+    ViewBag.Title = "Lista de  proveedores";
+}
+<!--Filtro de la tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div id="form-filtro-tabla" class="form-inline">
+                <div class="form-group">
+                    <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                    <input type="button" class="btn btn-parametrizacion" value="BUSCAR" onclick="ListarProveedores.reconstruirTabla()" />
+                    <input type="button" class="btn btn-parametrizacion" value="VER TODO" onclick="ListarProveedores.ResetearTablaPais()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">        
+        <table id="tabla-proveedor" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Nit</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Dirección</th>
+                    <th class="text-center">Telefono</th>
+                    <th class="text-center">Correo</th>
+                    <th class="text-center"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <!--Script listar Empresa impuestos-->
+    <script type="text/javascript">
+        var URL_LISTAR_PROVEEDOR = "@Url.Action("Listar", "Proveedor", new { Area = "Gestion" })";
+        var urlVerItem = "@Url.Action("Listar", "ProveedorItemTarifario", new { Area = "Gestion" })";
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/ProveedorItemTarifario/ListarProveedores.js")
+}

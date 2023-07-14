@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Facturas clientes";
+}
+<div class="x_panel">
+    <div class="x_title">
+        <h2>@ViewBag.Title</h2>
+        <ul class="nav navbar-right panel_toolbox text-right">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+
+        <div class="col-md-12">
+            <div class="form-group col-md-12">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="texto">Ingrese el texto:</label>
+                        <input type="text" class="form-control" id="texto">
+                    </div>
+                    <div class="form-group col-md-3" id="select-empresa-id">
+                        <label class="control-label">Seleccione una empresa</label>
+                        <select class="form-control selectpicker" data-live-search="true" onchange="consultarFacturaCliente.OnChangeEmpresa(this)" id="select-empresa"></select>
+                    </div>
+                    <div class="form-group col-md-3" id="select-cliente-id">
+                        <label class="control-label">Seleccione un cliente</label>
+                        <select class="form-control selectpicker" data-live-search="true" onchange="consultarFacturaCliente.OnChangeCliente(this)" id="select-cliente"></select>
+                    </div>
+                    <div class="form-group col-md-3" id="select-producto-id">
+                        <label class="control-label">Seleccione un producto</label>
+                        <select class="form-control selectpicker" data-live-search="true" onchange="consultarFacturaCliente.OnChangeProducto(this)" id="select-producto"></select>
+                    </div>
+
+                    <div class="form-group col-md-3" id="select-ot-id">
+                        <label class="control-label">Seleccione una OT</label>
+                        <select class="form-control selectpicker" data-live-search="true" id="select-ot"></select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="FechaInicio"> Desde:</label>
+                        <input type="text" class="form-control" id="FechaInicio">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="FechaFin"> Hasta:</label>
+                        <input type="text" class="form-control" id="FechaFin">
+                    </div>
+                    <div class="form-group col-md-3 ">
+                        <br />
+                        <a class="btn btn-warning" onclick="consultarFacturaCliente.CrearTablaFacturasClientes()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12" id="factura-cliente">
+                    <table id="tabla_factura_cliente" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Empresa</th>
+                                <th>Cliente</th>
+                                <th>Producto</th>
+                                <th>OT</th>
+                                <th>Número de ppto</th>
+                                <th>Número consecutivo de factura</th>
+                                <th>Número factura</th>
+                                <th>Fecha de factura</th>
+                                <th>Valor de la factura</th>
+                                <th>Valor de impuestos</th>
+                                <th>Total</th>
+                                <th>Fecha de registro</th>
+                                <th>Usuario que registró</th>
+                                <th>Estado de la factura</th>
+                                <th>Activar/Cancelar</th>
+                                <th>Ver detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

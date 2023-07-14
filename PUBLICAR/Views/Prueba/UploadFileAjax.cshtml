@@ -1,0 +1,48 @@
+﻿@model UploadFileAjaxViewModel
+@{
+    ViewBag.Title = "UploadFileAjax";
+}
+
+@using (Ajax.BeginForm("UploadFileAjax", "Prueba", new { Area = "" },
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnBegin = "OnBeginForm"
+    },
+    new { @class = "", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="clearfix"></div>
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+    <div class="clearfix"></div>
+
+    <h2>UploadFileAjax</h2>
+    <input type="file" id="uploadFile" onchange="UploadFile(this)" />
+    <input type="submit" value="Guardar" />
+}
+
+<script>
+    var URL = "@Url.Action("UploadFileTemp", "Prueba", new { area= "" })";
+    var FILE = null;
+    function UploadFile(e) {
+        RequestHttp._UploadFile(e, URL, function (result) {
+            if (result != null) {
+                FILE = {
+                    'Name': result.data.Name,
+                    'Path': result.data.Path,
+                    'OriginalName': result.data.OriginalName
+                };
+            }
+        });
+    }
+
+    function OnBeginForm(jqXHR, settings) {
+        var data = $(this).serializeObject();
+        data["File"] = FILE;
+        settings.data = jQuery.param(data);
+        return true;
+    }
+</script>

@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "ModalConfirmation";
+}
+
+<a href="#" onclick="AbrirConfirmacion()">Abrir confirmacion</a>
+
+@section Scripts{
+    <script type="text/javascript">
+        function AbrirConfirmacion() {
+            var title = "Mensaje de confirmación";
+            var body = '<h1>Texto de confirmación</h1>';
+            var footer = '<button type="button" class="btn btn-warning" data-dismiss="modal" >Cancelar</button>' +
+                '<button type="button" class="btn btn-success" >Confirmar</button>';
+            Utils._BuilderConfirmation(title, body, footer);
+        }
+    </script>
+}

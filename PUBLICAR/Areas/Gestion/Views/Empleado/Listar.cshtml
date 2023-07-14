@@ -1,0 +1,131 @@
+﻿@model ListarEmpleadoViewModel
+@{
+    ViewBag.Title = "Empleados";
+}
+
+@Html.HiddenFor(m => m.EmpresaId)
+
+<div class="col-md-12 text-center">
+    <h3>@Model.NombreComercial</h3>
+    <br />
+    @if (Model.LogoPath != null)
+    {
+        <img src="@Url.Content(Model.LogoPath)" class="img-responsive img-center" />
+    }
+</div>
+
+<div class="clearfix"></div>
+<div class="ln_solid"></div>
+
+@*<div class="col-md-12">
+    <div class="text-right" style="display:none; ">
+        <a href="@Url.Action("Listar", "Indemnizacion", new { Area = "Gestion", id = Model.EmpresaId })" class="btn btn-secondary">Indemnizaciones</a>
+        <a href="@Url.Action("Listar", "Liquidacion", new { Area = "Gestion", id = Model.EmpresaId })" class="btn btn-secondary">Liquidaciones</a>
+    </div>
+</div>*@
+
+<div class="col-md-12">
+    <ul id="tabs-empleados-prospectos" class="nav nav-tabs navbar-gestion">
+        <li class="active"><a data-toggle="tab" href="#empleados" data-number-tab="1">Empleados</a></li>
+        @if (Sesion.HasPermission("GES-PROSPECTO_LISTAR"))
+        {
+            <li><a data-toggle="tab" href="#prospectos" data-number-tab="2">Prospectos</a></li>
+        }
+    </ul>
+</div>
+
+<div class="col-md-12">
+
+    <br /><br />
+    <div class="tab-content">
+
+        <!--Empleados-->
+        <div id="empleados" class="tab-pane fade in active">
+            <div class="pull-left">
+                <div class="form-inline">
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.UnidadNegocioId, Model.UnidadesNegocio, "Seleccione Unidad de negocio", new { @class = "form-control selectpicker", onchange = "OnchangeUnidadNegocioInfoLaboral(this)" })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.AreaId, Model.Areas, "Seleccione Area", new { @class = "form-control selectpicker", onchange = "OnChangeArea(this)" })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.CargoId, Model.Cargos, "Seleccione Cargo", new { @class = "form-control selectpicker", onchange = "OnChangeCargo(this)" })
+                    </div>
+                    <div class="form-group">
+                        <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                        <input type="button" class="btn btn-secondary" value="BUSCAR" onclick="RecargarTablaEmpleado()" />
+                    </div>
+                </div>
+            </div>
+            <div class="pull-right">
+                <a href="@Url.Action("Crear", "Empleado", new { Area = "Gestion", id = Model.EmpresaId })" class="btn btn-primary">Adicionar</a>
+            </div>
+
+            <!--Tabla-->
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="tabla-empleados" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Documento</th>
+                                <th class="text-center">Nombres</th>
+                                <th class="text-center">Cargo</th>
+                                <th class="text-center">Fecha Ingreso</th>
+                                <th class="text-center">Fecha Retiro</th>
+                                <th class="text-center">Unidad de Negocio</th>
+                                <th class="text-center">Área</th>
+                                <th class="text-center">Estado</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--Fin Empleados-->
+        <!--Prospectos-->
+        @if (Sesion.HasPermission("GES-PROSPECTO_LISTAR"))
+            {
+            <div id="prospectos" class="tab-pane fade">
+                @Html.Partial("~/Areas/Gestion/Views/Prospecto/Listar.cshtml", new ListarProspectoViewModel { EmpresaId = Model.EmpresaId, UnidadesNegocio = Model.UnidadesNegocio })
+            </div>
+        }
+        <!--Fin Prospectos-->
+
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        var URL_LISTAR_EMPLEADO = "@Url.Action("Listar", "Empleado", new { Area = "Gestion", id = Model.EmpresaId})";
+
+        var PERMISO_VER_EMPLEADO = ("@Sesion.HasPermission("GES-EMPLEADO_VER")" === "True");
+        var URL_VER_EMPLEADO = "@Url.Action("Ver", "Empleado", new { Area = "Gestion"})";
+
+        var PERMISO_RETIRAR_EMPLEADO = ("@Sesion.HasPermission("GES-EMPLEADO_RETIRAR")" === "True");
+        var URL_RETIRAR_EMPLEADO = "@Url.Action("Retirar", "Empleado", new { Area = "Gestion" })";
+
+        var PERMISO_REINTEGRAR_EMPLEADO = ("@Sesion.HasPermission("GES-EMPLEADO_REINTEGRAR")" === "True");
+        var URL_REINTEGRAR_EMPLEADO = "@Url.Action("Reintegrar", "Empleado", new { Area = "Gestion" })";
+
+         var URL_CAMBIO_UNIDAD_NEGOCIO = '@Url.Action("ListarOpcionesAreas", "Empleado", new { Area = "Gestion"})';
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/Empleado/Listar.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Empleado/Retirar.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Empleado/Reintegrar.js")
+
+    @if (Sesion.HasPermission("GES-PROSPECTO_LISTAR"))
+    {
+        <script type="text/javascript">
+            var URL_LISTAR_PROSPECTOS = "@Url.Action("Listar", "Prospecto", new { Area = "Gestion", empresaId = Model.EmpresaId })";
+            var PERMISO_ELIMINAR_PROSPECTO = ("@Sesion.HasPermission("GES-PROSPECTO_ELIMINAR")" === "True");
+            var URL_ELIMINAR_PROSPECTO = "@Url.Action("Eliminar", "Prospecto", new { Area = "Gestion"})";
+        </script>
+        @Scripts.Render("~/Areas/Gestion/scripts/Prospecto/Listar.js")
+    }
+}

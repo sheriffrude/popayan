@@ -1,0 +1,333 @@
+﻿/*******DATA TABLE*********/
+table.dataTable {
+    border: 0px;
+    color: #222;
+    font-size: 12px;
+}
+
+    table.dataTable thead {
+        margin-bottom: 10px !important;
+    }
+
+        table.dataTable thead th,
+        table.dataTable tfoot th {
+            margin-bottom: 10px;
+            font-size: 14px;
+            background-color: #fff;
+            border: 2px solid #fff;
+            color: #000;
+        }
+
+            table.dataTable thead th:first-child {
+                border-radius: 10px 0 0 10px;
+                border-left: none;
+            }
+
+            table.dataTable thead th:last-child {
+                border-radius: 0 10px 10px 0;
+                border-right: none;
+            }
+
+            table.dataTable tfoot th:first-child {
+                border-radius: 10px 0 0 10px;
+                border-left: none;
+            }
+
+            table.dataTable tfoot th:last-child {
+                border-radius: 0 10px 10px 0;
+                border-right: none;
+            }
+
+    table.dataTable tbody tr {
+        background-color: #F9F9F9;
+    }
+
+        table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd, table.dataTable tbody tr.odd {
+            background-color: #e2e2e2;
+        }
+
+        table.dataTable tbody tr td {
+            border: 2px solid #fff;
+        }
+
+        table.dataTable tbody tr:first-child td:first-child {
+            border-radius: 10px 0 0 0;
+        }
+
+        table.dataTable tbody tr:first-child td:last-child {
+            border-radius: 0 10px 0 0;
+        }
+
+        table.dataTable tbody tr:last-child td:first-child {
+            border-radius: 0 0 0 10px;
+        }
+
+        table.dataTable tbody tr:last-child td:last-child {
+            border-radius: 0 0 10px 0;
+        }
+
+.dataTables_wrapper .dataTables_info {
+    background-color: #6DCA23;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 5px;
+    padding: 6px;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    font-size: 13px;
+}
+
+    .dataTables_wrapper .dataTables_paginate .pagination > li > a,
+    .dataTables_wrapper .dataTables_paginate .pagination > li > span {
+        color: #6DCA23;
+        font-weight: bold;
+        border: 1px solid #6DCA23;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .pagination > .active > a,
+    .dataTables_wrapper .dataTables_paginate .pagination > .active > a:hover,
+    .dataTables_wrapper .dataTables_paginate .pagination > .active > a:focus,
+    .dataTables_wrapper .dataTables_paginate .pagination > .active > span,
+    .dataTables_wrapper .dataTables_paginate .pagination > .active > span:hover,
+    .dataTables_wrapper .dataTables_paginate .pagination > .active > span:focus {
+        background-color: #6DCA23;
+        color: #fff;
+        font-weight: bold;
+        border: 1px solid #6DCA23;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .pagination > .disabled > a,
+    .dataTables_wrapper .dataTables_paginate .pagination > .disabled > a:hover,
+    .dataTables_wrapper .dataTables_paginate .pagination > .disabled > a:focus,
+    .dataTables_wrapper .dataTables_paginate .pagination > .disabled > span,
+    .dataTables_wrapper .dataTables_paginate .pagination > .disabled > span:hover,
+    .dataTables_wrapper .dataTables_paginate .pagination > .disabled > span:focus {
+        background-color: #6DCA23;
+        color: #fff;
+        font-weight: bold;
+        border: 1px solid #6DCA23;
+        opacity: 0.4;
+    }
+/*******FIN DATA TABLE*********/
+
+/**BOTON PERSONALIZADO**/
+.btn-trafico {
+    color: #FFFFFF;
+    background-color: #6DCA23;
+    border-color: #5BA81C;
+}
+
+    .btn-trafico:hover,
+    .btn-trafico:focus,
+    .btn-trafico:active,
+    .btn-trafico.active,
+    .open .dropdown-toggle.btn-trafico {
+        color: #FFFFFF;
+        background-color: #5CAB1B;
+        border-color: #5BA81C;
+    }
+
+    .btn-trafico:active,
+    .btn-trafico.active,
+    .open .dropdown-toggle.btn-trafico {
+        background-image: none;
+    }
+
+    .btn-trafico.disabled,
+    .btn-trafico[disabled],
+    fieldset[disabled] .btn-trafico,
+    .btn-trafico.disabled:hover,
+    .btn-trafico[disabled]:hover,
+    fieldset[disabled] .btn-trafico:hover,
+    .btn-trafico.disabled:focus,
+    .btn-trafico[disabled]:focus,
+    fieldset[disabled] .btn-trafico:focus,
+    .btn-trafico.disabled:active,
+    .btn-trafico[disabled]:active,
+    fieldset[disabled] .btn-trafico:active,
+    .btn-trafico.disabled.active,
+    .btn-trafico[disabled].active,
+    fieldset[disabled] .btn-trafico.active {
+        background-color: #6DCA23;
+        border-color: #5BA81C;
+    }
+
+    .btn-trafico .badge {
+        color: #6DCA23;
+        background-color: #FFFFFF;
+    }
+/**FIN BOTON PERSONALIZADO**/
+
+
+/**TABS**/
+.nav-tabs {
+    color: #fff;
+    font-weight: bold;
+}
+    .nav-tabs > li > a {
+        background-color: #C4EAA7;
+        color: #fff;
+    }
+
+        .nav-tabs > li > a:hover,
+        .nav-tabs > li.active > a, 
+        .nav-tabs > li.active > a:hover, 
+        .nav-tabs > li.active > a:focus {
+            background-color: #6DCA23 !important;
+            color: #fff;
+        }
+/**FIN TABS**/
+
+/**WICKEDPICKER**/
+.wickedpicker {
+    z-index: 9999;
+}
+/**FIN WICKEDPICKER**/
+
+/**RADIO**/
+
+/*input[type=radio].custom-radio:checked + label.custom-radio-label {
+    background: #fff;
+}
+
+label.custom-radio-label {
+    border: 3px solid #5BA81C;
+    background-color: #5BA81C;
+}*/
+/**FIN RADIO**/
+
+
+/****Calendario****/
+.fc.fc-unthemed {
+    text-transform: uppercase;
+}
+
+    .fc.fc-unthemed .fc-toolbar {
+        border-top: 2px solid #6DCA23;
+        border-bottom: 2px solid #6DCA23;
+        padding: 11px 0;
+    }
+
+        .fc.fc-unthemed .fc-toolbar .fc-button-group button, .fc-today-button.fc-button {
+            border: 1px solid #6DCA23;
+            background-color: #6DCA23;
+            color: #fff;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .fc.fc-unthemed .fc-toolbar button.fc-state-active {
+            background-color: #fff;
+            color: #6DCA23;
+        }
+
+.fc-state-default {
+    background: none;
+}
+
+.fc.fc-unthemed .fc-center h2 {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.fc.fc-unthemed th.fc-day-header {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 0;
+}
+
+.fc.fc-unthemed .fc-day-header.fc-widget-header {
+    border-width: 2px;
+}
+
+.fc.fc-unthemed td.fc-head-container {
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-width: 2px !important;
+}
+
+.fc.fc-unthemed .fc-body td.fc-widget-content {
+    border: 0;
+}
+
+.fc.fc-unthemed .fc-day.fc-widget-content {
+    border: 2px solid #6DCA23 !important;
+}
+
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-content, .fc-unthemed .fc-popover, .fc-unthemed .fc-list-view, .fc-unthemed .fc-list-heading td {
+    border-color: #6DCA23;
+}
+
+.fc.fc-unthemed .fc-day-number {
+    border-radius: 50%;
+    background-color: #D1F2EB  ;
+    color: #fff;
+    width: 24px;
+    text-align: center;
+    height: 21px;
+    padding-top: 5px;
+    margin: 5px 5px 0;
+    font-weight: bold;
+}
+
+    .fc.fc-unthemed .fc-day-number:hover {
+        background-color: #fff;
+        color: #D4EFDF;
+    }
+
+.fc.fc-unthemed .fc-day.fc-widget-content.fc-fri.fc-today {
+    background-color: #EDEDED;
+}
+
+.fc-event table tbody tr td {
+    color: #fff;
+    font-weight: bold !important;
+    border: 0;
+}
+
+.fc.fc-unthemed .fc-day-grid-event.fc-h-event.fc-event .fc-content table tbody tr td:first-child, .fc-scroller.fc-time-grid-container .fc-content table tbody tr td:first-child {
+    width: 0;
+}
+
+.fc-event, .fc-event-dot {
+    background-color: #6DCA23;
+    border: 1px solid #6DCA23;
+    padding: 2px;
+    color: #fff;
+}
+
+.fullcalendar-dia-fondo-amarillo {
+    background-color: #6DCA23;
+}
+.fc-content {
+     background-color: #6DCA23;
+     border : 0;
+}
+
+.fc-day-grid-event .fc-h-event .fc-event .fc-not-start {
+ background-color: #6DCA23;
+     border : 0;
+}
+.fc-ltr .fc-h-event.fc-not-end, .fc-rtl .fc-h-event.fc-not-start {
+border:unset;
+}
+.fc-ltr .fc-h-event.fc-not-start, .fc-rtl .fc-h-event.fc-not-end {
+    border:unset;
+}
+
+.fc-view-container *, .fc-view-container :after, .fc-view-container :before{
+border : unset;
+}
+.fc-more {
+color:#6DCA23;
+}
+.fc-event, .fc-event:hover, .ui-widget .fc-event {
+        border :unset;
+}
+.fc-day-grid-event fc-h-event fc-event fc-start fc-end {
+    border :unset;
+}
+/****Fin Calendario****/    

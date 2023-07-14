@@ -1,0 +1,54 @@
+﻿@model CrearEmpleadoContactoEmergenciaViewModel
+
+@Html.HiddenFor(p => p.IdContactoEmergencia, new { id="id",@class = "contacto-emergencia" })
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.DocumentoContactoEmergencia, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.DocumentoContactoEmergencia, new { @class = "form-control contacto-emergencia" })
+        @Html.ValidationMessageFor(m => m.DocumentoContactoEmergencia, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.TipoDocumentoContactoEmergenciaId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.TipoDocumentoContactoEmergenciaId, Model.ListaTiposDocumento, "Seleccione", new { @class = "form-control contacto-emergencia" })
+        @Html.ValidationMessageFor(m => m.TipoDocumentoContactoEmergenciaId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.PrimerNombreContactoEmergencia, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PrimerNombreContactoEmergencia, new { @class = "form-control contacto-emergencia" })
+        @Html.ValidationMessageFor(m => m.PrimerNombreContactoEmergencia, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.SegundoNombreContactoEmergencia, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.SegundoNombreContactoEmergencia, new { @class = "form-control contacto-emergencia" })
+        @Html.ValidationMessageFor(m => m.SegundoNombreContactoEmergencia, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.PrimerApellidoContactoEmergencia, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PrimerApellidoContactoEmergencia, new { @class = "form-control contacto-emergencia" })
+        @Html.ValidationMessageFor(m => m.PrimerApellidoContactoEmergencia, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.SegundoApellidoContactoEmergencia, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.SegundoApellidoContactoEmergencia, new { @class = "form-control contacto-emergencia" })
+        @Html.ValidationMessageFor(m => m.SegundoApellidoContactoEmergencia, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.SexoContactoEmergenciaId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.SexoContactoEmergenciaId, Model.ListaSexos, "Seleccione", new { @class = "form-control contacto-emergencia" })
+        @Html.ValidationMessageFor(m => m.SexoContactoEmergenciaId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.CelularContactoEmergencia, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.CelularContactoEmergencia, new { @class = "form-control contacto-emergencia" })
+        @Html.ValidationMessageFor(m => m.CelularContactoEmergencia, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.TelefonoContactoEmergencia, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.TelefonoContactoEmergencia, new { @class = "form-control contacto-emergencia" })
+        @Html.ValidationMessageFor(m => m.TelefonoContactoEmergencia, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.TipoParentescoContactoEmergenciaId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.TipoParentescoContactoEmergenciaId, Model.ListaTiposParentescos, "Seleccione", new { @class = "form-control contacto-emergencia" })
+        @Html.ValidationMessageFor(m => m.TipoParentescoContactoEmergenciaId, "", new { @class = "text-danger" })
+    </div>

@@ -1,0 +1,210 @@
+﻿@model HorarioLaboralViewModel
+@{
+    ViewBag.Title = "Configuración Horario Laboral";
+}
+
+<div class="row">
+    <div class="col-md-12 padding-left-0 padding-right-0">
+        @using (Ajax.BeginForm("Editar", "HorarioLaboral", new { Area = "Parametrizacion" },
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            OnBegin = "OnBeginHorarioLaboral",
+                            OnComplete = "OnCompleteEditarHorarioLaboral"
+                        },
+                        new { @class = "", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="clearfix"></div>
+            @Html.ValidationMessage("Error", new { @class = "text-danger" })
+            @Html.ValidationMessage("Success", new { @class = "text-success" })
+            @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+            <div class="clearfix"></div>
+
+            <!--Lunes-->
+            <div class="form-group col-md-2">
+                <div class="container-checkbox">
+                    <input type="checkbox" id="CheckboxLunes" value="1" data-content-horas=".content-horas-lunes" @(Model.DiasDeserialize.Exists(x => x == 1) ? "checked='checked'" : "") />
+                    <label for="CheckboxLunes">Lunes</label>
+                </div>
+            </div>
+            @*<div class="form-group col-md-2">
+                    <div class="content-horas-lunes @(Model.DiasDeserialize.Exists(x => x.Digito == 1) ? "" : "hidden")">
+                        <label class="control-label">Hora Inicial</label>
+                        <input type="text" id="HoraInicialLunes" class="form-control timepicker" value="@(Model.DiasDeserialize.Exists(x => x.Digito == 1) ? Model.DiasDeserialize.Find(x => x.Digito == 1).HoraInicial: "")" />
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="content-horas-lunes @(Model.DiasDeserialize.Exists(x => x.Digito == 1) ? "" : "hidden")">
+                        <label class="control-label">Hora Final</label>
+                        <input type="text" id="HoraFinalLunes" class="form-control timepicker" />
+                    </div>
+                </div>*@
+
+            <!--Martes-->
+            <div class="form-group col-md-2">
+                <div class="container-checkbox">
+                    <input type="checkbox" id="CheckboxMartes" value="2" data-content-horas=".content-horas-martes" @(Model.DiasDeserialize.Exists(x => x == 2) ? "checked='checked'" : "") />
+                    <label for="CheckboxMartes">Martes</label>
+                </div>
+            </div>
+            @*<div class="form-group col-md-2">
+                    <div class="content-horas-martes @(Model.DiasDeserialize.Exists(x => x.Digito == 2) ? "" : "hidden")">
+                        <label class="control-label">Hora Inicial</label>
+                        <input type="text" id="HoraInicialMartes" class="form-control timepicker" />
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="content-horas-martes @(Model.DiasDeserialize.Exists(x => x.Digito == 2) ? "" : "hidden")">
+                        <label class="control-label">Hora Final</label>
+                        <input type="text" id="HoraFinalMartes" class="form-control timepicker" />
+                    </div>
+                </div>*@
+
+            <!--Miercoles-->
+            <div class="form-group col-md-2">
+                <div class="container-checkbox">
+                    <input type="checkbox" id="CheckboxMiercoles" value="3" data-content-horas=".content-horas-miercoles" @(Model.DiasDeserialize.Exists(x => x == 3) ? "checked='checked'" : "") />
+                    <label for="CheckboxMiercoles">Miercoles</label>
+                </div>
+            </div>
+            @*<div class="form-group col-md-2">
+                    <div class="content-horas-miercoles @(Model.DiasDeserialize.Exists(x => x.Digito == 3) ? "" : "hidden")">
+                        <label class="control-label">Hora Inicial</label>
+                        <input type="text" id="HoraInicialMiercoles" class="form-control timepicker" />
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="content-horas-miercoles @(Model.DiasDeserialize.Exists(x => x.Digito == 3) ? "" : "hidden")">
+                        <label class="control-label">Hora Final</label>
+                        <input type="text" id="HoraFinalMiercoles" class="form-control timepicker" />
+                    </div>
+                </div>*@
+
+            <!--Jueves-->
+            <div class="form-group col-md-2">
+                <div class="container-checkbox">
+                    <input type="checkbox" id="CheckboxJueves" value="4" data-content-horas=".content-horas-jueves" @(Model.DiasDeserialize.Exists(x => x == 4) ? "checked='checked'" : "") />
+                    <label for="CheckboxJueves">Jueves</label>
+                </div>
+            </div>
+            @*<div class="form-group col-md-2">
+                    <div class="content-horas-jueves @(Model.DiasDeserialize.Exists(x => x.Digito == 4) ? "" : "hidden")">
+                        <label class="control-label">Hora Inicial</label>
+                        <input type="text" id="HoraInicialJueves" class="form-control timepicker" />
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="content-horas-jueves @(Model.DiasDeserialize.Exists(x => x.Digito == 4) ? "" : "hidden")">
+                        <label class="control-label">Hora Final</label>
+                        <input type="text" id="HoraFinalJueves" class="form-control timepicker" />
+                    </div>
+                </div>*@
+
+            <!--Viernes-->
+            <div class="form-group col-md-2">
+                <div class="container-checkbox">
+                    <input type="checkbox" id="CheckboxViernes" value="5" data-content-horas=".content-horas-viernes" @(Model.DiasDeserialize.Exists(x => x == 5) ? "checked='checked'" : "") />
+                    <label for="CheckboxViernes">
+                        Viernes
+                    </label>
+                </div>
+            </div>
+            @*<div class="form-group col-md-2">
+                    <div class="content-horas-viernes @(Model.DiasDeserialize.Exists(x => x.Digito == 5) ? "" : "hidden")">
+                        <label class="control-label">Hora Inicial</label>
+                        <input type="text" id="HoraInicialViernes" class="form-control timepicker" />
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="content-horas-viernes @(Model.DiasDeserialize.Exists(x => x.Digito == 5) ? "" : "hidden")">
+                        <label class="control-label">Hora Final</label>
+                        <input type="text" id="HoraFinalViernes" class="form-control timepicker" />
+                    </div>
+                </div>*@
+
+            <!--Sabado-->
+            <div class="form-group col-md-2">
+                <div class="container-checkbox">
+                    <input type="checkbox" id="CheckboxSabado" value="6" data-content-horas=".content-horas-sabado" @(Model.DiasDeserialize.Exists(x => x == 6) ? "checked='checked'" : "") />
+                    <label for="CheckboxSabado">
+                        Sabado
+                    </label>
+                </div>
+            </div>
+            @*<div class="form-group col-md-2">
+                    <div class="content-horas-sabado @(Model.DiasDeserialize.Exists(x => x.Digito == 6) ? "" : "hidden")">
+                        <label class="control-label">Hora Inicial</label>
+                        <input type="text" id="HoraInicialSabado" class="form-control timepicker" />
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="content-horas-sabado @(Model.DiasDeserialize.Exists(x => x.Digito == 6) ? "" : "hidden")">
+                        <label class="control-label">Hora Final</label>
+                        <input type="text" id="HoraFinalSabado" class="form-control timepicker" />
+                    </div>
+                </div>*@
+
+            <!--Domingo-->
+            <div class="form-group col-md-2">
+                <div class="container-checkbox">
+                    <input type="checkbox" id="CheckboxDomingo" value="7" data-content-horas=".content-horas-domingo" @(Model.DiasDeserialize.Exists(x => x == 7) ? "checked='checked'" : "") />
+                    <label for="CheckboxDomingo">Domingo</label>
+                </div>
+            </div>
+
+
+            @*<div class="form-group col-md-2">
+                    <div class="content-horas-domingo @(Model.DiasDeserialize.Exists(x => x.Digito == 7) ? "" : "hidden")">
+                        <label class="control-label">Hora Inicial</label>
+                        <input type="text" id="HoraInicialDomingo" class="form-control timepicker" />
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="content-horas-domingo @(Model.DiasDeserialize.Exists(x => x.Digito == 7) ? "" : "hidden")">
+                        <label class="control-label">Hora Final</label>
+                        <input type="text" id="HoraFinalDomingo" class="form-control timepicker" />
+                    </div>
+                </div>*@
+
+            <div class="clearfix"></div>
+
+            <div class="form-group col-md-3">
+                @Html.LabelFor(m => m.TotalDias, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.TotalDias, new { @type = "number", @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.TotalDias, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-md-3">
+                @Html.LabelFor(m => m.TotalHoras, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.TotalHoras, new { @type = "number", @class = "form-control", min = 0 })
+                @Html.ValidationMessageFor(m => m.TotalHoras, "", new { @class = "text-danger" })
+            </div>
+
+            @*<div class="form-group col-md-3">
+                <div class="container-checkbox">
+                    <input type="checkbox" id="CheckboxBloqueoHoras" value="7" data-content-horas=".content-bloqueo-horas" @(Model.DiasDeserialize.Exists(x => x == 7) ? "checked='checked'" : "") />
+                    <label for="CheckboxBloqueoHoras">Habilitar bloqueo horas hombre</label>
+                </div>
+            </div>*@
+
+            <div class="form-group col-md-3">
+                @Html.LabelFor(m => m.BloqueoHorasHombre, new { @class = "control-label" })
+                @Html.CheckBoxFor(m => m.BloqueoHorasHombre, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.BloqueoHorasHombre, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="text-right">
+                <button type="submit" class="btn btn-success">Guardar</button>
+                <a href="@Url.Action("Index", "Menu", new { Area = "Parametrizacion" })" class="btn btn-warning">Cancelar</a>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/Areas/Parametrizacion/scripts/HorarioLaboral/Editar.js")
+}

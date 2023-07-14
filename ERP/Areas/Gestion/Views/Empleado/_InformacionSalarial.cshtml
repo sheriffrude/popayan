@@ -1,0 +1,85 @@
+﻿@model ProcessPlusERP.Areas.Gestion.Models.CrearEmpleadoInfoSalarialViewModel
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorSalario, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorSalario, new { @class = "form-control info-salarial" })
+    @Html.ValidationMessageFor(m => m.ValorSalario, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.ValorBeneficioPrestacional, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.ValorBeneficioPrestacional, new { @class = "form-control info-salarial" })
+    @Html.ValidationMessageFor(m => m.ValorBeneficioPrestacional, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.BonosAlimentacion, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.BonosAlimentacion, new { @class = "form-control info-salarial" })
+    @Html.ValidationMessageFor(m => m.BonosAlimentacion, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Otros, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.Otros, new { @class = "form-control info-salarial" })
+    @Html.ValidationMessageFor(m => m.Otros, "", new { @class = "text-danger" })
+</div>
+
+<hr />
+<div class="form-group">
+    <label class="control-label">¿Registra distribución salarial?</label>
+    <input type="checkbox" name="DistribucionPago" id="DistribucionPago" value="1" onclick="clickDistribucionSalarial(event)"> Si<br>
+</div>
+
+<div id="registra-distribucion-salarial">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.ObservacionesSalario, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.ObservacionesSalario, new { @class = "form-control info-salarial" })
+        @Html.ValidationMessageFor(m => m.ObservacionesSalario, "", new { @class = "text-danger" })
+    </div>
+    <br />
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EmpresaSalarioId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.EmpresaSalarioId, Model.EmpresasSalario, "Seleccione", new { @class = "form-control", onchange = "OnchangeEmpresaInfoSalarial(this)" })
+        @Html.ValidationMessageFor(m => m.EmpresaSalarioId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.UnidadNegocioSalarioId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.UnidadNegocioSalarioId, Model.UnidadesNegocioSalario, "Seleccione", new { @class = "form-control selectpicker", data_live_search="true" })
+        @Html.ValidationMessageFor(m => m.UnidadNegocioSalarioId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.PorcentajeSalario, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PorcentajeSalario, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PorcentajeSalario, "", new { @class = "text-danger" })
+    </div>
+    <div class="text-right" style="padding-top: 10px;">
+        <button type="button" class="btn btn-secondary text-right" onclick="agregarUnidadPorcentaje()">Agregar</button>
+    </div>
+
+    <div class="form-group col-md-12" id="listado-correos">
+        <table id="tabla-unidades-porcentaje" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th hidden></th>
+                    <th class="text-center">Empresa</th>
+                    <th hidden></th>
+                    <th class="text-center">Unidades de negocio</th>
+                    <th class="text-center">Porcentaje (%)</th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <br />
+</div>
+
+<script>
+    var URL_CONSULTAR_DEPARTAMENTOS_PAIS = "@Url.Action("ListarOpcionesDepto", "Empleado", new { Area =  "Gestion" })";
+
+    var URL_CONSULTAR_CIUDADES_DEPARTAMENTO = "@Url.Action("ListarOpcionesMpio", "Empleado", new { Area =  "Gestion" })";
+
+    var URL_CONSULTAR_EMPRESAS_CIUDAD = "@Url.Action("ListarOpcionesEmpresas", "Empleado", new { Area =  "Gestion" })";
+
+    var URL_CONSULTAR_UNIDADES_NEGOCIO_EMPRESA = "@Url.Action("ListarOpcionesUnidadesNegocio", "Empleado", new { Area =  "Gestion" })";
+
+</script>

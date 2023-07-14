@@ -1,0 +1,49 @@
+﻿@model ListarNominaViewModel
+@{
+    ViewBag.Title = "Nominas Cargadas";
+}
+
+<!--Filtro de la tabla-->
+<div class="row margin-top-1">
+    <div class="col-md-10 text-left">
+        <form id="form-filtro-tabla" class="form-inline">
+            <div class="form-group">
+                <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-12">
+        <table id="tabla-nominas" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Año</th>
+                    <th class="text-center">Mes</th>
+                    <th class="text-center"></th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <!--Script listar paises-->
+    <script type="text/javascript">
+        var URL_LISTAR_NOMINA = "@Url.Action("Listar", "Nomina", new { Area = "Gestion", id = Model.EmpresaId })";
+        var URL_ELIMINAR_NOMINA = "@Url.Action("Eliminar", "Nomina", new { Area = "Gestion" })";
+        var PERMISO_ELIMINAR_NOMINA = ("@Sesion.HasPermission("GES-NOMINA_ELIMINAR")" === "True");
+        var URL_DESCARGAR_NOMINA = "@Url.Action("Descargar", "Nomina", new { Area = "Gestion" })";
+        var PERMISO_DESCARGAR_NOMINA = ("@Sesion.HasPermission("GES-NOMINA_DESCARGAR")" === "True");
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/Nomina/Listar.js")
+}

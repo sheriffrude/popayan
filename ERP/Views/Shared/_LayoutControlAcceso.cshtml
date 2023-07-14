@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>:: Process + :: @ViewBag.Title</title>
+
+    @Styles.Render("~/bundles/jquery-ui.css")
+    @Styles.Render("~/bundles/bootstrap.css")
+    @Styles.Render("~/Content/template.css")
+</head>
+<body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    @RenderBody()
+                </section>
+            </div>
+        </div>
+    </div>
+    <!--Loading-->
+    @*<div id="container-loading" class="container-loading">
+            <img src="@Url.Content("~/Content/images/loading.gif")" alt="" />
+        </div>*@
+    <!--Modal-->
+    @*<div id="all-modal" class="modal fade in">
+            <div class="modal-dialog">
+                <div class="modal-content"></div>
+            </div>
+        </div>*@
+    <!--Loading-->
+    <div style="right:0; bottom:0;">v8</div>
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/jquery-ui.js")
+    @Scripts.Render("~/bundles/bootstrap.js")
+    @Scripts.Render("~/Content/template.js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,80 @@
+﻿@model CrearEmpresaClienteContratosViewModel
+@{
+    //Titulo
+    ViewBag.Title = "Crear contrato cliente";
+}
+<!--Espacio vertical-->
+<div class="help-block"></div>
+<!--Formulario-->
+
+<div class="modal-body">
+    @using (Html.BeginForm("Crear", "EmpresaClienteContratos",
+                                                            new { Area = "Gestion" },
+                                                            FormMethod.Post,
+                                                            new { enctype = "multipart/form-data", @class = "", role = "form" }))
+    {
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(m => m.EmpresaId)
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.NombreContrato, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NombreContrato, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.NombreContrato, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.ClienteId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.ClienteId, Model.ListaClientes, "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true" })
+            @Html.ValidationMessageFor(m => m.ClienteId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.FechaContrato, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaContrato, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FechaContrato, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Valor, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Valor, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Valor, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.FechaFirma, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaFirma, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FechaFirma, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.FechaTerminacion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaTerminacion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FechaTerminacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.TipoContratoId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.TipoContratoId, Model.ListaTipoContrato, "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true" })
+            @Html.ValidationMessageFor(m => m.TipoContratoId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+            <input id="Documento" name="Documento" type="file" class="form-control" />
+            @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-12 text-right">
+            <input type="submit" class="btn btn-success" value="Guardar" />
+            <a href="@Url.Action("Listar", "EmpresaClienteContratos", new { Area = "Gestion", Id = ViewBag.Id } )" class="btn btn-warning">
+                Cancelar
+            </a>
+        </div>
+    }
+
+    @Styles.Render("~/bundles/dataTables.css")
+    @section Scripts{
+        @Scripts.Render("~/bundles/dataTables.js")
+        @Scripts.Render("~/Areas/Gestion/scripts/EmpresaClienteContratos/Crear.js")
+    }

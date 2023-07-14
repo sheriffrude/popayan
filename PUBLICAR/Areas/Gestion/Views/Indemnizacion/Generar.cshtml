@@ -1,0 +1,53 @@
+﻿@model GenerarIndemnizacionViewModel
+@{
+    ViewBag.Title = "Generar Indemnización";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+@using (Ajax.BeginForm("Generar", "Indemnizacion",
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnBegin = "OnBeginCalcularIndemnizacionEmpleado",
+        OnComplete = "OnCompleteCalcularIndemnizacionEmpleado"
+    },
+    new { @class = "", role = "form", id="generarIndemnizacion" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="clearfix"></div>
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-6" })
+    <div class="clearfix"></div>
+
+    <div class="modal-body">
+        <div class="form-group">
+            @Html.LabelFor(m => m.UnidadNegocioId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.UnidadNegocioId, Model.UnidadesNegocio, "Seleccione", new { @class = "form-control datos-basicos" })
+            @Html.ValidationMessageFor(m => m.UnidadNegocioId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group ">
+            @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Documento, new { @class = "form-control datos-basicos" })
+            @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+        </div>  
+        <div class="form-group " id="nombre-completo">
+            @Html.LabelFor(m => m.NombreCompleto, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NombreCompleto, new { @class = "form-control", disabled="disabled"})
+        </div>  
+        <div class="form-group ">
+            @Html.LabelFor(m => m.FechaRetiro, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FechaRetiro, new { @class = "form-control datos-basicos" })
+            @Html.ValidationMessageFor(m => m.FechaRetiro, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" onclick="generar()">Generar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+}

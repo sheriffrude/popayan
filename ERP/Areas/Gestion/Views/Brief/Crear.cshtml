@@ -1,0 +1,70 @@
+﻿@model  CrearBriefViewModel
+@{
+    ViewBag.Title = "Crear Brief";
+}
+
+<!--Formulario-->
+@using (Ajax.BeginForm("Crear", "Brief", new { Area = "Gestion" },
+    new AjaxOptions {
+        HttpMethod = "POST",
+        OnBegin = "OnBeginCrearBrief",
+        OnComplete = "OnCompleteCrearBrief"
+    },
+    new { @class = "", role = "form" })
+    )
+{
+    @Html.AntiForgeryToken()
+
+    <div class="clearfix"></div>
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+    <div class="clearfix"></div>
+
+    @Html.HiddenFor(m => m.UnidadNegocioId)
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Nombre, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col-md-12 text-right">
+        <a href="@Url.Action("CrearPregunta", "Brief", new { Area = "Gestion" })" class="btn btn-secondary" data-toggle="modal" data-target="#">Nueva Pregunta</a>
+    </div>
+
+    <div class="col-md-12">
+        <table id="tabla-preguntas" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Pregunta</th>
+                    <th class="text-center">Descripcion</th>
+                    <th class="text-center">Tipo pregunta</th>
+                    <th class="text-center">Obligatorio</th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="col-md-12 text-center">
+        <input type="image" alt="Submit" src="@Url.Content("~/Content/images/boton-guardar.png")" class="btn" value="Guardar" />
+        <img src="@Url.Content("~/Content/images/union-botones.png")" alt="" class="imagen-union-botones hidden-xs" />
+        <a href="@Url.Action("Menu", "Brief", new { Area = "Gestion" })" class="btn">
+            <img src="@Url.Content("~/Content/images/boton-cancelar.png")" alt="" />
+        </a>
+    </div>
+}
+
+@Styles.Render("~/bundles/dataTables.css")
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <script type="text/javascript">
+        var URL_LISTAR_BRIEF = "@Url.Action("Listar", "Brief", new { Area = "Gestion", id = Model.UnidadNegocioId })";
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/Brief/Crear.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/Brief/CrearPregunta.js")
+}

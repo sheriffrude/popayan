@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Presupuestos";
+}
+
+<!--Filtro-->
+<div class="col-md-12">
+    <div class="pull-left">
+        <form id="form-filtro-tabla" class="form-inline">
+            <div class="form-group">
+                <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+            </div>
+        </form>
+    </div>
+    @*@if (Sesion.HasPermission("GES-PRESUPUESTO_GENERAL_CREAR"))
+    {*@
+        <div class="pull-right">
+            <a href="@Url.Action("Crear", "PresupuestoGeneral", new { Area = "Gestion" })" class="btn btn-secondary">Adicionar</a>
+        </div>
+    @*}*@
+</div>
+
+<!--Tabla-->
+<div class="col-md-12">
+    <table id="tabla-presupuesto-general" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th class="text-center">Año</th>
+                <th class="text-center">EmpresaId</th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+                
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    <script type="text/javascript">
+        var URL_LISTAR_PRESUPUESTO_GENERAL = "@Url.Action("Listar", "PresupuestoGeneral", new { Area = "Gestion" })";
+        var URL_PARAMETRIZAR_PRESUPUESTO_GENERAL = "@Url.Action("Parametrizar", "PresupuestoGeneral", new { Area = "Gestion" })";
+        var URL_ALIMENTAR_PRESUPUESTO_GENERAL = "@Url.Action("Alimentar", "PresupuestoGeneral", new { Area = "Gestion" })";
+        var URL_ALIMENTAR_PRESUPUESTO_GENERAL_METAS = "@Url.Action("AlimentarMetas", "PresupuestoGeneral", new { Area = "Gestion" })";
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/PresupuestoGeneral/Listar.js")
+}

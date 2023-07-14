@@ -1,0 +1,48 @@
+﻿@model CrearFacturaPagoClienteViewModel
+@{
+    ViewBag.Title = "Pago cliente";
+}
+<div class="col-md-2">
+    <!-- required for floating -->
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs tabs-left" id="nav-tabs-facturacion">
+        <!-- 'tabs-right' for right tabs -->
+        @if (Sesion.HasPermission("PRO-FACTURA_PAGO_CLIENTE_CREAR"))
+        {
+            <li class="active"><a href="#registrar-pago-cliente" data-toggle="tab" data-number-tab="1">REGISTRAR PAGO CLIENTE</a></li>
+        }
+        @if (Sesion.HasPermission("PRO-FACTURA_PAGO_CLIENTE_LISTAR"))
+        {
+            <li><a href="#consultar-pagos-cliente" onclick="consultarFacturaPagoCliente.CrearTablaFacturasPagoCliente()" data-toggle="tab" data-number-tab="2">CONSULTAR PAGO A CLIENTES</a></li>
+        }
+    </ul>
+</div>
+<div class="col-md-10">
+    <!-- Tab panes -->
+    <div class="tab-content">
+        @if (Sesion.HasPermission("PRO-FACTURA_PAGO_CLIENTE_CREAR"))
+        {
+            <div class="tab-pane active" id="registrar-pago-cliente">
+                @Html.Partial("~/Areas/Produccion/Views/FacturaPagoCliente/Crear.cshtml")
+            </div>
+        }
+        @if (Sesion.HasPermission("PRO-FACTURA_PAGO_CLIENTE_LISTAR"))
+        {
+            <div class="tab-pane" id="consultar-pagos-cliente">
+                @Html.Partial("~/Areas/Produccion/Views/FacturaPagoCliente/Listar.cshtml")
+            </div>
+        }
+    </div>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaPagoCliente/Crear.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaPagoCliente/Listar.js")
+    @Scripts.Render("~/Areas/Produccion/scripts/FacturaPagoCliente/Consultar.js")
+
+    <script type="text/javascript">
+            var URL_CONSULTAR_FACTURA_PAGO_CLIENTE= "@Url.Action("Listar", "FacturaPagoCliente", new { Area = "Produccion"})";
+            var URL_DETALLE_PAGO_FACTURA_CLIENTE = "@Url.Action("Consultar", "FacturaPagoCliente", new { Area = "Produccion" })";
+            var URL_CANCELAR_PAGO_FACTURA_CLIENTE = "@Url.Action("Cancelar", "FacturaPagoCliente", new { area= "Produccion" })";
+    </script>
+}

@@ -1,0 +1,34 @@
+﻿@*@model MenuEnviarDocumentoViewModel*@
+@{
+    ViewBag.Title = "Documentos pendientes por enviar";
+}
+
+<div class="modal-header">
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <!--Tabs-->
+            <ul class="nav nav-tabs" id="nav-tabs-enviar-documento" role="tablist">
+                <li role="presentation" class="active"><a href="#EnviarDocumento" aria-controls="EnviarDocumento" role="tab" data-toggle="tab" data-number-tab="1">Documentos pendientes por enviar</a></li>
+                <li role="presentation"><a href="#HistoricoEnviarDocumento" aria-controls="HistoricoEnviarDocumento" role="tab" data-toggle="tab" data-number-tab="2">Histórico de documentos pendientes</a></li>
+            </ul>
+
+            <!--Content Tabs-->
+            <div class="tab-content">
+
+                <!--TAB PENDIENTES-->
+                <div role="tabpanel" class="tab-pane active" id="EnviarDocumento">
+                    @Html.Partial("~/Areas/Produccion/Views/EnviarDocumento/_EnviarDocumento.cshtml")
+                </div>
+                <!--TAB CONTESTADAS-->
+                <div role="tabpanel" class="tab-pane" id="HistoricoEnviarDocumento">
+                    @Html.Partial("~/Areas/Produccion/Views/EnviarDocumento/_EnviarDocumentoHistorico.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

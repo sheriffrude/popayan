@@ -1,0 +1,149 @@
+﻿@model TraficoClienteViewModel
+@{
+    ViewBag.Title = "Tráfico Cliente";
+}
+
+<div class="pull-right">
+    @if (Sesion.HasPermission("TRA-TRAFICO_ADMINISTRATIVO_SOLICITUD_ADMINISTRATIVA_CREAR"))
+    {
+        <button class="btn btn-secondary" onclick="AbrirModalCrear()">Nueva Solicitud</button>
+    }
+</div>
+
+<div class="clearfix"></div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Filtros de búsqueda</div>
+    <div class="panel-body">
+        <form class="form-inline">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="texto">Grupo:</label>
+                    @Html.ListBoxFor(m => m.GrupoId, Model.ListaGrupos, new { id = "GrupoId", @class = "listbox" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="texto">Estado:</label>
+                    <select id="TipoCierreId" class="form-control">
+                        <option value="1" selected>En Progreso </option>
+                        <option value="2">Finalizadas</option>
+                        <option value="3">Canceladas</option>
+                        <option value="4">Todas</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="texto">Ingrese el texto:</label>
+                    <input type="text" class="form-control" id="texto">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="pull-left">
+                    <div class="form-group">
+                        <div class="select-style">
+                            <label for="texto"> </label>
+                            <input type="button" class="btn btn-trafico" onclick="TablaSolicitudes()" value="Buscar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Solicitudes Creadas</div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td width="10%" align="right">
+                            <div style="height:18px;width:18px;background-color:#9bd39b;border:3px solid #9bd39b;border-radius:0.3em;-moz-border-radius:0.3em;-webkit-border-radius:0.3em;"></div>
+                        </td>
+                        <td width="15%" align="left">&nbsp;&nbsp;<b> EN PROGRESO</b></td>
+                        <td width="10%" align="right">
+                            <div style="height:18px;width:18px;background-color:#bfbfbf;border:3px solid #bfbfbf;border-radius:0.3em;-moz-border-radius:0.3em;-webkit-border-radius:0.3em;"></div>
+                        </td>
+                        <td width="15%" align="left">&nbsp;&nbsp;<b> FINALIZADAS</b></td>
+                        <td width="10%" align="right">
+                            <div style="height:18px;width:18px;background-color:#e07370;border:3px solid #e07370;border-radius:0.3em;-moz-border-radius:0.3em;-webkit-border-radius:0.3em;"></div>
+                        </td>
+                        <td width="15%" align="left">&nbsp;&nbsp;<b> CANCELADAS</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-12">
+            <table id="tabla_Solicitudes_hechas" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Tarea</th>
+                        <th class="text-center">Departamento</th>
+                        <th class="text-center">Grupo</th>
+                        <th class="text-center">Contactos</th>
+                        <th class="text-center">Responsables</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Observaciones</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Activar/Cancelar</th>
+                        <th class="text-center">Editar solicitud</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+@Styles.Render("~/bundles/bootstrap-multiselect.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/bundles/bootstrap-multiselect.js")
+    <script type="text/javascript">
+
+        //Url Solicitud
+        var URL_CREAR_SOLICITUD_CLIENTE = "@Url.Action("Crear", "TraficoCliente", new { Area = "Trafico" })";
+        var URL_LISTAR_SOLICITUD_CLIENTE = "@Url.Action("Listar", "TraficoCliente", new { Area = "Trafico" })";
+        var URL_EDITAR_SOLICITUD =  "@Url.Action("Editar", "TraficoCliente", new { Area = "Trafico" })";
+
+        //Url Contactos
+        var URL_LISTAR_CONTACTOS = "@Url.Action("ListarContactos", "TraficoCliente", new { Area = "Trafico" })";
+        var URL_TABLA_CONTACTOS = "@Url.Action("ListarContactos", "TraficoCliente", new { Area = "Trafico" })";
+        var URL_ELIMINAR_CONTACTO = "@Url.Action("EliminarContacto", "TraficoCliente", new { Area = "Trafico" })";
+        var URL_AGREGAR_CONTACTO = "@Url.Action("CrearContacto", "TraficoCliente", new { Area = "Trafico" })";
+
+        //Url Responsable
+        var URL_AGREGAR_RESPONSABLE = "@Url.Action("CrearResponsable", "TraficoCliente", new { Area = "Trafico" })";
+
+        //Url Status
+        var URL_AGREGAR_STATUS = "@Url.Action("CrearStatus", "TraficoCliente", new { Area = "Trafico" })";
+        var URL_HISTORIAL_STATUS = "@Url.Action("ListarHistoricoStatus", "TraficoCliente", new { Area = "Trafico" })";
+        var URL_LISTAR_HISTORICO = "@Url.Action("ListarHistoricoStatus", "TraficoCliente", new { Area = "Trafico" })";
+
+        //Url Observaciones
+        var URL_AGREGAR_OBSERVACION = "@Url.Action("CrearObservacion", "TraficoCliente", new { Area = "Trafico" })";
+        var URL_HISTORIAL_OBSERVACION = "@Url.Action("ListarHistoricoObservacion", "TraficoCliente", new { Area = "Trafico" })";
+        var URL_LISTAR_HISTORICO_OBSERVACION = "@Url.Action("ListarHistoricoObservacion", "TraficoCliente", new { Area = "Trafico" })";
+
+        //Url Estado solicitud
+        var URL_CAMBIAR_ESTADO_SOLICITUD = "@Url.Action("CambiarEstado", "TraficoCliente", new { Area = "Trafico" })";
+
+        $(function () {
+            $('.listbox').multiselect({
+                includeSelectAllOption: true
+            });
+        });
+    </script>
+
+    @Scripts.Render("~/Areas/Trafico/scripts/TraficoCliente/Listar.js")
+}

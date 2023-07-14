@@ -1,0 +1,49 @@
+﻿@model  CrearEmpleadoDetalleConyugueViewModel
+
+@Html.HiddenFor(p => p.IdConyugue, new { @class = "conyugue" })
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.DocumentoConyugue, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.DocumentoConyugue, new { @class = "form-control conyugue" })
+    @Html.ValidationMessageFor(m => m.DocumentoConyugue, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoDocumentoConyugueId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.TipoDocumentoConyugueId, Model.ListaTiposDocumento, "Seleccione", new { @class = "form-control conyugue" })
+    @Html.ValidationMessageFor(m => m.TipoDocumentoConyugueId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PrimerNombreConyugue, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PrimerNombreConyugue, new { @class = "form-control conyugue" })
+    @Html.ValidationMessageFor(m => m.PrimerNombreConyugue, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SegundoNombreConyugue, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SegundoNombreConyugue, new { @class = "form-control conyugue" })
+    @Html.ValidationMessageFor(m => m.SegundoNombreConyugue, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.PrimerApellidoConyugue, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.PrimerApellidoConyugue, new { @class = "form-control conyugue" })
+    @Html.ValidationMessageFor(m => m.PrimerApellidoConyugue, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SegundoApellidoConyugue, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SegundoApellidoConyugue, new { @class = "form-control conyugue" })
+    @Html.ValidationMessageFor(m => m.SegundoApellidoConyugue, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.SexoConyugueId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.SexoConyugueId, Model.ListaSexos, "Seleccione", new { @class = "form-control conyugue" })
+    @Html.ValidationMessageFor(m => m.SexoConyugueId, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TelefonoConyugue, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.TelefonoConyugue, new { @class = "form-control conyugue" })
+    @Html.ValidationMessageFor(m => m.TelefonoConyugue, "", new { @class = "text-danger" })
+</div>
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.CelularConyugue, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.CelularConyugue, new { @class = "form-control conyugue" })
+    @Html.ValidationMessageFor(m => m.CelularConyugue, "", new { @class = "text-danger" })
+</div>

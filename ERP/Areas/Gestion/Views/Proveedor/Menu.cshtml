@@ -1,0 +1,47 @@
+﻿<style>
+    @@media (max-width: 600px) {
+        .col-sm-12, .col-sm-4 {
+            width: 100% !important;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 991px) {
+        .col-sm-12, .col-sm-4 {
+            width: 50% !important;
+        }
+    }
+</style>
+<div class="col-md-12 content-menu">
+    @if (Sesion.HasPermission("GES-PROVEEDOR_LISTAR"))
+    {
+        <div class="col-md-3 col-sm-4 text-center">
+            <a href="@Url.Action("Listar", "Proveedor", new {Area = "Gestion" })">
+                <img src="@Url.Content("~/Content/images/Gestion/Proveedor.svg")" class="img-response" alt="Proveedores" />
+                <h4 class="text-center">Información proveedores</h4>
+            </a>
+        </div>
+    }
+    @if (Sesion.HasPermission("GES-EMPRESA_PROVEEDOR_CONTACTO_LISTAR"))
+    {
+        <div class="col-md-3 col-sm-4 text-center">
+            <a href="@Url.Action("ListarProveedores", "ProveedorContacto", new { Area = "Gestion" })">
+                <img src="@Url.Content("~/Content/images/Gestion/Personas.svg")" class="img-response" alt="Contactos" />
+                <h4 class="text-center">Contactos</h4>
+            </a>
+        </div>
+    } 
+        <div class="col-md-3 col-sm-4 text-center">
+            <a href="@Url.Action("ListarProveedores", "ProveedorItemTarifario", new { Area = "Gestion" })">
+                <img src="@Url.Content("~/Content/images/Gestion/Tipos_actividades.svg")" class="img-response" alt="Contactos" />
+                <h4 class="text-center">Item Tarifario</h4>
+                @*<h4 class="text-center">Item tarifario</h4>*@
+            </a>
+        </div>
+    <div class="col-md-3 col-sm-4 text-center">
+        <a href="@Url.Action("Listar", "ProveedorGrupoTarifario", new { Area = "Gestion" })">
+            <img src="@Url.Content("~/Content/images/Gestion/Jerarquia_aprobaciones.svg")" class="img-response" alt="Contactos" />
+            <h4 class="text-center">Grupo Tarifario</h4>
+        </a>
+    </div>
+
+</div>

@@ -1,0 +1,60 @@
+﻿@model CrearProveedorDocumentoLegalViewModel
+
+@{
+    ViewBag.Title = "Agrega documentos legales";
+
+    //Clase body personalizado
+    ViewBag.BodyClass = "body-background-gray";
+
+    var ListaTipoDocumentoLegal = ViewBag.ListaTipoDocumentoLegal as IEnumerable<SelectListItem>;
+}
+
+<!--Formulario-->
+@using (Html.BeginForm("Crear", "ProveedorDocumentoLegal", new { Area = "Gestion" },
+                                        FormMethod.Post,                                        
+                                        new
+                                        {
+                                            enctype = "multipart/form-data",
+                                            @class = "",
+                                            role = "form"
+
+                                        })
+                                    )
+{
+    @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    @Html.ValidationMessage("Success", new { @class = "text-success" })
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(m => m.ProveedorId)
+    <input type="hidden" id="estadoProceso" value="@ViewBag.EstadoProceso" />
+    <input type="hidden" id="mensajeProceso" value="@ViewBag.MensajeProceso" />
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NombreDocumentoLegal, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.NombreDocumentoLegal, ListaTipoDocumentoLegal, "Seleccione", new { @class = "form-control selectpicker", data_live_search = "true" })
+        @Html.ValidationMessageFor(m => m.NombreDocumentoLegal, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Documento, new { @class = "control-label" })
+        <input id="Documento" name="Documento" type="file" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-12 text-right">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a type="button" href="@Url.Action("Listar", "ProveedorDocumentoLegal", new { Area = "Gestion", id = Model.Id })" class="btn btn-warning">Cerrar</a>
+    </div>
+
+}
+
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/ProveedorDocumentoLegal/Crear.js")
+}
+
+<script>
+    var urlRedireccion = "@Url.Action("Listar","ProveedorDocumentoLegal", new { Area = "Gestion", id = Model.ProveedorId })";
+</script>

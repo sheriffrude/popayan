@@ -1,0 +1,57 @@
+﻿@model EditarTipoDocumentoLegalEmpresaViewModel
+@{
+    ViewBag.Title = "Editar Tipo de documento legal de la empresa";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("Editar", "TipoDocumentoLegalEmpresa", new { Area = "Parametrizacion" },
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnComplete = "OnCompleteEditarTipoDocumentoLegalEmpresa"
+                },
+                new { @class = "", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="clearfix"></div>
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessage("Success", new { @class = "text-success" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger small col-md-12" })
+        <div class="clearfix"></div>
+
+        @Html.HiddenFor(m => m.Id)
+        <div class="form-group">
+            @Html.LabelFor(m => m.Nombre, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+        </div>        
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+            <div class="radio">
+                <label>
+                    @Html.RadioButtonFor(m => m.Estado, false)
+                    Inactivar
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    @Html.RadioButtonFor(m => m.Estado, true)
+                    Activar
+                </label>
+            </div>
+            @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    }
+</div>

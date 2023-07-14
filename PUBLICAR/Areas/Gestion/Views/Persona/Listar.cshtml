@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Personas";
+}
+
+<div class="col-md-12">
+    <div class="pull-left">
+        <form id="form-filtro-tabla" class="form-inline">
+            <div class="form-group">
+                <input type="search" name="input-filtro" id="input-filtro" class="form-control" placeholder="Filtro" />
+                <input type="submit" class="btn btn-secondary" value="BUSCAR" />
+            </div>
+        </form>
+    </div>
+    @if (Sesion.HasPermission("GES-PERSONA_CREAR"))
+    {
+        <div class="pull-right">
+            <a href="@Url.Action("Crear", "Persona", new { Area = "Gestion" })" class="btn btn-secondary">Adicionar</a>
+        </div>
+    }
+</div>
+
+<!--Tabla-->
+<div class="col-md-12">
+    <table id="tabla-Personas" class="table table-striped table-bordered compact text-center" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th class="text-center">Nombres</th>
+                <th class="text-center">Apellidos</th>
+                <th class="text-center">Tipo de documento</th>
+                <th class="text-center">Documento</th>
+                <th class="text-center">Sexo</th>
+                <th class="text-center">Correo</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+@Styles.Render("~/bundles/dataTables.css")
+<!--Script listar Personas-->
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+
+    <script type="text/javascript">
+        var URL_LISTAR_PERSONAS = "@Url.Action("Listar", "Persona", new { Area = "Gestion" })";
+        var URL_EDITAR_PERSONAS = "@Url.Action("Editar", "Persona", new { Area = "Gestion" })";
+        var URL_DETALLE_PERSONAS = "@Url.Action("Detalle", "Persona", new { Area = "Gestion" })";
+        var PERMISO_EDITAR_PERSONAS = ("@Sesion.HasPermission("GES-PERSONA_EDITAR")" === "True");
+        var URL_CAMBIAR_ESTADO_PERSONA = "@Url.Action("CambiarEstado", "Persona", new { Area = "Gestion" })";
+    </script>
+    @Scripts.Render("~/Areas/Gestion/scripts/Persona/Listar.js")
+}

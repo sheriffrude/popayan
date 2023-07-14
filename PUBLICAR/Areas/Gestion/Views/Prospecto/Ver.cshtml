@@ -1,0 +1,169 @@
+﻿@model VerProspectoViewModel
+@{
+    ViewBag.Title = "Cuadro de costos";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+<div class="modal-body">
+
+    <div class="col-md-12">
+        <ul class="nav nav-tabs navbar-gestion">
+            <li class="active"><a data-toggle="tab" href="#info-basica-tab" data-number-tab="1">Información básica</a></li>
+            <li><a data-toggle="tab" href="#seguridad-social-tab" data-number-tab="2">Seguridad social</a></li>
+            <li><a data-toggle="tab" href="#aportes-tab" data-number-tab="3">Aportes parafiscales</a></li>
+            <li><a data-toggle="tab" href="#deducciones-tab" data-number-tab="4">Deucciones trabajador</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-12">
+        <div class="tab-content">
+            <!--Información básica-->
+            <div id="info-basica-tab" class="tab-pane fade in active">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorSalario, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorSalario, new { @class = "form-control", disabled ="disabled"})
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorBeneficioNoPrestacional, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorBeneficioNoPrestacional, new { @class = "form-control", disabled = "disabled" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.BonosAlimentacion, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.BonosAlimentacion, new { @class = "form-control", disabled ="disabled"})
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.Otros, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Otros, new { @class = "form-control", disabled ="disabled"})
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.AuxilioTransporte, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.AuxilioTransporte, new { @class = "form-control", disabled ="disabled" })
+                </div>
+            </div>
+            <!--Fin Información básica-->
+            <!--Seguridad social-->
+            <div id="seguridad-social-tab" class="tab-pane fade">
+
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorPension, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorPension, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorPension, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.PorcentajePension, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PorcentajePension, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.PorcentajePension, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorSalud, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorSalud, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorSalud, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.PorcentajeSalud, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PorcentajeSalud, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.PorcentajeSalud, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorArl, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorArl, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorArl, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.PorcentajeArl, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PorcentajeArl, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.PorcentajeArl, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorSeguridadSocial, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorSeguridadSocial, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorSeguridadSocial, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.PorcentajeSeguridadSocial, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PorcentajeSeguridadSocial, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.PorcentajeSeguridadSocial, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <!--Prospectos-->
+            <div id="aportes-tab" class="tab-pane fade">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorCajaCompensacion, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorCajaCompensacion, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorCajaCompensacion, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.PorcentajeCajaCompensacion, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PorcentajeCajaCompensacion, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.PorcentajeCajaCompensacion, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorIcbf, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorIcbf, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorIcbf, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.PorcentajeIcbf, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PorcentajeIcbf, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.PorcentajeIcbf, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorSena, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorSena, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorSena, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.PorcentajeSena, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PorcentajeSena, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.PorcentajeSena, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorAporteParafiscal, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorAporteParafiscal, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorAporteParafiscal, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.PorcentajeAporteParafiscal, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PorcentajeAporteParafiscal, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.PorcentajeAporteParafiscal, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <!--Prospectos-->
+            <div id="deducciones-tab" class="tab-pane fade">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorSubtotal, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorSubtotal, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorSubtotal, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorIndemnizacion, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorIndemnizacion, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorIndemnizacion, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorTotalCosto, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorTotalCosto, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorTotalCosto, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ValorTotalRecibido, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ValorTotalRecibido, new { @class = "form-control", disabled ="disabled" })
+                    @Html.ValidationMessageFor(m => m.ValorTotalRecibido, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!--Fin Prospectos-->
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+﻿@model VerEmpresaProveedorViewModel
+@{
+    //Titulo
+    ViewBag.Title = "Ver Proveedor";
+}
+
+<!--Titulo y boton volver-->
+<div class="col-md-12 col-xs-6 text-right">
+    <a href="@Url.Action("Listar", "EmpresaProveedor", new {Area = "Gestion", id = Model.EmpresaId})" class="btn btn-warning">
+        Cerrar
+    </a>
+</div>
+
+<!--Espacio vertical-->
+<div class="help-block"></div>
+
+<!--Formulario-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.NombreComercial, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NombreComercial, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.NombreLegal, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NombreLegal, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Nit, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Nit, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-2">
+            @Html.LabelFor(m => m.Pais, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Pais, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-2">
+            @Html.LabelFor(m => m.Departamento, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Departamento, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-2">
+            @Html.LabelFor(m => m.Ciudad, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Ciudad, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Direccion, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Telefono, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.Correo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.DiaPago, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DiaPago, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+    </div>
+</div>
+@Styles.Render("~/bundles/dataTables.css")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/dataTables.js")
+    @Scripts.Render("~/Areas/Gestion/scripts/EmpresaProveedor/Ver.js")
+}
